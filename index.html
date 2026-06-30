@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>생활기록부 작성 연구소 · 수업 속 성장을 생활기록부로 연결하다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap">
 <style>
   :root{
     --paper:#FAF7EF;
@@ -41,7 +44,7 @@
     --shadow: 0 1px 2px rgba(43,38,32,.06), 0 8px 24px rgba(43,38,32,.08);
     --radius:14px;
     --serif: "Noto Serif KR", "Nanum Myeongjo", Georgia, serif;
-    --sans: "Pretendard", "Noto Sans KR", -apple-system, sans-serif;
+    --sans: "IBM Plex Sans KR", "Noto Sans KR", -apple-system, sans-serif;
     --mono: "IBM Plex Mono", "Consolas", monospace;
   }
 
@@ -70,13 +73,16 @@
   }
 
   *{box-sizing:border-box;}
+  html{font-size:17px;}
   html,body{margin:0;padding:0;}
   body{
     background:var(--paper);
     color:var(--ink);
     font-family:var(--sans);
-    line-height:1.6;
+    font-weight:500;
+    line-height:1.65;
     -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
     min-height:100vh;
   }
   @media (prefers-reduced-motion: reduce){
@@ -343,6 +349,7 @@
   .blank-text{
     font-size:.95rem;
     line-height:1.85;
+    letter-spacing:-.01em;
   }
 
   .compose-row{
