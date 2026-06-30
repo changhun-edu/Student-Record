@@ -4,32 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>생활기록부 작성 연구소 · 수업 속 성장을 생활기록부로 연결하다</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
   :root{
-    --paper:#FAF7EF;
-    --paper-line:#DCD3B8;
+    --paper:#F3ECDC;
+    --paper-line:#D9CCA8;
     --ink:#2B2620;
-    --ink-soft:#5C5447;
+    --ink-soft:#4F473A;
 
-    /* 브랜드 심볼 전용 — 도장 모티프에만 사용 */
-    --seal:#9C3B2E;
-    --seal-deep:#7A2C22;
+    /* 브랜드 심볼 전용 — 도장 모티프에만 사용. danger(적색)와 명확히 구분되는 갈색 계열 */
+    --seal:#8B5A34;
+    --seal-deep:#6E4527;
 
     /* 경고/금지 전용 — forbidden 목록, 글자수 초과, 데이터 오류, '주의' 라벨 */
     --danger:#B33B30;
     --danger-bg:#FBEAE7;
 
-    /* 입력/진행/선택 전용 — 인라인 빈칸, 포커스, 액션 버튼, 탭 활성화, 칩 선택 */
+    /* 입력/진행/선택 전용 — 빈칸 입력, 포커스, 기본 액션 버튼에만 사용. 상태 표시(탭/배지 등)는 ink 계열로 분리해 pine의 "할 수 있는 행동" 신호를 보존 */
     --pine:#3C5145;
     --pine-soft:#E7EEE8;
     --input-bg:#EAF3EC;
 
-    /* 난이도·학년 전용 (같은 색, 형태로 구분: pill=학년, 사각=난이도) */
-    --gold:#B68A3C;
-    --gold-bg:#F6ECD8;
+    /* 난이도·학년 전용 (같은 색, 형태로 구분: pill=학년, 사각=난이도). 채도를 낮춰 pine과의 시각적 경쟁 완화 */
+    --gold:#9C7B41;
+    --gold-bg:#EFE6D1;
 
     /* 검색 하이라이트 전용 — gold와 겹치지 않도록 시안 계열 */
     --hl-bg:#BEE7E3;
@@ -41,16 +39,16 @@
     --neutral-400:#A9A49B;
 
     --card:#FFFFFF;
-    --shadow: 0 1px 2px rgba(43,38,32,.06), 0 8px 24px rgba(43,38,32,.08);
+    --shadow: 0 1px 3px rgba(43,38,32,.08), 0 10px 28px rgba(43,38,32,.12);
     --radius:14px;
     --serif: "Noto Serif KR", "Nanum Myeongjo", Georgia, serif;
-    --sans: "IBM Plex Sans KR", "Noto Sans KR", -apple-system, sans-serif;
+    --sans: "Pretendard", "Noto Sans KR", -apple-system, sans-serif;
     --mono: "IBM Plex Mono", "Consolas", monospace;
   }
 
   @media (prefers-color-scheme: dark){
     :root{
-      --paper:#221E18;
+      --paper:#1E1A14;
       --paper-line:#3A352B;
       --ink:#EDE7D8;
       --ink-soft:#B8AF9C;
@@ -62,12 +60,12 @@
       --input-bg:#243228;
       --danger:#E8786B;
       --danger-bg:#3A2422;
-      --gold:#D2AC6B;
+      --gold:#C9A565;
       --gold-bg:#3A2F1C;
       --hl-bg:#1F4A45;
       --hl-text:#9FE0D8;
-      --seal:#C25A4A;
-      --seal-deep:#E0816F;
+      --seal:#B97A4C;
+      --seal-deep:#D89968;
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.4);
     }
   }
@@ -87,12 +85,6 @@
   }
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
-  }
-
-  /* 줄노트 무늬는 헤더/가이드처럼 텍스트 밀도가 낮은 장식 영역에만 적용 */
-  .ledger-paper-bg{
-    background-image:
-      repeating-linear-gradient(transparent 0, transparent 31px, var(--paper-line) 31px, var(--paper-line) 32px);
   }
 
   /* ===== print ===== */
@@ -125,7 +117,7 @@
   /* ===== header ===== */
   header.top{
     padding:28px 0 18px;
-    border-bottom:3px double var(--ink-soft);
+    border-bottom:1.5px solid var(--paper-line);
     margin-bottom:28px;
     display:flex;
     align-items:flex-end;
@@ -135,15 +127,15 @@
   }
   .brand{display:flex; align-items:center; gap:16px;}
   .seal-mark{
+    /* 폼 컨트롤(1.5px)보다 한 단계 두꺼운 2px만 의도적으로 사용 — 로고형 엠블럼이라는 점을 구분하기 위함 */
     width:52px;height:52px;border-radius:50%;
-    border:2.5px solid var(--seal);
+    border:2px solid var(--seal);
     color:var(--seal);
     display:flex;align-items:center;justify-content:center;
-    font-family:var(--serif);
+    font-family:var(--sans);
     font-weight:700;
-    font-size:16px;
+    font-size:15px;
     flex-shrink:0;
-    transform:rotate(-6deg);
     letter-spacing:-1px;
     transition:border-color .15s, color .15s;
   }
@@ -185,10 +177,10 @@
     transition:background .15s, color .15s, border-color .15s;
     white-space:nowrap;
   }
-  .tab-btn:hover{border-color:var(--pine);}
+  .tab-btn:hover{border-color:var(--ink-soft);}
   .tab-btn.active{
-    background:var(--pine);
-    border-color:var(--pine);
+    background:var(--ink);
+    border-color:var(--ink);
     color:#fff;
   }
 
@@ -275,9 +267,9 @@
     transition:all .15s;
   }
   .chip.selected{
-    background:var(--pine-soft);
-    border-color:var(--pine);
-    color:var(--pine);
+    background:var(--neutral-200);
+    border-color:var(--ink-soft);
+    color:var(--ink);
     font-weight:600;
   }
 
@@ -291,7 +283,7 @@
     margin-bottom:16px;
   }
   .ledger-head{
-    background:var(--pine);
+    background:var(--ink);
     color:#fff;
     padding:14px 20px;
     display:flex;
@@ -338,7 +330,7 @@
     border-radius:999px;
     font-weight:600;
   }
-  .badge.type{background:var(--pine-soft); color:var(--pine);}
+  .badge.type{background:var(--neutral-100); color:var(--ink-soft); border:1px solid var(--neutral-200);}
   .badge.level{
     background:var(--gold-bg);
     color:var(--gold);
@@ -729,6 +721,80 @@
     line-height:1.7;
   }
 
+  /* ===== perspective (관점별 비교 / 필터) ===== */
+  .badge.perspective{
+    background:var(--pine-soft);
+    color:var(--pine);
+    border:1px solid var(--pine);
+  }
+  .persp-row{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:14px;
+  }
+  @media (max-width:820px){
+    .persp-row{grid-template-columns:1fr;}
+  }
+  .persp-col{
+    border-radius:10px;
+    padding:14px;
+    font-size:.86rem;
+    line-height:1.7;
+    background:var(--neutral-100);
+    border:1px solid var(--neutral-200);
+  }
+  .persp-col-label{
+    font-size:.76rem;
+    font-weight:700;
+    color:var(--pine);
+    margin-bottom:4px;
+  }
+  .persp-col-desc{
+    font-size:.74rem;
+    color:var(--ink-soft);
+    margin:0 0 10px;
+    line-height:1.6;
+  }
+  .persp-col p{margin:0; color:var(--ink);}
+  .persp-chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px;}
+  .persp-chip{
+    border:1.5px solid var(--pine);
+    background:var(--card);
+    padding:7px 14px;
+    border-radius:999px;
+    font-size:.8rem;
+    cursor:pointer;
+    color:var(--pine);
+    transition:all .15s;
+  }
+  .persp-chip.selected{
+    background:var(--pine);
+    color:#fff;
+    font-weight:600;
+  }
+  .quiz-item{
+    border:1px solid var(--neutral-200);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:14px;
+    background:var(--neutral-100);
+  }
+  .quiz-item .quiz-text{font-size:.88rem; margin:0 0 10px; line-height:1.7;}
+  .quiz-options{display:flex; flex-wrap:wrap; gap:8px;}
+  .quiz-opt{
+    border:1.5px solid var(--paper-line);
+    background:var(--card);
+    padding:7px 13px;
+    border-radius:999px;
+    font-size:.8rem;
+    cursor:pointer;
+    color:var(--ink-soft);
+  }
+  .quiz-opt.correct{background:var(--pine-soft); border-color:var(--pine); color:var(--pine); font-weight:700;}
+  .quiz-opt.wrong{background:var(--danger-bg); border-color:var(--danger); color:var(--danger); font-weight:700;}
+  .quiz-feedback{font-size:.8rem; color:var(--ink-soft); margin-top:10px; display:none;}
+  .quiz-feedback.show{display:block;}
+
   /* ===== empty state ===== */
   .empty{
     text-align:center;
@@ -804,7 +870,7 @@
 
 <div class="wrap">
 
-  <header class="top ledger-paper-bg">
+  <header class="top">
     <div class="brand">
       <div class="seal-mark">記錄</div>
       <div class="brand-text">
@@ -919,6 +985,30 @@
       <p class="compare-why">왜 좋은가: "출발점 → 구체적 조작활동 → 도착점"의 흐름이 드러나, 단순한 결과 평가가 아니라 학생이 어떻게 성장했는지의 과정 전체가 보입니다. 학부모에게는 성장의 근거 자료가 됩니다.</p>
     </div>
 
+    <div class="section-head" style="margin-top:34px;"><span class="tag">관점</span><h2>같은 관찰, 다른 관점으로 쓰기</h2></div>
+    <p class="lead">"좋은 기재"도 한 가지 모양만 있는 것은 아닙니다. 같은 수업 장면이라도 어디에 초점을 두느냐(관점)에 따라 문장이 달라집니다. 아래 세 학생 사례는 각각 다른 관점을 대표적으로 보여줍니다.</p>
+
+    <div class="card">
+      <div class="persp-row">
+        <div class="persp-col">
+          <div class="persp-col-label">① 교과역량형</div>
+          <p class="persp-col-desc">공동체 역량 등 교과 역량을 중심에 두고 서술 (1-2학년 통합교과)</p>
+          <p>사람들이 많이 모이는 학교, 도서관, 놀이터, 공원 등 공공장소에서 지켜야 할 일과 그 안에 설치된 시설물의 올바른 사용 방법을 친구와 함께 찾아보고 그 내용을 바르게 정리하며, 스스로 계획을 세워 꾸준히 실천하며 공동체 역량을 키움.</p>
+        </div>
+        <div class="persp-col">
+          <div class="persp-col-label">② 구체활동형</div>
+          <p class="persp-col-desc">학생이 실제로 수행한 활동을 중심에 두고 서술 (3-4학년 과학)</p>
+          <p>2개의 알콜 온도계와 뷰렛집게를 이용하여 건습구 습도계를 만들어 온도를 측정할 때 습구 온도계가 건구온도계에 비하여 왜 온도가 낮은지에 대하여 호기심을 가지고 여러 차례 질문하였으며, 스스로 그 원리를 이해하고 정확하게 찾아냄.</p>
+        </div>
+        <div class="persp-col">
+          <div class="persp-col-label">③ 성취수준형</div>
+          <p class="persp-col-desc">처음과 나중의 성취수준 변화를 중심에 두고 서술 (3-4학년 수학)</p>
+          <p>입체도형에 대한 이해가 낮고 쌓기나무의 전체 모양과 규칙을 파악하는데 어려움을 겪었으나, 여러 시간에 걸쳐 다양한 쌓기나무를 직접 쌓아보고 층별로 모양과 개수를 파악해 보는 활동을 반복함으로써 개수를 구하는 방법을 알게 되었으며, 입체도형의 이해도가 꾸준히 향상됨.</p>
+        </div>
+      </div>
+      <p class="compare-why">어떻게 다른가: ①은 "이 활동을 통해 어떤 역량이 자랐는가"가 핵심 문장이고, ②는 "무엇을 어떻게 했는가"라는 행동 묘사가 핵심이며, ③은 "전 → 과정 → 후"라는 변화의 흐름이 핵심입니다. 같은 학생, 같은 수업이라도 교사가 어떤 관점을 택하느냐에 따라 강조점이 달라집니다. '직접 써보기'에서 관점을 골라 연습해 보세요.</p>
+    </div>
+
     <div class="why-cta card">
       <p>이제 직접 성취기준을 골라 이런 방식으로 문구를 완성해 보세요.</p>
       <button type="button" class="btn btn-primary" id="goToCompose">직접 써보기 →</button>
@@ -942,6 +1032,11 @@
         <span class="icon">🔎</span>
         <input type="text" id="searchInput" placeholder="키워드로 검색 (예: 습도, 쌓기나무, 멘토링…)" autocomplete="off">
         <button type="button" class="clear-btn" id="searchClear" aria-label="검색어 지우기">✕</button>
+      </div>
+      <div class="field">
+        <label>관점으로 좁히기 (선택)</label>
+        <div class="persp-chip-row" id="perspectiveChips"></div>
+        <div class="hint" id="perspectiveDesc"></div>
       </div>
       <div class="grid2">
         <div class="field">
@@ -968,6 +1063,16 @@
     <p class="lead">중앙교육연수원 연수 자료를 바탕으로 정리한 핵심 원칙입니다. 펼쳐서 확인하세요.</p>
 
     <div class="card" style="padding:6px 22px;">
+      <div class="acc-item">
+        <button class="acc-head">세부능력 및 특기사항, 세 가지 관점 <span class="arrow">▶</span></button>
+        <div class="acc-panel"><div class="acc-panel-inner">
+          같은 수업 장면도 어디에 초점을 두느냐에 따라 다르게 쓸 수 있습니다.<br><br>
+          <b>① 교과역량형</b> — 공동체, 의사소통, 자기관리 등 교과 역량이 드러난 장면을 중심으로 씁니다.<br>
+          <b>② 구체활동형</b> — 학생이 실제로 수행한 활동(만들기·실험·관찰 등)의 과정을 중심으로 씁니다.<br>
+          <b>③ 성취수준형</b> — "처음엔 ~했으나 → 어떤 활동을 거쳐 → ~하게 됨"처럼 성취수준의 변화 과정을 중심으로 씁니다.<br><br>
+          세 관점 중 하나만 정답인 것은 아니며, 학생의 누가기록 내용과 강조하고 싶은 지점에 따라 골라 쓰면 됩니다. '직접 써보기' 탭에서 관점을 선택해 연습할 수 있습니다.
+        </div></div>
+      </div>
       <div class="acc-item">
         <button class="acc-head">표준 가이드라인 4가지 <span class="arrow">▶</span></button>
         <div class="acc-panel"><div class="acc-panel-inner">
@@ -1006,6 +1111,12 @@
           그 사례를 <b>학생의 진로 희망과 같은 맥락</b>으로 연결하면 추천서·지도 자료로서의 신뢰도가 높아집니다.
         </div></div>
       </div>
+      <div class="acc-item">
+        <button class="acc-head">미니 퀴즈 — 이 문장은 어떤 관점일까요? <span class="arrow">▶</span></button>
+        <div class="acc-panel"><div class="acc-panel-inner">
+          <div id="quizArea"></div>
+        </div></div>
+      </div>
     </div>
   </section>
 
@@ -1031,13 +1142,16 @@
   "use strict";
 
   var DATA = null;
-  var state = { subject:"", grade:"", competencies:[], query:"", openEntries:{} };
+  var state = { subject:"", grade:"", competencies:[], perspective:"", query:"", openEntries:{} };
   var STORAGE_KEY = 'girok-state-v1';
   var hasUnsavedInput = false;
 
   var subjectSelect = document.getElementById('subjectSelect');
   var gradeSelect = document.getElementById('gradeSelect');
   var competencyChips = document.getElementById('competencyChips');
+  var perspectiveChips = document.getElementById('perspectiveChips');
+  var perspectiveDesc = document.getElementById('perspectiveDesc');
+  var quizArea = document.getElementById('quizArea');
   var resultArea = document.getElementById('resultArea');
   var forbiddenList = document.getElementById('forbiddenList');
   var searchInput = document.getElementById('searchInput');
@@ -1066,6 +1180,7 @@
         subject: state.subject,
         grade: state.grade,
         competencies: state.competencies,
+        perspective: state.perspective,
         query: state.query,
         view: getCurrentView()
       }));
@@ -1185,6 +1300,32 @@
       });
     });
 
+    // ---- 관점 필터 (단일 선택) ----
+    var perspectives = DATA.perspectives || [];
+    function updatePerspectiveDesc(){
+      var p = perspectives.filter(function(p){ return p.key === state.perspective; })[0];
+      perspectiveDesc.textContent = p ? p.desc : '관점을 고르면 해당 관점으로 작성된 예시만 모아 보여줍니다. (행동특성 및 종합의견 예시는 관점 구분 대상이 아니라 항상 표시됩니다)';
+    }
+    perspectiveChips.innerHTML = perspectives.map(function(p){
+      return '<button type="button" class="persp-chip" data-persp="'+p.key+'">'+p.label+'</button>';
+    }).join('');
+    perspectiveChips.querySelectorAll('.persp-chip').forEach(function(chip){
+      chip.addEventListener('click', function(){
+        var k = chip.dataset.persp;
+        var alreadySelected = chip.classList.contains('selected');
+        perspectiveChips.querySelectorAll('.persp-chip').forEach(function(c){ c.classList.remove('selected'); });
+        state.perspective = alreadySelected ? "" : k;
+        if(!alreadySelected) chip.classList.add('selected');
+        updatePerspectiveDesc();
+        saveState();
+        renderResults();
+      });
+    });
+    updatePerspectiveDesc();
+
+    // ---- 가이드 탭 미니 퀴즈 ----
+    renderQuiz(perspectives);
+
     subjectSelect.addEventListener('change', function(){
       state.subject = subjectSelect.value;
       saveState();
@@ -1226,6 +1367,7 @@
       state.subject = saved.subject || "";
       state.grade = saved.grade || "";
       state.competencies = saved.competencies || [];
+      state.perspective = saved.perspective || "";
       state.query = saved.query || "";
       subjectSelect.value = state.subject;
       gradeSelect.value = state.grade;
@@ -1234,6 +1376,12 @@
       competencyChips.querySelectorAll('.chip').forEach(function(chip){
         if(state.competencies.indexOf(chip.dataset.comp) >= 0) chip.classList.add('selected');
       });
+      if(state.perspective){
+        perspectiveChips.querySelectorAll('.persp-chip').forEach(function(chip){
+          if(chip.dataset.persp === state.perspective) chip.classList.add('selected');
+        });
+        updatePerspectiveDesc();
+      }
     }
 
     var initialView = (location.hash ? location.hash.replace('#','') : null) ||
@@ -1279,6 +1427,7 @@
         var hasAny = e.competencies.some(function(c){ return state.competencies.indexOf(c) >= 0; });
         if(!hasAny) return false;
       }
+      if(state.perspective && e.perspective && e.perspective !== state.perspective) return false;
       if(!entryMatchesQuery(e, q)) return false;
       return true;
     });
@@ -1307,11 +1456,18 @@
     bindLedgerEvents();
   }
 
+  function perspectiveLabel(key){
+    if(!DATA || !DATA.perspectives) return '';
+    var p = DATA.perspectives.filter(function(p){ return p.key === key; })[0];
+    return p ? p.label : '';
+  }
+
   // ---------- card building ----------
   function buildLedgerHtml(entry){
     var codeStr = entry.achievementCode ? entry.achievementCode + ' ' : '';
     var isOpen = !!state.openEntries[entry.id];
     var q = state.query;
+    var perspLabel = perspectiveLabel(entry.perspective);
 
     var templatesHtml = entry.templates.map(function(tpl, i){
       return buildTemplateBlockHtml(entry, tpl, i);
@@ -1324,6 +1480,7 @@
             '<span class="summary-title">' +
               '<span class="subj-name">'+highlight(entry.subject, q)+'</span>' +
               '<span class="grade-tag">'+escapeHtml(entry.grade)+'</span>' +
+              (perspLabel ? '<span class="badge perspective">'+escapeHtml(perspLabel)+'</span>' : '') +
               (entry.templates.length>1 ? '<span class="tpl-count">예시 '+entry.templates.length+'개</span>' : '') +
               (codeStr ? '<span class="tpl-count">'+escapeHtml(codeStr.trim())+'</span>' : '') +
             '</span>' +
@@ -1592,6 +1749,51 @@
         ledgerBody.style.maxHeight = ledgerBody.scrollHeight + 'px';
       });
     }
+  }
+
+  // ---------- 가이드 탭: 관점 미니 퀴즈 ----------
+  function renderQuiz(perspectives){
+    if(!quizArea || !perspectives.length) return;
+    var quizItems = [
+      { text: '공동체 역량을 중심으로 두고, 학교·도서관 등 공공장소에서 지켜야 할 일을 친구와 함께 찾아보고 정리하며 공동체 역량을 키웠다고 서술함.', correct: 'competency' },
+      { text: '온도계 두 개로 직접 습도계를 만들어 측정하면서, 왜 온도가 다른지 여러 차례 질문하고 스스로 원리를 찾아낸 과정을 그대로 서술함.', correct: 'activity' },
+      { text: '처음엔 입체도형에 대한 이해가 낮았으나, 여러 차례 조작 활동을 반복한 끝에 이해도가 꾸준히 향상되었다고 서술함.', correct: 'level' }
+    ];
+    quizArea.innerHTML = quizItems.map(function(item, idx){
+      var optsHtml = perspectives.map(function(p){
+        return '<button type="button" class="quiz-opt" data-key="'+p.key+'" data-correct="'+(p.key===item.correct?'1':'0')+'">'+p.label+'</button>';
+      }).join('');
+      return (
+        '<div class="quiz-item" data-quiz="'+idx+'">' +
+          '<p class="quiz-text">' + (idx+1) + '. ' + escapeHtml(item.text) + '</p>' +
+          '<div class="quiz-options">' + optsHtml + '</div>' +
+          '<div class="quiz-feedback"></div>' +
+        '</div>'
+      );
+    }).join('');
+
+    quizArea.querySelectorAll('.quiz-item').forEach(function(qEl){
+      var answered = false;
+      var feedback = qEl.querySelector('.quiz-feedback');
+      qEl.querySelectorAll('.quiz-opt').forEach(function(opt){
+        opt.addEventListener('click', function(){
+          if(answered) return;
+          answered = true;
+          var isCorrect = opt.dataset.correct === '1';
+          qEl.querySelectorAll('.quiz-opt').forEach(function(o){
+            if(o.dataset.correct === '1') o.classList.add('correct');
+            else if(o === opt) o.classList.add('wrong');
+          });
+          feedback.classList.add('show');
+          feedback.textContent = isCorrect ? '정답입니다!' : '아쉽지만 다시 한번 생각해 보세요 — 초록색으로 표시된 것이 정답입니다.';
+          // 아코디언 펼침 높이 재계산
+          var panel = qEl.closest('.acc-panel');
+          if(panel && panel.style.maxHeight){
+            requestAnimationFrame(function(){ panel.style.maxHeight = panel.scrollHeight + 'px'; });
+          }
+        });
+      });
+    });
   }
 
   loadData();
