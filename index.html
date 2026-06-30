@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>기록의 정석 · 과정중심평가 생활기록부 작성 도우미</title>
+<style>
+  :root{
+    --paper:#FAF7EF;
+    --paper-line:#DCD3B8;
+    --ink:#2B2620;
+    --ink-soft:#5C5447;
+
+    /* 브랜드 심볼 전용 — 도장 모티프에만 사용 */
+    --seal:#9C3B2E;
+    --seal-deep:#7A2C22;
+
+    /* 경고/금지 전용 — forbidden 목록, 글자수 초과, 데이터 오류, '주의' 라벨 */
+    --danger:#B33B30;
+    --danger-bg:#FBEAE7;
+
+    /* 입력/진행/선택 전용 — 인라인 빈칸, 포커스, 액션 버튼, 탭 활성화, 칩 선택 */
+    --pine:#3C5145;
+    --pine-soft:#E7EEE8;
+    --input-bg:#EAF3EC;
+
+    /* 난이도·학년 전용 (같은 색, 형태로 구분: pill=학년, 사각=난이도) */
+    --gold:#B68A3C;
+    --gold-bg:#F6ECD8;
+
+    /* 검색 하이라이트 전용 — gold와 겹치지 않도록 시안 계열 */
+    --hl-bg:#BEE7E3;
+    --hl-text:#0F3D38;
+
+    /* 중성 회색 — "쉬는 색", 카드 본문/보더/비활성 UI */
+    --neutral-100:#F4F3F1;
+    --neutral-200:#E6E4E0;
+    --neutral-400:#A9A49B;
+
+    --card:#FFFFFF;
+    --shadow: 0 1px 2px rgba(43,38,32,.06), 0 8px 24px rgba(43,38,32,.08);
+    --radius:14px;
+    --serif: "Noto Serif KR", "Nanum Myeongjo", Georgia, serif;
+    --sans: "Pretendard", "Noto Sans KR", -apple-system, sans-serif;
+    --mono: "IBM Plex Mono", "Consolas", monospace;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#221E18;
+      --paper-line:#3A352B;
+      --ink:#EDE7D8;
+      --ink-soft:#B8AF9C;
+      --card:#2B2620;
+      --neutral-100:#332E26;
+      --neutral-200:#433D32;
+      --neutral-400:#8A8275;
+      --pine-soft:#28332C;
+      --input-bg:#243228;
+      --danger:#E8786B;
+      --danger-bg:#3A2422;
+      --gold:#D2AC6B;
+      --gold-bg:#3A2F1C;
+      --hl-bg:#1F4A45;
+      --hl-text:#9FE0D8;
+      --seal:#C25A4A;
+      --seal-deep:#E0816F;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.4);
+    }
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
+  }
+
+  /* 줄노트 무늬는 헤더/가이드처럼 텍스트 밀도가 낮은 장식 영역에만 적용 */
+  .ledger-paper-bg{
+    background-image:
+      repeating-linear-gradient(transparent 0, transparent 31px, var(--paper-line) 31px, var(--paper-line) 32px);
+  }
+
+  /* ===== print ===== */
+  @media print{
+    body{background:#fff; color:#000;}
+    .tabs, .top-meta, header.top, .search-row, .field, footer,
+    .compose-row, .ledger-summary .chevron, .data-status, .color-legend,
+    .rule-warnings, .why-cta,
+    .view:not(.active){display:none !important;}
+    .ledger, .card{box-shadow:none; border:1px solid #999;}
+    .ledger-body{max-height:none !important;}
+    .output-edit{border:1px solid #999; padding:8px;}
+    mark.hl{background:none; text-decoration:underline;}
+    .badge, .grade-tag{
+      background:none !important;
+      color:#000 !important;
+      border:1px solid #999 !important;
+    }
+    .badge.type::before{content:"[영역] ";}
+    .badge.level::before{content:"[난이도] ";}
+    .grade-tag::before{content:"[학년] ";}
+  }
+
+  a{color:inherit;}
+  button{font-family:inherit;}
+
+  /* ===== layout shell ===== */
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px 80px;}
+
+  /* ===== header ===== */
+  header.top{
+    padding:28px 0 18px;
+    border-bottom:3px double var(--ink-soft);
+    margin-bottom:28px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .brand{display:flex; align-items:center; gap:14px;}
+  .seal-mark{
+    width:46px;height:46px;border-radius:50%;
+    border:2.5px solid var(--seal);
+    color:var(--seal);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:13px;
+    flex-shrink:0;
+    transform:rotate(-6deg);
+    letter-spacing:-1px;
+    transition:border-color .15s, color .15s;
+  }
+  .seal-mark:hover{border-color:var(--seal-deep); color:var(--seal-deep);}
+  .brand-text h1{
+    font-family:var(--serif);
+    font-size:1.5rem;
+    margin:0 0 2px;
+    letter-spacing:-.01em;
+  }
+  .brand-text p{
+    margin:0;
+    font-size:.82rem;
+    color:var(--ink-soft);
+  }
+  .top-meta{
+    font-family:var(--mono);
+    font-size:.72rem;
+    color:var(--ink-soft);
+    text-align:right;
+    line-height:1.5;
+  }
+
+  /* ===== nav tabs ===== */
+  .tabs{
+    display:flex;
+    gap:6px;
+    margin-bottom:28px;
+    flex-wrap:wrap;
+  }
+  .tab-btn{
+    background:transparent;
+    border:1.5px solid var(--paper-line);
+    color:var(--ink-soft);
+    padding:9px 16px;
+    border-radius:999px;
+    font-size:.86rem;
+    cursor:pointer;
+    transition:background .15s, color .15s, border-color .15s;
+    white-space:nowrap;
+  }
+  .tab-btn:hover{border-color:var(--pine);}
+  .tab-btn.active{
+    background:var(--pine);
+    border-color:var(--pine);
+    color:#fff;
+  }
+
+  .view{display:none;}
+  .view.active{display:block; animation:fadeIn .25s ease;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+  /* ===== section heading ===== */
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin:0 0 16px;
+  }
+  .section-head .tag{
+    font-family:var(--mono);
+    font-size:.7rem;
+    color:var(--ink-soft);
+    background:var(--neutral-100);
+    border:1px solid var(--neutral-200);
+    padding:2px 8px;
+    border-radius:4px;
+    letter-spacing:.04em;
+  }
+  .section-head .tag.tag-danger{
+    color:#fff;
+    background:var(--danger);
+    border-color:var(--danger);
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-size:1.2rem;
+    margin:0;
+  }
+  .lead{color:var(--ink-soft); font-size:.92rem; margin:0 0 22px; max-width:640px;}
+
+  /* ===== card ===== */
+  .card{
+    background:var(--card);
+    border:1px solid var(--paper-line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:22px;
+    margin-bottom:18px;
+  }
+
+  /* ===== form controls ===== */
+  .field{margin-bottom:16px;}
+  .field label{
+    display:block;
+    font-size:.82rem;
+    font-weight:600;
+    margin-bottom:6px;
+    color:var(--ink);
+  }
+  .field .hint{font-size:.76rem; color:var(--ink-soft); margin-top:4px;}
+  select, input[type="text"], textarea{
+    width:100%;
+    border:1.5px solid var(--paper-line);
+    background:var(--card);
+    border-radius:8px;
+    padding:10px 12px;
+    font-family:var(--sans);
+    font-size:.92rem;
+    color:var(--ink);
+  }
+  select:focus, input:focus, textarea:focus{
+    outline:2px solid var(--pine);
+    outline-offset:1px;
+    border-color:var(--pine);
+  }
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:600px){.grid2{grid-template-columns:1fr;}}
+
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    border:1.5px solid var(--paper-line);
+    background:var(--card);
+    padding:7px 13px;
+    border-radius:999px;
+    font-size:.8rem;
+    cursor:pointer;
+    color:var(--ink-soft);
+    transition:all .15s;
+  }
+  .chip.selected{
+    background:var(--pine-soft);
+    border-color:var(--pine);
+    color:var(--pine);
+    font-weight:600;
+  }
+
+  /* ===== achievement result card (the "ledger card") ===== */
+  .ledger{
+    background:var(--card);
+    border:1px solid var(--paper-line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    margin-bottom:16px;
+  }
+  .ledger-head{
+    background:var(--pine);
+    color:#fff;
+    padding:14px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .ledger-head .code{
+    font-family:var(--mono);
+    font-size:.78rem;
+    opacity:.85;
+  }
+  .ledger-head .subj{
+    font-family:var(--serif);
+    font-size:1.05rem;
+  }
+  .ledger-body{padding:20px;}
+  .goal-text{
+    font-size:.9rem;
+    color:var(--ink-soft);
+    border-left:3px solid var(--gold);
+    padding-left:12px;
+    margin:0 0 18px;
+  }
+
+  .template-block{
+    border:1px solid var(--neutral-200);
+    border-radius:10px;
+    padding:16px;
+    margin-bottom:14px;
+    background:var(--neutral-100);
+  }
+  .template-block .meta{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    margin-bottom:10px;
+    flex-wrap:wrap;
+  }
+  .badge{
+    font-size:.7rem;
+    padding:2px 9px;
+    border-radius:999px;
+    font-weight:600;
+  }
+  .badge.type{background:var(--pine-soft); color:var(--pine);}
+  .badge.level{
+    background:var(--gold-bg);
+    color:var(--gold);
+    border-radius:4px;
+    border:1px solid var(--gold);
+  }
+
+  .blank-text{
+    font-size:.95rem;
+    line-height:1.85;
+  }
+
+  .compose-row{
+    display:flex;
+    gap:10px;
+    margin-top:14px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    border:none;
+    border-radius:8px;
+    padding:9px 16px;
+    font-size:.84rem;
+    cursor:pointer;
+    font-weight:600;
+    transition:transform .12s, opacity .12s;
+  }
+  .btn:active{transform:scale(.97);}
+  .btn-primary{background:var(--pine); color:#fff;}
+  .btn-primary:hover{opacity:.92;}
+  .btn-ghost{background:var(--neutral-100); border:1.5px solid var(--neutral-200); color:var(--ink-soft);}
+  .btn-ghost:hover{border-color:var(--ink-soft); background:var(--neutral-200);}
+  .btn-sm{padding:6px 12px; font-size:.76rem;}
+
+  .output-box{
+    background:var(--card);
+    border:1.5px solid var(--pine);
+    border-radius:8px;
+    padding:14px 16px;
+    margin-top:10px;
+    font-size:.92rem;
+    line-height:1.8;
+    display:none;
+  }
+  .output-box.show{display:block;}
+  .output-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:10px;
+    font-size:.76rem;
+    color:var(--ink-soft);
+  }
+  .charcount.over{color:var(--danger); font-weight:700;}
+
+  /* ===== 결과 편집 textarea ===== */
+  .output-edit{
+    width:100%;
+    min-height:90px;
+    border:none;
+    background:transparent;
+    font-family:var(--sans);
+    font-size:.92rem;
+    line-height:1.8;
+    color:var(--ink);
+    resize:vertical;
+    padding:0;
+  }
+  .output-edit:focus{outline:none;}
+  .output-hint{font-size:.74rem; color:var(--ink-soft); margin-top:2px;}
+
+  .rule-warnings{display:none; margin-top:10px;}
+  .rule-warnings.show{display:block;}
+  .rule-warning{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    background:var(--danger-bg);
+    border:1px solid var(--danger);
+    border-radius:8px;
+    padding:8px 12px;
+    font-size:.8rem;
+    color:var(--ink);
+    margin-bottom:6px;
+    line-height:1.6;
+  }
+  .rule-warning:last-child{margin-bottom:0;}
+  .rule-warning-icon{color:var(--danger); flex-shrink:0; font-size:.85rem;}
+
+  /* ===== 검색창 ===== */
+  .search-row{position:relative; margin-bottom:14px;}
+  .search-row input{
+    width:100%;
+    border:1.5px solid var(--paper-line);
+    background:var(--card);
+    border-radius:10px;
+    padding:11px 14px 11px 38px;
+    font-size:.94rem;
+  }
+  .search-row input:focus{
+    outline:2px solid var(--pine);
+    outline-offset:1px;
+    border-color:var(--pine);
+  }
+  .search-row .icon{
+    position:absolute;
+    left:13px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--ink-soft);
+    font-size:.95rem;
+    pointer-events:none;
+  }
+  .search-row .clear-btn{
+    position:absolute;
+    right:8px;
+    top:50%;
+    transform:translateY(-50%);
+    background:transparent;
+    border:none;
+    color:var(--ink-soft);
+    font-size:1rem;
+    cursor:pointer;
+    padding:4px 8px;
+    display:none;
+  }
+  .search-row .clear-btn.show{display:block;}
+
+  .result-count{
+    font-size:.78rem;
+    color:var(--ink-soft);
+    margin:0 0 12px;
+  }
+
+  /* ===== 색 의미 안내 배너 (1회성) ===== */
+  .color-legend{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:14px;
+    background:var(--neutral-100);
+    border:1px solid var(--neutral-200);
+    border-radius:10px;
+    padding:10px 16px;
+    margin-bottom:16px;
+    font-size:.78rem;
+    color:var(--ink-soft);
+  }
+  .color-legend.hidden{display:none;}
+  .legend-item{display:inline-flex; align-items:center; gap:6px;}
+  .legend-dot{
+    width:9px; height:9px;
+    border-radius:50%;
+    flex-shrink:0;
+    display:inline-block;
+  }
+  .legend-dot.dot-pine{background:var(--pine);}
+  .legend-dot.dot-hl{background:var(--hl-bg); border:1px solid var(--hl-text);}
+  .legend-dot.dot-danger{background:var(--danger);}
+  .legend-close{
+    margin-left:auto;
+    background:transparent;
+    border:none;
+    color:var(--ink-soft);
+    cursor:pointer;
+    font-size:.85rem;
+    padding:2px 6px;
+    flex-shrink:0;
+  }
+  .legend-close:hover{color:var(--ink);}
+
+  /* ===== 압축 카드 (entry summary) ===== */
+  .ledger-summary{
+    width:100%;
+    background:transparent;
+    border:none;
+    text-align:left;
+    padding:16px 20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    color:inherit;
+  }
+  .ledger-summary:hover{background:rgba(60,81,69,.04);}
+  .ledger-summary .summary-left{flex:1; min-width:0;}
+  .ledger-summary .summary-title{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:4px;
+  }
+  .ledger-summary .subj-name{
+    font-family:var(--serif);
+    font-size:1.02rem;
+    color:var(--ink);
+  }
+  .ledger-summary .grade-tag{
+    font-size:.7rem;
+    background:var(--gold-bg);
+    color:var(--gold);
+    padding:2px 8px;
+    border-radius:999px;
+    font-weight:600;
+  }
+  .ledger-summary .tpl-count{
+    font-size:.7rem;
+    color:var(--ink-soft);
+    font-family:var(--mono);
+  }
+  .ledger-summary .summary-goal{
+    font-size:.82rem;
+    color:var(--ink-soft);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .ledger-summary .chevron{
+    flex-shrink:0;
+    color:var(--seal);
+    font-size:.8rem;
+    transition:transform .2s;
+  }
+  .ledger-summary.open .chevron{transform:rotate(90deg);}
+
+  .ledger-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .25s ease;
+  }
+  .ledger-body-inner{padding:0 20px 20px;}
+
+  mark.hl{
+    background:var(--hl-bg);
+    color:var(--hl-text);
+    border-radius:2px;
+    padding:0 1px;
+    font-weight:600;
+  }
+
+  /* ===== 인라인 슬롯 입력 ===== */
+  .slot-input{
+    display:inline-block;
+    border:none;
+    border-bottom:1.5px solid var(--pine);
+    background:var(--input-bg);
+    color:var(--pine);
+    font-family:inherit;
+    font-size:.95rem;
+    font-weight:600;
+    padding:1px 4px;
+    border-radius:3px 3px 0 0;
+    min-width:64px;
+    width:auto;
+  }
+  .slot-input:focus{
+    outline:none;
+    background:var(--card);
+    border-bottom-color:var(--pine);
+    color:var(--pine);
+  }
+  .slot-input::placeholder{color:var(--neutral-400); font-weight:400;}
+
+  .live-count{
+    font-size:.74rem;
+    color:var(--ink-soft);
+    margin-top:8px;
+  }
+  .live-count.over{color:var(--danger); font-weight:700;}
+
+  /* ===== retry ===== */
+  .retry-btn{
+    margin-left:8px;
+    background:transparent;
+    border:1px solid currentColor;
+    color:inherit;
+    border-radius:6px;
+    padding:1px 8px;
+    font-size:.68rem;
+    cursor:pointer;
+  }
+
+  /* ===== WHY 화면 ===== */
+  .why-flow{
+    display:flex;
+    align-items:stretch;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .why-step{
+    flex:1;
+    min-width:160px;
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+  }
+  .why-num{
+    flex-shrink:0;
+    width:30px; height:30px;
+    border-radius:50%;
+    background:var(--pine);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:.9rem;
+  }
+  .why-step h3{
+    font-family:var(--serif);
+    font-size:.98rem;
+    margin:2px 0 4px;
+  }
+  .why-step p{
+    font-size:.82rem;
+    color:var(--ink-soft);
+    margin:0;
+  }
+  .why-arrow{
+    align-self:center;
+    color:var(--neutral-400);
+    font-size:1.3rem;
+    flex-shrink:0;
+  }
+  @media (max-width:700px){
+    .why-flow{flex-direction:column;}
+    .why-arrow{transform:rotate(90deg); margin:-4px 0;}
+  }
+
+  .why-card-title{
+    font-family:var(--serif);
+    font-size:1.02rem;
+    margin:0 0 10px;
+  }
+  .why-body{
+    font-size:.9rem;
+    color:var(--ink-soft);
+    line-height:1.85;
+    margin:0;
+  }
+
+  .why-cta{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+    background:var(--pine-soft);
+    border:1px solid var(--pine);
+  }
+  .why-cta p{margin:0; font-size:.9rem; color:var(--pine);}
+
+  /* ===== COMPARE 화면 ===== */
+  .compare-card{margin-bottom:16px;}
+  .compare-tag{
+    font-size:.78rem;
+    font-weight:700;
+    color:var(--pine);
+    margin-bottom:12px;
+  }
+  .compare-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  @media (max-width:700px){
+    .compare-row{grid-template-columns:1fr;}
+  }
+  .compare-col{
+    border-radius:10px;
+    padding:14px;
+    font-size:.88rem;
+    line-height:1.7;
+  }
+  .compare-col.bad{
+    background:var(--danger-bg);
+    border:1px solid var(--danger);
+  }
+  .compare-col.good{
+    background:var(--pine-soft);
+    border:1px solid var(--pine);
+  }
+  .compare-col p{margin:0; color:var(--ink);}
+  .compare-label{
+    font-size:.74rem;
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .compare-col.bad .compare-label{color:var(--danger);}
+  .compare-col.good .compare-label{color:var(--pine);}
+  .compare-why{
+    font-size:.8rem;
+    color:var(--ink-soft);
+    margin:12px 0 0;
+    padding-top:12px;
+    border-top:1px dashed var(--neutral-200);
+    line-height:1.7;
+  }
+
+  /* ===== empty state ===== */
+  .empty{
+    text-align:center;
+    padding:50px 20px;
+    color:var(--ink-soft);
+  }
+  .empty .glyph{font-size:2.2rem; margin-bottom:10px;}
+
+  /* ===== checklist (forbidden notices) ===== */
+  .notice-list{list-style:none; margin:0; padding:0;}
+  .notice-list li{
+    display:flex;
+    gap:10px;
+    padding:12px 0;
+    border-bottom:1px dashed var(--paper-line);
+    font-size:.88rem;
+  }
+  .notice-list li:last-child{border-bottom:none;}
+  .notice-list .x{
+    color:var(--danger);
+    font-weight:700;
+    flex-shrink:0;
+  }
+
+  /* ===== guide accordion ===== */
+  .acc-item{border-bottom:1px solid var(--paper-line);}
+  .acc-item:last-child{border-bottom:none;}
+  .acc-head{
+    width:100%;
+    background:transparent;
+    border:none;
+    text-align:left;
+    padding:16px 4px;
+    font-family:var(--serif);
+    font-size:1rem;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:var(--ink);
+  }
+  .acc-head .arrow{transition:transform .2s; color:var(--seal); font-size:.8rem;}
+  .acc-head.open .arrow{transform:rotate(90deg);}
+  .acc-panel{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .25s ease;
+  }
+  .acc-panel-inner{padding:0 4px 18px; font-size:.9rem; color:var(--ink-soft);}
+  .acc-panel-inner b{color:var(--ink); font-weight:700;}
+  .acc-panel-inner .example{
+    background:var(--pine-soft);
+    border-radius:8px;
+    padding:12px 14px;
+    margin-top:8px;
+    color:var(--pine);
+    font-size:.85rem;
+    line-height:1.75;
+  }
+
+  footer{
+    text-align:center;
+    font-size:.74rem;
+    color:var(--ink-soft);
+    padding-top:30px;
+    border-top:1px solid var(--paper-line);
+    margin-top:40px;
+  }
+
+  /* status pill for offline data */
+  .data-status{
+    font-family:var(--mono);
+    font-size:.7rem;
+    padding:3px 9px;
+    border-radius:6px;
+    background:var(--pine-soft);
+    color:var(--pine);
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+  }
+  .data-status.err{background:var(--danger-bg); color:var(--danger);}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--pine); display:inline-block;}
+  .data-status.err .dot{background:var(--danger);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="top ledger-paper-bg">
+    <div class="brand">
+      <div class="seal-mark">記錄</div>
+      <div class="brand-text">
+        <h1>기록의 정석</h1>
+        <p>과정중심평가에 맞는 생활기록부 작성을 익히는 교원용 도구</p>
+      </div>
+    </div>
+    <div class="top-meta">
+      <span id="dataStatus" class="data-status"><span class="dot"></span>문구 데이터 불러오는 중…</span><br>
+      AI 미사용 · 규칙 기반 템플릿 · 서버 저장 없음
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab-btn active" data-view="why" role="tab">💡 왜 필요한가</button>
+    <button class="tab-btn" data-view="compare" role="tab">⚖️ 나쁜 예 vs 좋은 예</button>
+    <button class="tab-btn" data-view="compose" role="tab">✏️ 직접 써보기</button>
+    <button class="tab-btn" data-view="guide" role="tab">📖 작성 가이드</button>
+    <button class="tab-btn" data-view="forbidden" role="tab">🚫 기재 금지 항목</button>
+  </nav>
+
+  <!-- ===================== VIEW 0: WHY ===================== -->
+  <section class="view active" id="view-why">
+    <div class="section-head"><span class="tag">시작하며</span><h2>왜 과정중심평가에 맞게 써야 할까요</h2></div>
+    <p class="lead">생활기록부는 결과 점수 한 줄이 아니라, 학생이 배우는 과정에서 보인 변화와 성장을 담는 기록입니다.</p>
+
+    <div class="why-flow card">
+      <div class="why-step">
+        <span class="why-num">1</span>
+        <div>
+          <h3>수업 중 관찰</h3>
+          <p>교사가 수업 시간에 학생의 태도, 질문, 협업 모습을 누가 기록합니다.</p>
+        </div>
+      </div>
+      <div class="why-arrow">→</div>
+      <div class="why-step">
+        <span class="why-num">2</span>
+        <div>
+          <h3>과정중심평가</h3>
+          <p>결과만이 아니라 학습 과정에서의 변화·성장 정도를 평가합니다.</p>
+        </div>
+      </div>
+      <div class="why-arrow">→</div>
+      <div class="why-step">
+        <span class="why-num">3</span>
+        <div>
+          <h3>생활기록부 기재</h3>
+          <p>누가 기록을 종합해, 구체적 사례가 드러나는 문장으로 작성합니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="why-card-title">왜 결과 중심 기재로는 부족할까요</h3>
+      <p class="why-body">
+        "성실하고 적극적인 학생임" 같은 문장은 누구에게나 붙일 수 있어 정보 가치가 거의 없습니다.
+        반면 과정중심평가에 기반한 기재는 그 학생만의 구체적인 장면 — 어떤 질문을 했는지, 어떻게 실패를 만회했는지,
+        모둠에서 어떤 역할을 했는지 — 을 담기 때문에 학생 개개인의 성장 서사를 보여줄 수 있습니다.
+        이런 기록은 학생·학부모에게는 성장의 근거 자료가 되고, 상급학교 진학 시에는 추천서에 준하는 신뢰도를 갖습니다.
+      </p>
+    </div>
+
+    <div class="why-cta card">
+      <p>실제로 어떻게 다른지, 좋지 않은 예시와 좋은 예시를 나란히 비교해 보세요.</p>
+      <button type="button" class="btn btn-primary" id="goToCompare">나쁜 예 vs 좋은 예 보기 →</button>
+    </div>
+  </section>
+
+  <!-- ===================== VIEW: COMPARE ===================== -->
+  <section class="view" id="view-compare">
+    <div class="section-head"><span class="tag">비교</span><h2>나쁜 예 vs 좋은 예</h2></div>
+    <p class="lead">같은 학생, 같은 상황을 어떻게 다르게 기재할 수 있는지 비교해 보세요. 핵심은 막연한 칭찬이 아니라 구체적 장면입니다.</p>
+
+    <div class="compare-card card">
+      <div class="compare-tag">단점을 성장 가능성으로 전환하기</div>
+      <div class="compare-row">
+        <div class="compare-col bad">
+          <div class="compare-label">✕ 막연한 기재</div>
+          <p>감정 조절을 잘 못하고 친구와 자주 다투는 편임.</p>
+        </div>
+        <div class="compare-col good">
+          <div class="compare-label">✓ 과정중심 기재</div>
+          <p>화가 났을 때 감정을 조절하는 것이 미숙하여 친구와 다툴 때가 있지만, 자신의 잘못을 솔직하게 인정하고 반성하려는 태도가 좋으므로 상대방을 배려하는 바른 언행을 위해 노력한다면 더 즐거운 학교생활을 할 수 있을 것으로 기대됨.</p>
+        </div>
+      </div>
+      <p class="compare-why">왜 좋은가: 단점을 먼저 인정하되, 그것을 비난으로 끝내지 않고 "반성하는 태도"라는 구체적 근거를 들어 성장 가능성으로 전환합니다. 같은 정보라도 순서와 화법에 따라 추천서가 되기도, 지적이 되기도 합니다.</p>
+    </div>
+
+    <div class="compare-card card">
+      <div class="compare-tag">막연한 칭찬 대신 구체적 장면 제시하기</div>
+      <div class="compare-row">
+        <div class="compare-col bad">
+          <div class="compare-label">✕ 막연한 기재</div>
+          <p>과학에 흥미가 많고 적극적으로 수업에 참여하는 학생임.</p>
+        </div>
+        <div class="compare-col good">
+          <div class="compare-label">✓ 과정중심 기재</div>
+          <p>건습구 습도계를 만들어 온도를 측정할 때 습구 온도계가 건구온도계에 비하여 왜 온도가 낮은지에 대하여 호기심을 가지고 여러 차례 질문하였으며, 스스로 그 원리를 이해하고 정확하게 찾아냄.</p>
+        </div>
+      </div>
+      <p class="compare-why">왜 좋은가: "흥미가 많다"는 어떤 학생에게나 붙일 수 있는 말이지만, 실제 누가기록(언제, 무엇을, 어떻게)을 바탕으로 쓰면 그 학생만의 고유한 장면이 되어 신뢰도가 높아집니다.</p>
+    </div>
+
+    <div class="compare-card card">
+      <div class="compare-tag">결과가 아니라 변화의 과정을 보여주기</div>
+      <div class="compare-row">
+        <div class="compare-col bad">
+          <div class="compare-label">✕ 막연한 기재</div>
+          <p>수학을 잘하지 못하지만 열심히 노력하는 학생임.</p>
+        </div>
+        <div class="compare-col good">
+          <div class="compare-label">✓ 과정중심 기재</div>
+          <p>입체도형에 대한 이해가 낮고 쌓기나무의 전체 모양과 규칙을 파악하는데 어려움을 겪었으나, 여러 시간에 걸쳐 다양한 쌓기나무를 직접 쌓아보고 층별로 모양과 개수를 파악해 보는 활동을 반복함으로써 쌓기나무를 쌓은 모양을 파악하고 개수를 구하는 방법을 알게 되었으며, 입체도형의 이해도가 꾸준히 향상됨.</p>
+        </div>
+      </div>
+      <p class="compare-why">왜 좋은가: "출발점 → 구체적 조작활동 → 도착점"의 흐름이 드러나, 단순한 결과 평가가 아니라 학생이 어떻게 성장했는지의 과정 전체가 보입니다. 학부모에게는 성장의 근거 자료가 됩니다.</p>
+    </div>
+
+    <div class="why-cta card">
+      <p>이제 직접 성취기준을 골라 이런 방식으로 문구를 완성해 보세요.</p>
+      <button type="button" class="btn btn-primary" id="goToCompose">직접 써보기 →</button>
+    </div>
+  </section>
+
+  <!-- ===================== VIEW 1: COMPOSE ===================== -->
+  <section class="view" id="view-compose">
+    <div class="section-head"><span class="tag">STEP 1</span><h2>성취기준 선택</h2></div>
+    <p class="lead">검색창에 키워드를 입력하거나, 교과·학년군·역량으로 좁혀서 기재 예시 템플릿을 찾아보세요.</p>
+
+    <div class="color-legend" id="colorLegend">
+      <span class="legend-item"><span class="legend-dot dot-pine"></span>초록 빈칸 — 직접 입력하는 곳</span>
+      <span class="legend-item"><span class="legend-dot dot-hl"></span>청록 강조 — 검색어와 일치하는 부분</span>
+      <span class="legend-item"><span class="legend-dot dot-danger"></span>빨강 — 절대 기재하면 안 되는 내용</span>
+      <button type="button" class="legend-close" id="legendClose" aria-label="안내 닫기">✕</button>
+    </div>
+
+    <div class="card">
+      <div class="search-row">
+        <span class="icon">🔎</span>
+        <input type="text" id="searchInput" placeholder="키워드로 검색 (예: 습도, 쌓기나무, 멘토링…)" autocomplete="off">
+        <button type="button" class="clear-btn" id="searchClear" aria-label="검색어 지우기">✕</button>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label for="subjectSelect">교과</label>
+          <select id="subjectSelect"><option value="">불러오는 중…</option></select>
+        </div>
+        <div class="field">
+          <label for="gradeSelect">학년군</label>
+          <select id="gradeSelect"><option value="">전체</option></select>
+        </div>
+      </div>
+      <div class="field">
+        <label>역량 키워드 (선택, 복수 가능)</label>
+        <div class="chip-row" id="competencyChips"></div>
+      </div>
+    </div>
+
+    <div id="resultArea"></div>
+  </section>
+
+  <!-- ===================== VIEW 2: GUIDE ===================== -->
+  <section class="view" id="view-guide">
+    <div class="section-head"><span class="tag">참고</span><h2>과정중심평가 기재 가이드</h2></div>
+    <p class="lead">중앙교육연수원 연수 자료를 바탕으로 정리한 핵심 원칙입니다. 펼쳐서 확인하세요.</p>
+
+    <div class="card" style="padding:6px 22px;">
+      <div class="acc-item">
+        <button class="acc-head">표준 가이드라인 4가지 <span class="arrow">▶</span></button>
+        <div class="acc-panel"><div class="acc-panel-inner">
+          1. 학생의 수업 참여 태도·노력과, 교과별 성취기준에 따른 <b>자기주도적 학습에 의한 변화와 성장 정도</b>를 기재합니다.<br>
+          2. <b>학생 중심의 참여형 수업</b>으로의 전환을 전제로 작성합니다.<br>
+          3. <b>'수업목표 – 수업과정 – 평가'</b>가 연계되도록 서술합니다.<br>
+          4. 학생의 관찰 결과를 <b>누가 기록</b>하여 활용합니다 (탐구 과정의 역할, 지속성, 협업과 인성 관찰 포함).
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">누가기록을 문구로 바꾸는 법 <span class="arrow">▶</span></button>
+        <div class="acc-panel"><div class="acc-panel-inner">
+          평소 메모해 둔 날짜별 누가기록(예: "4.20 학급회의에서 의견이 다른 친구를 설득함")을<br>
+          종합하여 한 단락의 서술형 문장으로 재구성합니다. 핵심 내용만 추출하고, 최종 편집 후 반영하세요.
+          <div class="example">예시: "학급 자치회의에서 학급 문화의 개선 방향에 대해 토의하는 과정에서… 함께 살아가는 방법에 대해 의견을 제시하여 친구들로부터 신뢰를 얻음."</div>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">영역을 구분해서 쓰면 좋은 이유 <span class="arrow">▶</span></button>
+        <div class="acc-panel"><div class="acc-panel-inner">
+          행동특성 및 종합의견은 <b>학교생활 모습 / 인성 / 교과활동 / 예술활동</b> 영역으로 나누어 생각하면
+          내용이 풍부해지고 균형이 잡힙니다. 다만, <b>실제 작성 시 "인성:", "교과활동:" 같은 영역 라벨 자체는 절대 쓰지 않습니다.</b>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">성취수준이 낮았다가 향상된 경우 쓰는 법 <span class="arrow">▶</span></button>
+        <div class="acc-panel"><div class="acc-panel-inner">
+          단점을 먼저 쓰고 바로 비난처럼 끝내지 않습니다. <b>"~을 겪었으나 → 구체적 활동을 반복 → 향상됨"</b> 순서로,
+          부정적 부분을 성장 가능성으로 전환하여 장점으로 부각시키는 것이 핵심입니다 (넛지 효과).
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">추천서처럼 신뢰도 높이는 법 <span class="arrow">▶</span></button>
+        <div class="acc-panel"><div class="acc-panel-inner">
+          막연한 칭찬보다 <b>구체적 활동(학급회의, 동아리, 스포츠클럽 등)의 사례</b>를 먼저 제시하고,
+          그 사례를 <b>학생의 진로 희망과 같은 맥락</b>으로 연결하면 추천서·지도 자료로서의 신뢰도가 높아집니다.
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== VIEW 3: FORBIDDEN ===================== -->
+  <section class="view" id="view-forbidden">
+    <div class="section-head"><span class="tag tag-danger">주의</span><h2>기재 금지 / 유의 항목</h2></div>
+    <p class="lead">작성 전 반드시 확인하세요. 첨부 연수자료 기준으로 정리했습니다.</p>
+    <div class="card">
+      <ul class="notice-list" id="forbiddenList">
+        <li><span class="x">✕</span><span>불러오는 중…</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    이 도구는 학교생활기록부 작성 연수 자료를 학습 목적으로 정리한 것입니다. 최종 기재 전 학교 학업성적관리위원회 및 최신 「학교생활기록 작성 및 관리지침」을 반드시 확인하세요.<br>
+    문구 데이터는 브라우저에서만 처리되며 서버에 전송·저장되지 않습니다.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var DATA = null;
+  var state = { subject:"", grade:"", competencies:[], query:"", openEntries:{} };
+  var STORAGE_KEY = 'girok-state-v1';
+  var hasUnsavedInput = false;
+
+  var dataStatusEl = document.getElementById('dataStatus');
+  var subjectSelect = document.getElementById('subjectSelect');
+  var gradeSelect = document.getElementById('gradeSelect');
+  var competencyChips = document.getElementById('competencyChips');
+  var resultArea = document.getElementById('resultArea');
+  var forbiddenList = document.getElementById('forbiddenList');
+  var searchInput = document.getElementById('searchInput');
+  var searchClear = document.getElementById('searchClear');
+  var colorLegend = document.getElementById('colorLegend');
+  var legendClose = document.getElementById('legendClose');
+  var LEGEND_KEY = 'girok-legend-dismissed';
+
+  // ---------- 색 의미 안내 배너 (1회성, sessionStorage로 기억) ----------
+  (function initLegend(){
+    try{
+      if(sessionStorage.getItem(LEGEND_KEY) === '1'){
+        colorLegend.classList.add('hidden');
+      }
+    }catch(e){ /* storage 사용 불가 환경 — 기본값(보임) 유지 */ }
+    legendClose.addEventListener('click', function(){
+      colorLegend.classList.add('hidden');
+      try{ sessionStorage.setItem(LEGEND_KEY, '1'); }catch(e){}
+    });
+  })();
+
+  // ---------- persistence (sessionStorage) ----------
+  function saveState(){
+    try{
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
+        subject: state.subject,
+        grade: state.grade,
+        competencies: state.competencies,
+        query: state.query,
+        view: getCurrentView()
+      }));
+    }catch(e){ /* storage 사용 불가 환경 — 조용히 무시 */ }
+  }
+
+  function loadSavedState(){
+    try{
+      var raw = sessionStorage.getItem(STORAGE_KEY);
+      if(!raw) return null;
+      return JSON.parse(raw);
+    }catch(e){ return null; }
+  }
+
+  function getCurrentView(){
+    var activeBtn = document.querySelector('.tab-btn.active');
+    return activeBtn ? activeBtn.dataset.view : 'compose';
+  }
+
+  // ---------- tabs (해시 라우팅) ----------
+  var tabBtns = document.querySelectorAll('.tab-btn');
+
+  function activateView(viewName, pushHistory){
+    var target = document.getElementById('view-' + viewName);
+    if(!target) viewName = 'why';
+    tabBtns.forEach(function(b){ b.classList.toggle('active', b.dataset.view === viewName); });
+    document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
+    document.getElementById('view-' + viewName).classList.add('active');
+    if(pushHistory !== false && location.hash !== '#' + viewName){
+      history.pushState({ view: viewName }, '', '#' + viewName);
+    }
+    saveState();
+    window.scrollTo({top:0, behavior:'instant'});
+  }
+
+  tabBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      activateView(btn.dataset.view, true);
+    });
+  });
+
+  // ---- WHY / COMPARE 화면의 CTA 버튼 ----
+  var goToCompareBtn = document.getElementById('goToCompare');
+  if(goToCompareBtn){
+    goToCompareBtn.addEventListener('click', function(){ activateView('compare', true); });
+  }
+  var goToComposeBtn = document.getElementById('goToCompose');
+  if(goToComposeBtn){
+    goToComposeBtn.addEventListener('click', function(){ activateView('compose', true); });
+  }
+
+  window.addEventListener('popstate', function(e){
+    var viewName = (e.state && e.state.view) || (location.hash ? location.hash.replace('#','') : 'why');
+    activateView(viewName, false);
+  });
+
+  window.addEventListener('beforeunload', function(e){
+    if(hasUnsavedInput){
+      e.preventDefault();
+      e.returnValue = '';
+      return '';
+    }
+  });
+
+  // ---------- accordion (가이드 탭) ----------
+  document.querySelectorAll('.acc-head').forEach(function(head){
+    head.addEventListener('click', function(){
+      var panel = head.nextElementSibling;
+      var isOpen = head.classList.contains('open');
+      document.querySelectorAll('.acc-head').forEach(function(h){
+        h.classList.remove('open');
+        h.nextElementSibling.style.maxHeight = null;
+      });
+      if(!isOpen){
+        head.classList.add('open');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+    });
+  });
+
+  // ---------- data loading ----------
+  function setStatus(ok, msg, showRetry){
+    dataStatusEl.classList.toggle('err', !ok);
+    dataStatusEl.innerHTML = '<span class="dot"></span>' + msg +
+      (showRetry ? '<button type="button" class="retry-btn" id="retryBtn">다시 시도</button>' : '');
+    if(showRetry){
+      document.getElementById('retryBtn').addEventListener('click', function(){
+        setStatus(true, '문구 데이터 다시 불러오는 중…');
+        loadData();
+      });
+    }
+  }
+
+  function loadData(){
+    fetch('data/phrases.json')
+      .then(function(res){
+        if(!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function(json){
+        DATA = json;
+        setStatus(true, '문구 데이터 ' + DATA.entries.length + '건 로드 완료');
+        initControls();
+      })
+      .catch(function(err){
+        setStatus(false, '데이터 로드 실패 — 네트워크 또는 경로를 확인하세요', true);
+        subjectSelect.innerHTML = '<option value="">데이터 없음</option>';
+        console.error(err);
+      });
+  }
+
+  function initControls(){
+    subjectSelect.innerHTML = '<option value="">전체</option>' +
+      DATA.subjects.map(function(s){ return '<option value="'+s+'">'+s+'</option>'; }).join('');
+
+    gradeSelect.innerHTML = '<option value="">전체</option>' +
+      DATA.grades.map(function(g){ return '<option value="'+g+'">'+g+'</option>'; }).join('');
+
+    competencyChips.innerHTML = DATA.competencies.map(function(c){
+      return '<button type="button" class="chip" data-comp="'+c+'">'+c+'</button>';
+    }).join('');
+    competencyChips.querySelectorAll('.chip').forEach(function(chip){
+      chip.addEventListener('click', function(){
+        var c = chip.dataset.comp;
+        chip.classList.toggle('selected');
+        var idx = state.competencies.indexOf(c);
+        if(idx >= 0) state.competencies.splice(idx,1);
+        else state.competencies.push(c);
+        saveState();
+        renderResults();
+      });
+    });
+
+    subjectSelect.addEventListener('change', function(){
+      state.subject = subjectSelect.value;
+      saveState();
+      renderResults();
+    });
+    gradeSelect.addEventListener('change', function(){
+      state.grade = gradeSelect.value;
+      saveState();
+      renderResults();
+    });
+
+    // ---- 검색 ----
+    var searchDebounce = null;
+    searchInput.addEventListener('input', function(){
+      searchClear.classList.toggle('show', searchInput.value.length > 0);
+      clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(function(){
+        state.query = searchInput.value.trim();
+        saveState();
+        renderResults();
+      }, 150);
+    });
+    searchClear.addEventListener('click', function(){
+      searchInput.value = '';
+      searchClear.classList.remove('show');
+      state.query = '';
+      saveState();
+      renderResults();
+      searchInput.focus();
+    });
+
+    forbiddenList.innerHTML = DATA.forbiddenNotices.map(function(n){
+      return '<li><span class="x">✕</span><span>'+escapeHtml(n)+'</span></li>';
+    }).join('');
+
+    // ---- 저장된 상태 복원 ----
+    var saved = loadSavedState();
+    if(saved){
+      state.subject = saved.subject || "";
+      state.grade = saved.grade || "";
+      state.competencies = saved.competencies || [];
+      state.query = saved.query || "";
+      subjectSelect.value = state.subject;
+      gradeSelect.value = state.grade;
+      searchInput.value = state.query;
+      searchClear.classList.toggle('show', state.query.length > 0);
+      competencyChips.querySelectorAll('.chip').forEach(function(chip){
+        if(state.competencies.indexOf(chip.dataset.comp) >= 0) chip.classList.add('selected');
+      });
+    }
+
+    var initialView = (location.hash ? location.hash.replace('#','') : null) ||
+                       (saved && saved.view) || 'why';
+    if(!history.state){
+      history.replaceState({ view: initialView }, '', '#' + initialView);
+    }
+    activateView(initialView, false);
+
+    renderResults();
+  }
+
+  function escapeHtml(str){
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function highlight(text, query){
+    if(!query) return escapeHtml(text);
+    var escaped = escapeHtml(text);
+    var escapedQuery = escapeHtml(query).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return escaped.replace(new RegExp('(' + escapedQuery + ')', 'gi'), '<mark class="hl">$1</mark>');
+  }
+
+  // ---------- filtering ----------
+  function entryMatchesQuery(entry, q){
+    if(!q) return true;
+    var hay = [
+      entry.subject, entry.grade, entry.achievementCode, entry.achievementGoal
+    ].concat(entry.templates.map(function(t){ return t.text + ' ' + t.type + ' ' + t.level; }))
+     .join(' ').toLowerCase();
+    return hay.indexOf(q.toLowerCase()) >= 0;
+  }
+
+  function filteredEntries(){
+    if(!DATA) return [];
+    var q = state.query;
+    return DATA.entries.filter(function(e){
+      if(state.subject && e.subject !== state.subject) return false;
+      if(state.grade && e.grade !== state.grade && e.grade !== '전학년') return false;
+      if(state.competencies.length){
+        var hasAny = e.competencies.some(function(c){ return state.competencies.indexOf(c) >= 0; });
+        if(!hasAny) return false;
+      }
+      if(!entryMatchesQuery(e, q)) return false;
+      return true;
+    });
+  }
+
+  function renderResults(){
+    if(!DATA) return;
+    var entries = filteredEntries();
+    var anyFilterActive = !!(state.subject || state.grade || state.competencies.length || state.query);
+
+    if(!anyFilterActive){
+      resultArea.innerHTML =
+        '<div class="card empty"><div class="glyph">🗂️</div>' +
+        '검색어를 입력하거나 교과를 선택하면 관련 성취기준과 기재 예시가 나타납니다.</div>';
+      return;
+    }
+    if(entries.length === 0){
+      resultArea.innerHTML =
+        '<div class="card empty"><div class="glyph">📭</div>' +
+        '조건에 맞는 예시가 없습니다. 검색어나 필터를 조정해 보세요.</div>';
+      return;
+    }
+
+    var countHtml = '<p class="result-count">' + entries.length + '건의 성취기준이 검색되었습니다. 카드를 눌러 펼쳐보세요.</p>';
+    resultArea.innerHTML = countHtml + entries.map(buildLedgerHtml).join('');
+    bindLedgerEvents();
+  }
+
+  // ---------- card building ----------
+  function buildLedgerHtml(entry){
+    var codeStr = entry.achievementCode ? entry.achievementCode + ' ' : '';
+    var isOpen = !!state.openEntries[entry.id];
+    var q = state.query;
+
+    var templatesHtml = entry.templates.map(function(tpl, i){
+      return buildTemplateBlockHtml(entry, tpl, i);
+    }).join('');
+
+    return (
+      '<div class="ledger" data-entry-id="'+escapeHtml(entry.id)+'">' +
+        '<button type="button" class="ledger-summary'+(isOpen?' open':'')+'" data-toggle-entry="'+escapeHtml(entry.id)+'">' +
+          '<span class="summary-left">' +
+            '<span class="summary-title">' +
+              '<span class="subj-name">'+highlight(entry.subject, q)+'</span>' +
+              '<span class="grade-tag">'+escapeHtml(entry.grade)+'</span>' +
+              (entry.templates.length>1 ? '<span class="tpl-count">예시 '+entry.templates.length+'개</span>' : '') +
+              (codeStr ? '<span class="tpl-count">'+escapeHtml(codeStr.trim())+'</span>' : '') +
+            '</span>' +
+            '<span class="summary-goal">'+highlight(entry.achievementGoal, q)+'</span>' +
+          '</span>' +
+          '<span class="chevron">▶</span>' +
+        '</button>' +
+        '<div class="ledger-body" id="body-'+escapeHtml(entry.id)+'">' +
+          '<div class="ledger-body-inner">' +
+            templatesHtml +
+          '</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  function buildTemplateBlockHtml(entry, tpl, i){
+    var hasBlanks = /\{[^}]+\}/.test(tpl.text);
+    // build display text with inline input placeholders rendered as spans;
+    // actual <input> elements are created after insertion (see activateInlineInputs)
+    var displayHtml = escapeHtml(tpl.text).replace(/\{([^}]+)\}/g, function(_, name){
+      return '<span class="slot-pending" data-blank="'+escapeHtml(name)+'">{'+escapeHtml(name)+'}</span>';
+    });
+
+    return (
+      '<div class="template-block" data-entry="'+escapeHtml(entry.id)+'" data-tpl="'+i+'">' +
+        '<div class="meta">' +
+          '<span class="badge type">'+escapeHtml(tpl.type)+'</span>' +
+          '<span class="badge level">'+escapeHtml(tpl.level)+'</span>' +
+        '</div>' +
+        '<div class="blank-text" data-raw="'+escapeHtml(tpl.text)+'">'+displayHtml+'</div>' +
+        (hasBlanks ?
+          '<div class="live-count" data-livecount></div>' +
+          '<div class="compose-row">' +
+            '<button type="button" class="btn btn-primary btn-sm act-generate">이 내용으로 문구 완성</button>' +
+            '<button type="button" class="btn btn-ghost btn-sm act-reset" style="display:none;">빈칸 초기화</button>' +
+          '</div>'
+        :
+          '<div class="compose-row">' +
+            '<button type="button" class="btn btn-ghost btn-sm act-show-plain">문구 보기 / 복사하기</button>' +
+          '</div>'
+        ) +
+        '<div class="output-box"></div>' +
+      '</div>'
+    );
+  }
+
+  // ---------- entry open/close binding ----------
+  function bindLedgerEvents(){
+    resultArea.querySelectorAll('[data-toggle-entry]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var id = btn.dataset.toggleEntry;
+        var body = document.getElementById('body-' + id);
+        var willOpen = !state.openEntries[id];
+        state.openEntries[id] = willOpen;
+        btn.classList.toggle('open', willOpen);
+        if(willOpen){
+          body.style.maxHeight = body.scrollHeight + 'px';
+          // initialize inline inputs only once when first opened
+          activateInlineInputs(body);
+        } else {
+          body.style.maxHeight = null;
+        }
+      });
+    });
+
+    // pre-open any entries restored from state (rare, but keep consistent)
+    resultArea.querySelectorAll('.ledger-summary.open').forEach(function(btn){
+      var id = btn.dataset.toggleEntry;
+      var body = document.getElementById('body-' + id);
+      body.style.maxHeight = body.scrollHeight + 'px';
+      activateInlineInputs(body);
+    });
+  }
+
+  // replace .slot-pending spans with real <input> elements, wire up live updates
+  function activateInlineInputs(container){
+    container.querySelectorAll('.template-block').forEach(function(block){
+      if(block.dataset.activated === '1') return;
+      block.dataset.activated = '1';
+
+      var blankTextEl = block.querySelector('.blank-text');
+      var pendingSlots = blankTextEl.querySelectorAll('.slot-pending');
+      pendingSlots.forEach(function(span){
+        var name = span.dataset.blank;
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'slot-input';
+        input.dataset.blank = name;
+        input.placeholder = name;
+        input.size = Math.max(name.length, 4);
+        input.addEventListener('input', function(){
+          hasUnsavedInput = true;
+          autoResize(input);
+          updateLiveCount(block);
+        });
+        span.replaceWith(input);
+      });
+
+      var liveCountEl = block.querySelector('[data-livecount]');
+      if(liveCountEl) updateLiveCount(block);
+
+      var generateBtn = block.querySelector('.act-generate');
+      if(generateBtn){
+        generateBtn.addEventListener('click', function(){
+          finalizeOutput(block);
+        });
+      }
+
+      var resetBtn = block.querySelector('.act-reset');
+      if(resetBtn){
+        resetBtn.addEventListener('click', function(){
+          block.querySelectorAll('.slot-input').forEach(function(inp){ inp.value = ''; autoResize(inp); });
+          updateLiveCount(block);
+          var out = block.querySelector('.output-box');
+          out.classList.remove('show');
+          out.innerHTML = '';
+          resetBtn.style.display = 'none';
+          hasUnsavedInput = false;
+        });
+      }
+
+      var plainBtn = block.querySelector('.act-show-plain');
+      if(plainBtn){
+        plainBtn.addEventListener('click', function(){
+          var raw = blankTextEl.dataset.raw;
+          showFinalOutput(block, raw);
+        });
+      }
+    });
+  }
+
+  function autoResize(input){
+    input.size = Math.max(input.value.length, input.placeholder.length, 4);
+  }
+
+  function currentComposedText(block){
+    var raw = block.querySelector('.blank-text').dataset.raw;
+    var values = {};
+    block.querySelectorAll('.slot-input').forEach(function(inp){
+      values[inp.dataset.blank] = inp.value.trim();
+    });
+    return raw.replace(/\{([^}]+)\}/g, function(_, name){
+      return values[name] && values[name].length ? values[name] : '【' + name + '】';
+    });
+  }
+
+  function updateLiveCount(block){
+    var el = block.querySelector('[data-livecount]');
+    if(!el) return;
+    var text = currentComposedText(block);
+    var len = text.length;
+    el.textContent = '현재 ' + len + ' / 500자' + (len > 500 ? ' — 500자 초과' : '');
+    el.classList.toggle('over', len > 500);
+  }
+
+  function finalizeOutput(block){
+    var text = currentComposedText(block);
+    showFinalOutput(block, text);
+    hasUnsavedInput = false;
+    var resetBtn = block.querySelector('.act-reset');
+    if(resetBtn) resetBtn.style.display = 'inline-block';
+  }
+
+  // renders the result as an editable textarea + live char counter + copy button
+  // 작성 직후(및 수정 중) 자동으로 검사하는 규칙 위반 패턴
+  // PDF 기준 텍스트만으로 판별 가능한 항목만 포함 (AI 미사용)
+  var RULE_CHECKS = [
+    { pattern: /(학교생활|인성|교과활동|예술활동|관찰내용|평가내용)\s*[:：]/, message: '영역을 구분하는 라벨(예: "인성:")은 실제 기재 시 포함하면 안 됩니다.' },
+    { pattern: /(교외|전국|시도)?\s*(대회|경시대회|콘테스트)/, message: '대회 참여·수상 사실은 기재할 수 없습니다.' },
+    { pattern: /(토익|토플|텝스|opic|아이엘츠|TOEIC|TOEFL|TEPS)/i, message: '공인어학시험 관련 내용은 기재할 수 없습니다.' },
+    { pattern: /(논문|학회.*발표|학회지)/, message: '논문 투고·등재, 학회 발표 사실은 기재할 수 없습니다.' },
+    { pattern: /(도서\s*출간|책을\s*출간|저서)/, message: '도서출간 사실은 기재할 수 없습니다.' },
+    { pattern: /(특허|실용신안|지식재산권)/, message: '지식재산권 출원·등록 사실은 기재할 수 없습니다.' },
+    { pattern: /(K-?MOOC|KOCW|무크)/i, message: 'K-MOOC, MOOC, KOCW 이수 사실은 기재할 수 없습니다.' },
+    { pattern: /(표창장|감사장|공로상)/, message: '교외 기관·단체로부터 받은 상은 기재할 수 없습니다.' },
+    { pattern: /【[^】]+】/, message: '아직 채워지지 않은 빈칸(【 】)이 남아 있습니다.' }
+  ];
+
+  function checkRuleViolations(text){
+    var hits = [];
+    RULE_CHECKS.forEach(function(rule){
+      if(rule.pattern.test(text)) hits.push(rule.message);
+    });
+    if(text.length > 500) hits.push('500자를 초과했습니다. 다른 영역으로 나누어 적을 수 없으니 분량을 줄여주세요.');
+    return hits;
+  }
+
+  function renderRuleWarnings(container, text){
+    var hits = checkRuleViolations(text);
+    container.innerHTML = '';
+    if(hits.length === 0){
+      container.classList.remove('show');
+      return;
+    }
+    container.classList.add('show');
+    hits.forEach(function(msg){
+      var item = document.createElement('div');
+      item.className = 'rule-warning';
+      item.innerHTML = '<span class="rule-warning-icon">⚠</span><span>' + escapeHtml(msg) + '</span>';
+      container.appendChild(item);
+    });
+  }
+
+  function showFinalOutput(block, text){
+    var out = block.querySelector('.output-box');
+    out.classList.add('show');
+    out.innerHTML = '';
+
+    var textarea = document.createElement('textarea');
+    textarea.className = 'output-edit';
+    textarea.value = text;
+    textarea.spellcheck = false;
+    out.appendChild(textarea);
+
+    var hint = document.createElement('div');
+    hint.className = 'output-hint';
+    hint.textContent = '직접 수정할 수 있습니다. 아래 영역에서 기재 규칙 위반 여부를 자동으로 확인합니다.';
+    out.appendChild(hint);
+
+    var warnBox = document.createElement('div');
+    warnBox.className = 'rule-warnings';
+    out.appendChild(warnBox);
+
+    var metaRow = document.createElement('div');
+    metaRow.className = 'output-meta';
+    var countSpan = document.createElement('span');
+    metaRow.appendChild(countSpan);
+
+    var copyBtn = document.createElement('button');
+    copyBtn.type = 'button';
+    copyBtn.className = 'btn btn-ghost btn-sm';
+    copyBtn.textContent = '복사하기';
+    metaRow.appendChild(copyBtn);
+
+    out.appendChild(metaRow);
+
+    function refreshCount(){
+      var len = textarea.value.length;
+      countSpan.className = 'charcount' + (len > 500 ? ' over' : '');
+      countSpan.textContent = len + ' / 500자' + (len > 500 ? ' — 500자를 초과했습니다' : '');
+      renderRuleWarnings(warnBox, textarea.value);
+      var ledgerBody2 = block.closest('.ledger-body');
+      if(ledgerBody2 && ledgerBody2.style.maxHeight){
+        requestAnimationFrame(function(){
+          ledgerBody2.style.maxHeight = ledgerBody2.scrollHeight + 'px';
+        });
+      }
+    }
+    refreshCount();
+    textarea.addEventListener('input', refreshCount);
+
+    copyBtn.addEventListener('click', function(){
+      navigator.clipboard.writeText(textarea.value).then(function(){
+        copyBtn.textContent = '복사됨!';
+        setTimeout(function(){ copyBtn.textContent = '복사하기'; }, 1500);
+      }).catch(function(){
+        copyBtn.textContent = '복사 실패 — 직접 선택해 주세요';
+      });
+    });
+
+    // keep parent ledger-body height in sync since content height changed
+    var ledgerBody = block.closest('.ledger-body');
+    if(ledgerBody && ledgerBody.style.maxHeight){
+      requestAnimationFrame(function(){
+        ledgerBody.style.maxHeight = ledgerBody.scrollHeight + 'px';
+      });
+    }
+  }
+
+  loadData();
+})();
+</script>
+</body>
+</html>
