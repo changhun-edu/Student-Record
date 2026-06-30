@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>기록의 정석 · 과정중심평가 생활기록부 작성 도우미</title>
+<title>생활기록부 작성 연구소 · 수업 속 성장을 생활기록부로 연결하다</title>
 <style>
   :root{
     --paper:#FAF7EF;
@@ -92,7 +92,7 @@
   /* ===== print ===== */
   @media print{
     body{background:#fff; color:#000;}
-    .tabs, .top-meta, header.top, .search-row, .field, footer,
+    .tabs, header.top, .search-row, .field, footer,
     .compose-row, .ledger-summary .chevron, .data-status, .color-legend,
     .rule-warnings, .why-cta,
     .view:not(.active){display:none !important;}
@@ -127,40 +127,40 @@
     gap:16px;
     flex-wrap:wrap;
   }
-  .brand{display:flex; align-items:center; gap:14px;}
+  .brand{display:flex; align-items:center; gap:16px;}
   .seal-mark{
-    width:46px;height:46px;border-radius:50%;
+    width:52px;height:52px;border-radius:50%;
     border:2.5px solid var(--seal);
     color:var(--seal);
     display:flex;align-items:center;justify-content:center;
     font-family:var(--serif);
     font-weight:700;
-    font-size:13px;
+    font-size:16px;
     flex-shrink:0;
     transform:rotate(-6deg);
     letter-spacing:-1px;
     transition:border-color .15s, color .15s;
   }
   .seal-mark:hover{border-color:var(--seal-deep); color:var(--seal-deep);}
+  .brand-text{display:flex; flex-direction:column; justify-content:center;}
   .brand-text h1{
     font-family:var(--serif);
     font-size:1.5rem;
-    margin:0 0 2px;
+    margin:0 0 3px;
     letter-spacing:-.01em;
+    line-height:1.2;
+    white-space:nowrap;
   }
+  @media (max-width:480px){
+    .brand-text h1{font-size:1.2rem;}
+  }
+  .brand-text h1 .accent{color:var(--seal);}
   .brand-text p{
     margin:0;
     font-size:.82rem;
     color:var(--ink-soft);
+    line-height:1.4;
   }
-  .top-meta{
-    font-family:var(--mono);
-    font-size:.72rem;
-    color:var(--ink-soft);
-    text-align:right;
-    line-height:1.5;
-  }
-
   /* ===== nav tabs ===== */
   .tabs{
     display:flex;
@@ -818,6 +818,13 @@
   .data-status.err{background:var(--danger-bg); color:var(--danger);}
   .dot{width:6px;height:6px;border-radius:50%;background:var(--pine); display:inline-block;}
   .data-status.err .dot{background:var(--danger);}
+
+  /* 평소엔 화면에 노출하지 않고, 데이터 로드 실패(.err) 시에만 헤더 아래 표시 */
+  .sr-status{display:none;}
+  .sr-status.err{
+    display:inline-flex;
+    margin:-14px 0 18px;
+  }
 </style>
 </head>
 <body>
@@ -828,14 +835,11 @@
     <div class="brand">
       <div class="seal-mark">記錄</div>
       <div class="brand-text">
-        <h1>기록의 정석</h1>
-        <p>과정중심평가에 맞는 생활기록부 작성을 익히는 교원용 도구</p>
+        <h1>생활기록부 작성 <span class="accent">연구소</span></h1>
+        <p>수업 속 성장을 생활기록부로 연결하다</p>
       </div>
     </div>
-    <div class="top-meta">
-      <span id="dataStatus" class="data-status"><span class="dot"></span>문구 데이터 불러오는 중…</span><br>
-      AI 미사용 · 규칙 기반 템플릿 · 서버 저장 없음
-    </div>
+    <span id="dataStatus" class="data-status sr-status"><span class="dot"></span>문구 데이터 불러오는 중…</span>
   </header>
 
   <nav class="tabs" role="tablist">
