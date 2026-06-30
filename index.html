@@ -806,6 +806,40 @@
   }
   .stage-heading:first-child{margin-top:0;}
 
+  /* ===== 구성요소 분해 보기 ===== */
+  .breakdown-wrap{
+    margin-top:12px;
+    padding:14px;
+    background:var(--card);
+    border:1px dashed var(--neutral-200);
+    border-radius:8px;
+  }
+  .breakdown-text{font-size:.92rem; line-height:2; letter-spacing:-.01em;}
+  .brk-mark{
+    border-radius:5px;
+    padding:1px 4px;
+    background:none;
+    color:var(--ink);
+  }
+  .brk-c1{background:var(--gold-bg); box-shadow:inset 0 -2px 0 var(--gold);}
+  .brk-c2{background:var(--pine-soft); box-shadow:inset 0 -2px 0 var(--pine);}
+  .brk-c3{background:#eef0ff; box-shadow:inset 0 -2px 0 #6b6fd6;}
+  .brk-c4{background:#ffeef2; box-shadow:inset 0 -2px 0 #d6566f;}
+  .brk-c5{background:#fff3e0; box-shadow:inset 0 -2px 0 #d68a2f;}
+  .brk-num{font-size:.68rem; font-weight:700; margin-left:1px; vertical-align:super;}
+  .brk-legend{list-style:none; margin:12px 0 0; padding:10px 0 0; border-top:1px dashed var(--neutral-200); font-size:.82rem; display:flex; flex-direction:column; gap:6px;}
+  .brk-num-badge{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:18px; height:18px; border-radius:50%;
+    font-size:.68rem; font-weight:700; color:#fff; margin-right:6px;
+  }
+  .brk-num-badge.brk-c1{background:var(--gold); box-shadow:none; color:#fff;}
+  .brk-num-badge.brk-c2{background:var(--pine); box-shadow:none; color:#fff;}
+  .brk-num-badge.brk-c3{background:#6b6fd6; box-shadow:none; color:#fff;}
+  .brk-num-badge.brk-c4{background:#d6566f; box-shadow:none; color:#fff;}
+  .brk-num-badge.brk-c5{background:#d68a2f; box-shadow:none; color:#fff;}
+  .brk-role{color:var(--ink-soft); font-size:.78rem;}
+
   /* ===== empty state ===== */
   .empty{
     text-align:center;
@@ -1553,6 +1587,28 @@
     );
   }
 
+  function buildBreakdownHtml(tpl){
+    var text = tpl.text;
+    var pos = 0;
+    var resultHtml = '';
+    var legend = [];
+    tpl.breakdown.forEach(function(b, idx){
+      var foundIdx = text.indexOf(b.phrase, pos);
+      if(foundIdx === -1) return;
+      var colorClass = 'brk-c' + ((idx % 5) + 1);
+      var num = idx + 1;
+      resultHtml += escapeHtml(text.slice(pos, foundIdx));
+      resultHtml += '<mark class="brk-mark ' + colorClass + '">' + escapeHtml(b.phrase) + '<sup class="brk-num">' + num + '</sup></mark>';
+      pos = foundIdx + b.phrase.length;
+      legend.push(
+        '<li><span class="brk-num-badge ' + colorClass + '">' + num + '</span>' +
+        '<b>' + escapeHtml(b.label) + '</b> <span class="brk-role">(' + escapeHtml(b.role) + ')</span></li>'
+      );
+    });
+    resultHtml += escapeHtml(text.slice(pos));
+    return '<div class="breakdown-text">' + resultHtml + '</div><ul class="brk-legend">' + legend.join('') + '</ul>';
+  }
+
   function buildTemplateBlockHtml(entry, tpl, i){
     var hasBlanks = /\{[^}]+\}/.test(tpl.text);
     // build display text with inline input placeholders rendered as spans;
@@ -1578,9 +1634,11 @@
         :
           '<div class="compose-row">' +
             '<button type="button" class="btn btn-ghost btn-sm act-show-plain">문구 보기 / 복사하기</button>' +
+            (tpl.breakdown ? '<button type="button" class="btn btn-ghost btn-sm act-toggle-breakdown">🧩 구성요소 보기</button>' : '') +
           '</div>'
         ) +
         '<div class="output-box"></div>' +
+        (tpl.breakdown ? '<div class="breakdown-wrap" style="display:none;">' + buildBreakdownHtml(tpl) + '</div>' : '') +
       '</div>'
     );
   }
@@ -1665,6 +1723,20 @@
         plainBtn.addEventListener('click', function(){
           var raw = blankTextEl.dataset.raw;
           showFinalOutput(block, raw);
+        });
+      }
+
+      var breakdownBtn = block.querySelector('.act-toggle-breakdown');
+      if(breakdownBtn){
+        var breakdownWrap = block.querySelector('.breakdown-wrap');
+        breakdownBtn.addEventListener('click', function(){
+          var nowOpen = breakdownWrap.style.display === 'none';
+          breakdownWrap.style.display = nowOpen ? 'block' : 'none';
+          breakdownBtn.textContent = nowOpen ? '🧩 구성요소 숨기기' : '🧩 구성요소 보기';
+          var ledgerBody = block.closest('.ledger-body');
+          if(ledgerBody && ledgerBody.style.maxHeight){
+            requestAnimationFrame(function(){ ledgerBody.style.maxHeight = ledgerBody.scrollHeight + 'px'; });
+          }
         });
       }
     });
