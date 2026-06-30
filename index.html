@@ -839,6 +839,8 @@
   .brk-num-badge.brk-c4{background:#d6566f; box-shadow:none; color:#fff;}
   .brk-num-badge.brk-c5{background:#d68a2f; box-shadow:none; color:#fff;}
   .brk-role{color:var(--ink-soft); font-size:.78rem;}
+  .breakdown-showcase-card{margin-bottom:16px;}
+  .breakdown-showcase-card .breakdown-text{font-size:.94rem;}
 
   /* ===== empty state ===== */
   .empty{
@@ -927,6 +929,7 @@
 
   <nav class="tabs" role="tablist">
     <button class="tab-btn active" data-view="why" role="tab">💡 왜 필요한가</button>
+    <button class="tab-btn" data-view="breakdown" role="tab">🧩 관점별 구성요소</button>
     <button class="tab-btn" data-view="compare" role="tab">⚖️ 나쁜 예 vs 좋은 예</button>
     <button class="tab-btn" data-view="compose" role="tab">✏️ 직접 써보기</button>
     <button class="tab-btn" data-view="guide" role="tab">📖 작성 가이드</button>
@@ -975,8 +978,25 @@
     </div>
 
     <div class="why-cta card">
-      <p>실제로 어떻게 다른지, 좋지 않은 예시와 좋은 예시를 나란히 비교해 보세요.</p>
-      <button type="button" class="btn btn-primary" id="goToCompare">나쁜 예 vs 좋은 예 보기 →</button>
+      <p>같은 누가기록도 어떤 관점으로 보느냐에 따라 다른 구성요소로 채워집니다. 직접 뜯어보세요.</p>
+      <button type="button" class="btn btn-primary" id="goToBreakdown">관점별 구성요소 보기 →</button>
+    </div>
+  </section>
+
+  <!-- ===================== VIEW: BREAKDOWN (관점별 구성요소) ===================== -->
+  <section class="view" id="view-breakdown">
+    <div class="section-head"><span class="tag">핵심</span><h2>같은 누가기록, 다섯 가지 구성요소로 뜯어보기</h2></div>
+    <p class="lead">
+      세부능력 및 특기사항은 <b>① 학생 개인별 과정중심 수행평가 누가기록</b>을 재료로,
+      <b>② 교과 역량 중심</b> · <b>③ 구체적 활동 내용 중심</b> · <b>④ 성취기준에 따른 성취수준 중심</b> ·
+      <b>⑤ 단위 수업시간 중 변화와 성장 중심</b> · <b>⑥ 처음엔 낮았으나 피드백으로 향상된 경우</b>,
+      이렇게 다섯 가지 관점 중 하나로 가공해 완성합니다. 같은 재료라도 관점에 따라 문장을 이루는 구성요소 자체가 달라집니다.
+      아래 습도 단원 예제에서 직접 확인해 보세요.
+    </p>
+    <div id="breakdownShowcase"></div>
+    <div class="why-cta card">
+      <p>이제 다른 항목에서도 어떻게 다르게 기재되는지 비교해 보세요.</p>
+      <button type="button" class="btn btn-primary" id="goToCompareFromBreakdown">나쁜 예 vs 좋은 예 보기 →</button>
     </div>
   </section>
 
@@ -1293,6 +1313,14 @@
   if(goToComposeBtn){
     goToComposeBtn.addEventListener('click', function(){ activateView('compose', true); });
   }
+  var goToBreakdownBtn = document.getElementById('goToBreakdown');
+  if(goToBreakdownBtn){
+    goToBreakdownBtn.addEventListener('click', function(){ activateView('breakdown', true); });
+  }
+  var goToCompareFromBreakdownBtn = document.getElementById('goToCompareFromBreakdown');
+  if(goToCompareFromBreakdownBtn){
+    goToCompareFromBreakdownBtn.addEventListener('click', function(){ activateView('compare', true); });
+  }
 
   window.addEventListener('popstate', function(e){
     var viewName = (e.state && e.state.view) || (location.hash ? location.hash.replace('#','') : 'why');
@@ -1387,6 +1415,9 @@
 
     // ---- 가이드 탭 미니 퀴즈 ----
     renderQuiz(perspectives);
+
+    // ---- 관점별 구성요소 쇼케이스 ----
+    renderBreakdownShowcase();
 
     subjectSelect.addEventListener('change', function(){
       state.subject = subjectSelect.value;
@@ -1925,6 +1956,42 @@
         });
       });
     });
+  }
+
+  // ---------- 관점별 구성요소 쇼케이스 (BREAKDOWN 탭) ----------
+  function renderBreakdownShowcase(){
+    var el = document.getElementById('breakdownShowcase');
+    if(!el || !DATA) return;
+    var master = DATA.entries.filter(function(e){
+      return e.templates.filter(function(t){ return t.breakdown; }).length >= 2;
+    })[0];
+    if(!master){ el.innerHTML = '<div class="card empty">아직 구성요소 분해 예제가 준비되지 않았습니다.</div>'; return; }
+
+    var rawTpl = master.templates.filter(function(t){ return t.stage === 'raw'; })[0];
+    var processed = master.templates.filter(function(t){ return t.breakdown; });
+    var order = {};
+    DATA.perspectives.forEach(function(p, idx){ order[p.key] = idx; });
+    processed.sort(function(a, b){ return (order[a.perspective] || 0) - (order[b.perspective] || 0); });
+
+    var html = '<div class="card">' +
+      '<p class="stage-heading" style="margin-top:0;">🗒️ 누가기록 원자료 ('+escapeHtml(master.subject)+' · '+escapeHtml(master.grade)+')</p>';
+    if(rawTpl){
+      html += '<p style="font-size:.88rem;color:var(--ink-soft);line-height:1.7;margin:0;padding:12px 14px;background:var(--neutral-100);border-radius:8px;">'+escapeHtml(rawTpl.text)+'</p>';
+    }
+    html += '</div>';
+
+    html += processed.map(function(tpl, idx){
+      var p = DATA.perspectives.filter(function(p){ return p.key === tpl.perspective; })[0];
+      var label = p ? (idx+1) + '. ' + p.label : tpl.perspective;
+      var desc = p ? p.desc : '';
+      return '<div class="card breakdown-showcase-card">' +
+        '<div class="persp-col-label" style="font-size:.92rem;">'+escapeHtml(label)+'</div>' +
+        '<p class="persp-col-desc" style="margin-bottom:14px;">'+escapeHtml(desc)+'</p>' +
+        buildBreakdownHtml(tpl) +
+      '</div>';
+    }).join('');
+
+    el.innerHTML = html;
   }
 
   loadData();
