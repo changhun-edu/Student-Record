@@ -824,11 +824,11 @@
   .breakdown-showcase-card{margin-bottom:16px;}
   .breakdown-showcase-card .breakdown-text{font-size:.94rem;}
 
-  /* ===== 관점별 구성요소 2단 레이아웃 ===== */
+  /* ===== 관점별 구성요소 2단 레이아웃 (v2) ===== */
   .bkd-layout{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:18px;
+    grid-template-columns:1fr 28px 1fr;
+    gap:0;
     align-items:start;
   }
   @media(max-width:820px){
@@ -836,90 +836,103 @@
   }
   .bkd-raw{
     position:sticky;
-    top:80px;
+    top:72px;
+    background:var(--card);
+    border:2px solid var(--ink);
+    border-radius:var(--radius);
+    padding:18px 20px;
   }
-  .bkd-raw-head{
-    font-size:.75rem; font-weight:700; color:var(--ink-soft);
-    text-transform:uppercase; letter-spacing:.06em;
-    margin:0 0 10px;
+  .bkd-raw-badge{
+    display:inline-block;
+    font-size:.68rem; font-weight:800;
+    letter-spacing:.06em;
+    background:var(--ink); color:var(--card);
+    padding:2px 8px; border-radius:4px;
+    margin-bottom:10px;
   }
-  .bkd-raw-text{
-    font-size:.88rem; line-height:1.85;
-    color:var(--ink-soft);
-    padding:14px 16px;
+  .bkd-raw-meta{font-size:.75rem; color:var(--ink-soft); margin:0 0 10px;}
+  .bkd-raw-text{font-size:.88rem; line-height:1.9; color:var(--ink);}
+  .bkd-raw-hint{
+    display:flex; align-items:center; gap:6px;
+    font-size:.74rem; color:var(--ink-soft);
+    margin-top:14px; padding-top:12px;
+    border-top:1px dashed var(--neutral-200);
+  }
+  .bkd-arrow-col{
+    display:flex; align-items:flex-start; justify-content:center;
+    padding-top:64px; color:var(--ink-soft); font-size:1.1rem;
+  }
+  @media(max-width:820px){.bkd-arrow-col{display:none;}}
+  .bkd-right{
+    background:var(--card);
+    border:1.5px solid var(--paper-line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .bkd-tabs-wrap{
+    padding:14px 16px 0;
+    border-bottom:1.5px solid var(--paper-line);
     background:var(--neutral-100);
-    border-radius:10px;
-    border:1px solid var(--neutral-200);
   }
-  .bkd-right-head{
-    font-size:.75rem; font-weight:700; color:var(--ink-soft);
-    text-transform:uppercase; letter-spacing:.06em;
-    margin:0 0 10px;
+  .bkd-tabs-label{
+    font-size:.68rem; font-weight:700; letter-spacing:.07em;
+    color:var(--ink-soft); margin:0 0 8px;
   }
   .bkd-tabs{
-    display:flex; flex-wrap:wrap; gap:6px;
-    margin-bottom:14px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:5px;
+    padding-bottom:14px;
   }
+  @media(max-width:480px){.bkd-tabs{grid-template-columns:1fr 1fr;}}
   .bkd-tab{
-    border:1.5px solid var(--paper-line);
+    display:flex; align-items:center; gap:7px;
+    border:1.5px solid var(--neutral-200);
     background:var(--card);
     color:var(--ink-soft);
-    padding:6px 13px;
-    border-radius:999px;
-    font-size:.8rem;
+    padding:7px 10px;
+    border-radius:8px;
+    font-size:.78rem;
     cursor:pointer;
     transition:all .15s;
+    text-align:left; line-height:1.3;
   }
+  .bkd-tab:hover{border-color:var(--ink-soft); color:var(--ink);}
+  .bkd-tab-num{
+    width:20px; height:20px; border-radius:50%;
+    background:var(--neutral-200); color:var(--ink-soft);
+    font-size:.68rem; font-weight:800;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; transition:all .15s;
+  }
+  .bkd-tab.active .bkd-tab-num{background:var(--bkd-accent,var(--ink)); color:#fff;}
   .bkd-tab.active{
-    background:var(--ink);
-    border-color:var(--ink);
-    color:var(--card);
-    font-weight:600;
+    border-color:var(--bkd-accent,var(--ink));
+    color:var(--ink); font-weight:700;
+    background:var(--card);
   }
+  .bkd-desc-fixed{
+    padding:10px 16px;
+    background:var(--neutral-100);
+    border-bottom:1px dashed var(--neutral-200);
+    font-size:.8rem; color:var(--ink-soft);
+    line-height:1.6; min-height:42px;
+  }
+  .bkd-panels{padding:16px;}
   .bkd-panel{display:none;}
   .bkd-panel.active{display:block;}
-  .bkd-panel-desc{
-    font-size:.8rem;
-    color:var(--ink-soft);
-    margin:0 0 12px;
-    padding:10px 12px;
-    background:var(--neutral-100);
-    border-radius:8px;
-    border-left:3px solid var(--neutral-400);
-    line-height:1.6;
-  }
   .bkd-text{
-    font-size:.95rem;
-    line-height:2;
-    color:var(--ink);
-    padding:14px 16px;
-    background:var(--card);
-    border:1px solid var(--paper-line);
-    border-radius:10px;
-    margin-bottom:12px;
+    font-size:.92rem; line-height:2.1;
+    color:var(--ink); margin-bottom:12px;
   }
-
-  /* role 기반 고정 색상 */
-  .brk-role-competency{background:#EFE6D1; box-shadow:inset 0 -2px 0 #9C7B41;}
-  .brk-role-activity{background:#E0F2F1; box-shadow:inset 0 -2px 0 #2E7D72;}
-  .brk-role-level{background:#EEE8F8; box-shadow:inset 0 -2px 0 #6B5BAF;}
-  .brk-role-start{background:#FFF3E0; box-shadow:inset 0 -2px 0 #D48C2A;}
-  .brk-role-end{background:#E7EEE8; box-shadow:inset 0 -2px 0 #3C5145;}
-  .brk-role-feedback{background:#FBEAE7; box-shadow:inset 0 -2px 0 #B33B30;}
-  .brk-role-initial{background:#FBEAE7; box-shadow:inset 0 -2px 0 #B33B30;}
-  .brk-role-improved{background:#E7EEE8; box-shadow:inset 0 -2px 0 #3C5145;}
-
   .bkd-legend{
     list-style:none; margin:0; padding:12px 0 0;
     border-top:1px dashed var(--neutral-200);
-    display:flex; flex-direction:column; gap:8px;
-    font-size:.82rem;
+    display:flex; flex-direction:column; gap:7px;
+    font-size:.81rem;
   }
   .bkd-legend li{display:flex; align-items:flex-start; gap:8px; line-height:1.5;}
-  .bkd-swatch{
-    width:12px; height:12px; border-radius:3px;
-    flex-shrink:0; margin-top:3px;
-  }
+  .bkd-swatch{width:10px; height:10px; border-radius:2px; flex-shrink:0; margin-top:4px;}
   .bkd-swatch-competency{background:#9C7B41;}
   .bkd-swatch-activity{background:#2E7D72;}
   .bkd-swatch-level{background:#6B5BAF;}
@@ -929,17 +942,29 @@
   .bkd-swatch-initial{background:#B33B30;}
   .bkd-swatch-improved{background:#3C5145;}
   .bkd-legend-label{font-weight:700; color:var(--ink);}
-  .bkd-legend-role{color:var(--ink-soft);}
+  .bkd-legend-role{
+    font-size:.72rem; color:var(--card);
+    background:var(--ink-soft); border-radius:4px; padding:1px 5px; margin-left:3px;
+  }
 
+  /* role 기반 고정 색상 */
+  .brk-role-competency{background:#EFE6D1; box-shadow:inset 0 -2px 0 #9C7B41; border-radius:4px; padding:1px 3px;}
+  .brk-role-activity  {background:#E0F2F1; box-shadow:inset 0 -2px 0 #2E7D72; border-radius:4px; padding:1px 3px;}
+  .brk-role-level     {background:#EEE8F8; box-shadow:inset 0 -2px 0 #6B5BAF; border-radius:4px; padding:1px 3px;}
+  .brk-role-start     {background:#FFF3E0; box-shadow:inset 0 -2px 0 #D48C2A; border-radius:4px; padding:1px 3px;}
+  .brk-role-end       {background:#E7EEE8; box-shadow:inset 0 -2px 0 #3C5145; border-radius:4px; padding:1px 3px;}
+  .brk-role-feedback  {background:#FBEAE7; box-shadow:inset 0 -2px 0 #B33B30; border-radius:4px; padding:1px 3px;}
+  .brk-role-initial   {background:#FBEAE7; box-shadow:inset 0 -2px 0 #B33B30; border-radius:4px; padding:1px 3px;}
+  .brk-role-improved  {background:#E7EEE8; box-shadow:inset 0 -2px 0 #3C5145; border-radius:4px; padding:1px 3px;}
   @media(prefers-color-scheme:dark){
     .brk-role-competency{background:#3A2F1C; box-shadow:inset 0 -2px 0 #C9A565;}
-    .brk-role-activity{background:#0F2B28; box-shadow:inset 0 -2px 0 #4DB6AC;}
-    .brk-role-level{background:#1E1A2E; box-shadow:inset 0 -2px 0 #9C8FD6;}
-    .brk-role-start{background:#2D2012; box-shadow:inset 0 -2px 0 #E8A84A;}
-    .brk-role-end{background:#28332C; box-shadow:inset 0 -2px 0 #6EA882;}
-    .brk-role-feedback{background:#3A2422; box-shadow:inset 0 -2px 0 #E8786B;}
-    .brk-role-initial{background:#3A2422; box-shadow:inset 0 -2px 0 #E8786B;}
-    .brk-role-improved{background:#28332C; box-shadow:inset 0 -2px 0 #6EA882;}
+    .brk-role-activity  {background:#0F2B28; box-shadow:inset 0 -2px 0 #4DB6AC;}
+    .brk-role-level     {background:#1E1A2E; box-shadow:inset 0 -2px 0 #9C8FD6;}
+    .brk-role-start     {background:#2D2012; box-shadow:inset 0 -2px 0 #E8A84A;}
+    .brk-role-end       {background:#28332C; box-shadow:inset 0 -2px 0 #6EA882;}
+    .brk-role-feedback  {background:#3A2422; box-shadow:inset 0 -2px 0 #E8786B;}
+    .brk-role-initial   {background:#3A2422; box-shadow:inset 0 -2px 0 #E8786B;}
+    .brk-role-improved  {background:#28332C; box-shadow:inset 0 -2px 0 #6EA882;}
   }
 
   /* ===== empty state ===== */
@@ -1086,13 +1111,7 @@
   <!-- ===================== VIEW: BREAKDOWN (관점별 구성요소) ===================== -->
   <section class="view" id="view-breakdown">
     <div class="section-head"><span class="tag">핵심</span><h2>같은 누가기록, 다섯 가지 구성요소로 뜯어보기</h2></div>
-    <p class="lead">
-      세부능력 및 특기사항은 <b>① 학생 개인별 과정중심 수행평가 누가기록</b>을 재료로,
-      <b>② 교과 역량 중심</b> · <b>③ 구체적 활동 내용 중심</b> · <b>④ 성취기준에 따른 성취수준 중심</b> ·
-      <b>⑤ 단위 수업시간 중 변화와 성장 중심</b> · <b>⑥ 처음엔 낮았으나 피드백으로 향상된 경우</b>,
-      이렇게 다섯 가지 관점 중 하나로 가공해 완성합니다. 같은 재료라도 관점에 따라 문장을 이루는 구성요소 자체가 달라집니다.
-      아래 습도 단원 예제에서 직접 확인해 보세요.
-    </p>
+    <p class="lead">왼쪽의 누가기록 원자료가 어떤 관점을 택하느냐에 따라 오른쪽 문장의 구성요소 자체가 달라집니다. 탭을 눌러 비교해 보세요.</p>
     <div id="breakdownShowcase"></div>
     <div class="why-cta card">
       <p>이제 다른 항목에서도 어떻게 다르게 기재되는지 비교해 보세요.</p>
@@ -2115,6 +2134,15 @@
     );
   }
 
+  // ===== 관점 accent 색상 =====
+  var PERSP_ACCENT = {
+    competency:'#9C7B41',
+    activity:  '#2E7D72',
+    level:     '#6B5BAF',
+    growth:    '#D48C2A',
+    feedback:  '#B33B30'
+  };
+
   // ---------- 관점별 구성요소 쇼케이스 (BREAKDOWN 탭) ----------
   function renderBreakdownShowcase(){
     var el = document.getElementById('breakdownShowcase');
@@ -2133,51 +2161,80 @@
     DATA.perspectives.forEach(function(p, idx){ order[p.key] = idx; });
     processed.sort(function(a, b){ return (order[a.perspective]||99) - (order[b.perspective]||99); });
 
-    // ---- 2단 레이아웃 HTML ----
+    // 탭 HTML
     var tabsHtml = processed.map(function(tpl, idx){
       var p = DATA.perspectives.filter(function(p){ return p.key === tpl.perspective; })[0];
+      var short = p ? p.short : String(idx+1);
       var label = p ? p.label : tpl.perspective;
-      return '<button type="button" class="bkd-tab' + (idx===0?' active':'') + '" data-bkd-idx="'+idx+'">' +
-        escapeHtml(label) + '</button>';
+      var accent = PERSP_ACCENT[tpl.perspective] || 'var(--ink)';
+      return (
+        '<button type="button" class="bkd-tab' + (idx===0?' active':'') + '"' +
+        ' data-bkd-idx="'+idx+'"' +
+        ' data-bkd-accent="'+accent+'"' +
+        ' style="'+(idx===0?'--bkd-accent:'+accent+';border-color:'+accent:'')+'"' +
+        ' title="'+escapeHtml(label)+'">' +
+          '<span class="bkd-tab-num">' + (idx+1) + '</span>' +
+          escapeHtml(label) +
+        '</button>'
+      );
     }).join('');
 
+    // 패널 HTML (desc 없음)
     var panelsHtml = processed.map(function(tpl, idx){
-      var p = DATA.perspectives.filter(function(p){ return p.key === tpl.perspective; })[0];
-      var desc = p ? p.desc : '';
-      return '<div class="bkd-panel' + (idx===0?' active':'') + '" data-bkd-idx="'+idx+'">' +
-        '<p class="bkd-panel-desc">' + escapeHtml(desc) + '</p>' +
-        buildRoleBreakdownHtml(tpl) +
-      '</div>';
+      return (
+        '<div class="bkd-panel' + (idx===0?' active':'') + '" data-bkd-idx="'+idx+'">' +
+          buildRoleBreakdownHtml(tpl) +
+        '</div>'
+      );
     }).join('');
+
+    // 초기 desc
+    var firstP = DATA.perspectives.filter(function(p){ return p.key === processed[0].perspective; })[0];
+    var initDesc = firstP ? firstP.desc : '';
 
     el.innerHTML =
       '<div class="bkd-layout">' +
-        '<div class="bkd-raw card">' +
-          '<p class="bkd-raw-head">📋 누가기록 원자료</p>' +
-          '<p style="font-size:.75rem;color:var(--ink-soft);margin:0 0 8px;">' +
-            escapeHtml(master.subject) + ' · ' + escapeHtml(master.grade) +
-          '</p>' +
+        // 왼쪽: 원자료
+        '<div class="bkd-raw">' +
+          '<span class="bkd-raw-badge">원자료 (누가기록)</span>' +
+          '<p class="bkd-raw-meta">' + escapeHtml(master.subject) + ' · ' + escapeHtml(master.grade) + '</p>' +
           (rawTpl ?
             '<div class="bkd-raw-text">' + escapeHtml(rawTpl.text) + '</div>' :
-            '<p class="empty">원자료 없음</p>'
+            '<p style="color:var(--ink-soft)">원자료 없음</p>'
           ) +
-          '<p style="font-size:.76rem;color:var(--neutral-400);margin:12px 0 0;">↑ 이 문장이 오른쪽에서 관점에 따라 다르게 가공됩니다.</p>' +
+          '<p class="bkd-raw-hint">→ 이 관찰 기록을 바탕으로 오른쪽 다섯 가지 관점 중 하나로 가공합니다.</p>' +
         '</div>' +
-        '<div class="card">' +
-          '<p class="bkd-right-head">✏️ 관점별 가공본 — 탭을 눌러 비교하세요</p>' +
-          '<div class="bkd-tabs">' + tabsHtml + '</div>' +
-          '<div id="bkdPanels">' + panelsHtml + '</div>' +
+        // 가운데 화살표
+        '<div class="bkd-arrow-col">→</div>' +
+        // 오른쪽: 탭 + 패널
+        '<div class="bkd-right">' +
+          '<div class="bkd-tabs-wrap">' +
+            '<p class="bkd-tabs-label">관점을 선택하세요</p>' +
+            '<div class="bkd-tabs">' + tabsHtml + '</div>' +
+          '</div>' +
+          '<div class="bkd-desc-fixed" id="bkdDescFixed">' + escapeHtml(initDesc) + '</div>' +
+          '<div class="bkd-panels" id="bkdPanels">' + panelsHtml + '</div>' +
         '</div>' +
       '</div>';
 
     // 탭 클릭 이벤트
+    var descEl = el.querySelector('#bkdDescFixed');
     el.querySelectorAll('.bkd-tab').forEach(function(tab){
       tab.addEventListener('click', function(){
         var idx = tab.dataset.bkdIdx;
-        el.querySelectorAll('.bkd-tab').forEach(function(t){ t.classList.remove('active'); });
+        var accent = tab.dataset.bkdAccent || 'var(--ink)';
+        el.querySelectorAll('.bkd-tab').forEach(function(t){
+          t.classList.remove('active');
+          t.style.cssText = '';
+        });
         el.querySelectorAll('.bkd-panel').forEach(function(p){ p.classList.remove('active'); });
         tab.classList.add('active');
+        tab.style.cssText = '--bkd-accent:'+accent+';border-color:'+accent;
         el.querySelector('.bkd-panel[data-bkd-idx="'+idx+'"]').classList.add('active');
+        // desc 갱신
+        var tpl = processed[parseInt(idx,10)];
+        var p = DATA.perspectives.filter(function(p){ return p.key === tpl.perspective; })[0];
+        if(descEl) descEl.textContent = p ? p.desc : '';
       });
     });
   }
