@@ -93,7 +93,7 @@
   @media print{
     body{background:#fff; color:#000;}
     .tabs, header.top, .search-row, .field, footer,
-    .compose-row, .ledger-summary .chevron, .data-status, .color-legend,
+    .compose-row, .ledger-summary .chevron, .color-legend,
     .rule-warnings, .why-cta,
     .view:not(.active){display:none !important;}
     .ledger, .card{box-shadow:none; border:1px solid #999;}
@@ -605,18 +605,6 @@
   }
   .live-count.over{color:var(--danger); font-weight:700;}
 
-  /* ===== retry ===== */
-  .retry-btn{
-    margin-left:8px;
-    background:transparent;
-    border:1px solid currentColor;
-    color:inherit;
-    border-radius:6px;
-    padding:1px 8px;
-    font-size:.68rem;
-    cursor:pointer;
-  }
-
   /* ===== WHY 화면 ===== */
   .why-flow{
     display:flex;
@@ -803,28 +791,6 @@
     margin-top:40px;
   }
 
-  /* status pill for offline data */
-  .data-status{
-    font-family:var(--mono);
-    font-size:.7rem;
-    padding:3px 9px;
-    border-radius:6px;
-    background:var(--pine-soft);
-    color:var(--pine);
-    display:inline-flex;
-    align-items:center;
-    gap:5px;
-  }
-  .data-status.err{background:var(--danger-bg); color:var(--danger);}
-  .dot{width:6px;height:6px;border-radius:50%;background:var(--pine); display:inline-block;}
-  .data-status.err .dot{background:var(--danger);}
-
-  /* 평소엔 화면에 노출하지 않고, 데이터 로드 실패(.err) 시에만 헤더 아래 표시 */
-  .sr-status{display:none;}
-  .sr-status.err{
-    display:inline-flex;
-    margin:-14px 0 18px;
-  }
 </style>
 </head>
 <body>
@@ -839,7 +805,6 @@
         <p>수업 속 성장을 생활기록부로 연결하다</p>
       </div>
     </div>
-    <span id="dataStatus" class="data-status sr-status"><span class="dot"></span>문구 데이터 불러오는 중…</span>
   </header>
 
   <nav class="tabs" role="tablist">
@@ -1063,7 +1028,6 @@
   var STORAGE_KEY = 'girok-state-v1';
   var hasUnsavedInput = false;
 
-  var dataStatusEl = document.getElementById('dataStatus');
   var subjectSelect = document.getElementById('subjectSelect');
   var gradeSelect = document.getElementById('gradeSelect');
   var competencyChips = document.getElementById('competencyChips');
@@ -1176,18 +1140,6 @@
   });
 
   // ---------- data loading ----------
-  function setStatus(ok, msg, showRetry){
-    dataStatusEl.classList.toggle('err', !ok);
-    dataStatusEl.innerHTML = '<span class="dot"></span>' + msg +
-      (showRetry ? '<button type="button" class="retry-btn" id="retryBtn">다시 시도</button>' : '');
-    if(showRetry){
-      document.getElementById('retryBtn').addEventListener('click', function(){
-        setStatus(true, '문구 데이터 다시 불러오는 중…');
-        loadData();
-      });
-    }
-  }
-
   function loadData(){
     fetch('data/phrases.json')
       .then(function(res){
@@ -1196,13 +1148,11 @@
       })
       .then(function(json){
         DATA = json;
-        setStatus(true, '문구 데이터 ' + DATA.entries.length + '건 로드 완료');
         initControls();
       })
       .catch(function(err){
-        setStatus(false, '데이터 로드 실패 — 네트워크 또는 경로를 확인하세요', true);
         subjectSelect.innerHTML = '<option value="">데이터 없음</option>';
-        console.error(err);
+        console.error('문구 데이터 로드 실패:', err);
       });
   }
 
