@@ -814,33 +814,133 @@
     border:1px dashed var(--neutral-200);
     border-radius:8px;
   }
-  .breakdown-text{font-size:.92rem; line-height:2; letter-spacing:-.01em;}
+  .breakdown-text{font-size:.92rem; line-height:2.2; letter-spacing:-.01em;}
   .brk-mark{
     border-radius:5px;
     padding:1px 4px;
-    background:none;
     color:var(--ink);
   }
-  .brk-c1{background:var(--gold-bg); box-shadow:inset 0 -2px 0 var(--gold);}
-  .brk-c2{background:var(--pine-soft); box-shadow:inset 0 -2px 0 var(--pine);}
-  .brk-c3{background:#eef0ff; box-shadow:inset 0 -2px 0 #6b6fd6;}
-  .brk-c4{background:#ffeef2; box-shadow:inset 0 -2px 0 #d6566f;}
-  .brk-c5{background:#fff3e0; box-shadow:inset 0 -2px 0 #d68a2f;}
   .brk-num{font-size:.68rem; font-weight:700; margin-left:1px; vertical-align:super;}
-  .brk-legend{list-style:none; margin:12px 0 0; padding:10px 0 0; border-top:1px dashed var(--neutral-200); font-size:.82rem; display:flex; flex-direction:column; gap:6px;}
-  .brk-num-badge{
-    display:inline-flex; align-items:center; justify-content:center;
-    width:18px; height:18px; border-radius:50%;
-    font-size:.68rem; font-weight:700; color:#fff; margin-right:6px;
-  }
-  .brk-num-badge.brk-c1{background:var(--gold); box-shadow:none; color:#fff;}
-  .brk-num-badge.brk-c2{background:var(--pine); box-shadow:none; color:#fff;}
-  .brk-num-badge.brk-c3{background:#6b6fd6; box-shadow:none; color:#fff;}
-  .brk-num-badge.brk-c4{background:#d6566f; box-shadow:none; color:#fff;}
-  .brk-num-badge.brk-c5{background:#d68a2f; box-shadow:none; color:#fff;}
-  .brk-role{color:var(--ink-soft); font-size:.78rem;}
   .breakdown-showcase-card{margin-bottom:16px;}
   .breakdown-showcase-card .breakdown-text{font-size:.94rem;}
+
+  /* ===== 관점별 구성요소 2단 레이아웃 ===== */
+  .bkd-layout{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    align-items:start;
+  }
+  @media(max-width:820px){
+    .bkd-layout{grid-template-columns:1fr;}
+  }
+  .bkd-raw{
+    position:sticky;
+    top:80px;
+  }
+  .bkd-raw-head{
+    font-size:.75rem; font-weight:700; color:var(--ink-soft);
+    text-transform:uppercase; letter-spacing:.06em;
+    margin:0 0 10px;
+  }
+  .bkd-raw-text{
+    font-size:.88rem; line-height:1.85;
+    color:var(--ink-soft);
+    padding:14px 16px;
+    background:var(--neutral-100);
+    border-radius:10px;
+    border:1px solid var(--neutral-200);
+  }
+  .bkd-right-head{
+    font-size:.75rem; font-weight:700; color:var(--ink-soft);
+    text-transform:uppercase; letter-spacing:.06em;
+    margin:0 0 10px;
+  }
+  .bkd-tabs{
+    display:flex; flex-wrap:wrap; gap:6px;
+    margin-bottom:14px;
+  }
+  .bkd-tab{
+    border:1.5px solid var(--paper-line);
+    background:var(--card);
+    color:var(--ink-soft);
+    padding:6px 13px;
+    border-radius:999px;
+    font-size:.8rem;
+    cursor:pointer;
+    transition:all .15s;
+  }
+  .bkd-tab.active{
+    background:var(--ink);
+    border-color:var(--ink);
+    color:var(--card);
+    font-weight:600;
+  }
+  .bkd-panel{display:none;}
+  .bkd-panel.active{display:block;}
+  .bkd-panel-desc{
+    font-size:.8rem;
+    color:var(--ink-soft);
+    margin:0 0 12px;
+    padding:10px 12px;
+    background:var(--neutral-100);
+    border-radius:8px;
+    border-left:3px solid var(--neutral-400);
+    line-height:1.6;
+  }
+  .bkd-text{
+    font-size:.95rem;
+    line-height:2;
+    color:var(--ink);
+    padding:14px 16px;
+    background:var(--card);
+    border:1px solid var(--paper-line);
+    border-radius:10px;
+    margin-bottom:12px;
+  }
+
+  /* role 기반 고정 색상 */
+  .brk-role-competency{background:#EFE6D1; box-shadow:inset 0 -2px 0 #9C7B41;}
+  .brk-role-activity{background:#E0F2F1; box-shadow:inset 0 -2px 0 #2E7D72;}
+  .brk-role-level{background:#EEE8F8; box-shadow:inset 0 -2px 0 #6B5BAF;}
+  .brk-role-start{background:#FFF3E0; box-shadow:inset 0 -2px 0 #D48C2A;}
+  .brk-role-end{background:#E7EEE8; box-shadow:inset 0 -2px 0 #3C5145;}
+  .brk-role-feedback{background:#FBEAE7; box-shadow:inset 0 -2px 0 #B33B30;}
+  .brk-role-initial{background:#FBEAE7; box-shadow:inset 0 -2px 0 #B33B30;}
+  .brk-role-improved{background:#E7EEE8; box-shadow:inset 0 -2px 0 #3C5145;}
+
+  .bkd-legend{
+    list-style:none; margin:0; padding:12px 0 0;
+    border-top:1px dashed var(--neutral-200);
+    display:flex; flex-direction:column; gap:8px;
+    font-size:.82rem;
+  }
+  .bkd-legend li{display:flex; align-items:flex-start; gap:8px; line-height:1.5;}
+  .bkd-swatch{
+    width:12px; height:12px; border-radius:3px;
+    flex-shrink:0; margin-top:3px;
+  }
+  .bkd-swatch-competency{background:#9C7B41;}
+  .bkd-swatch-activity{background:#2E7D72;}
+  .bkd-swatch-level{background:#6B5BAF;}
+  .bkd-swatch-start{background:#D48C2A;}
+  .bkd-swatch-end{background:#3C5145;}
+  .bkd-swatch-feedback{background:#B33B30;}
+  .bkd-swatch-initial{background:#B33B30;}
+  .bkd-swatch-improved{background:#3C5145;}
+  .bkd-legend-label{font-weight:700; color:var(--ink);}
+  .bkd-legend-role{color:var(--ink-soft);}
+
+  @media(prefers-color-scheme:dark){
+    .brk-role-competency{background:#3A2F1C; box-shadow:inset 0 -2px 0 #C9A565;}
+    .brk-role-activity{background:#0F2B28; box-shadow:inset 0 -2px 0 #4DB6AC;}
+    .brk-role-level{background:#1E1A2E; box-shadow:inset 0 -2px 0 #9C8FD6;}
+    .brk-role-start{background:#2D2012; box-shadow:inset 0 -2px 0 #E8A84A;}
+    .brk-role-end{background:#28332C; box-shadow:inset 0 -2px 0 #6EA882;}
+    .brk-role-feedback{background:#3A2422; box-shadow:inset 0 -2px 0 #E8786B;}
+    .brk-role-initial{background:#3A2422; box-shadow:inset 0 -2px 0 #E8786B;}
+    .brk-role-improved{background:#28332C; box-shadow:inset 0 -2px 0 #6EA882;}
+  }
 
   /* ===== empty state ===== */
   .empty{
@@ -1626,18 +1726,28 @@
     tpl.breakdown.forEach(function(b, idx){
       var foundIdx = text.indexOf(b.phrase, pos);
       if(foundIdx === -1) return;
-      var colorClass = 'brk-c' + ((idx % 5) + 1);
+      var rc = roleClass(b.role);
       var num = idx + 1;
       resultHtml += escapeHtml(text.slice(pos, foundIdx));
-      resultHtml += '<mark class="brk-mark ' + colorClass + '">' + escapeHtml(b.phrase) + '<sup class="brk-num">' + num + '</sup></mark>';
+      resultHtml +=
+        '<mark class="brk-mark brk-role-' + rc + '">' +
+        escapeHtml(b.phrase) +
+        '<sup class="brk-num">' + num + '</sup>' +
+        '</mark>';
       pos = foundIdx + b.phrase.length;
       legend.push(
-        '<li><span class="brk-num-badge ' + colorClass + '">' + num + '</span>' +
-        '<b>' + escapeHtml(b.label) + '</b> <span class="brk-role">(' + escapeHtml(b.role) + ')</span></li>'
+        '<li>' +
+          '<span class="bkd-swatch bkd-swatch-' + rc + '"></span>' +
+          '<span><span class="bkd-legend-label">' + escapeHtml(b.label) + '</span>' +
+          ' <span class="bkd-legend-role">(' + escapeHtml(b.role) + ')</span></span>' +
+        '</li>'
       );
     });
     resultHtml += escapeHtml(text.slice(pos));
-    return '<div class="breakdown-text">' + resultHtml + '</div><ul class="brk-legend">' + legend.join('') + '</ul>';
+    return (
+      '<div class="breakdown-text">' + resultHtml + '</div>' +
+      '<ul class="bkd-legend">' + legend.join('') + '</ul>'
+    );
   }
 
   function buildTemplateBlockHtml(entry, tpl, i){
@@ -1958,6 +2068,53 @@
     });
   }
 
+  // ===== role → CSS class 매핑 =====
+  var ROLE_CLASS = {
+    '역량 1': 'competency', '역량 2': 'competency',
+    '활동 1': 'activity',   '활동 2': 'activity',   '활동 3': 'activity', '활동': 'activity',
+    '수준':   'level',
+    '출발점': 'start',
+    '도착점': 'end',
+    '피드백': 'feedback',
+    '초기수준': 'initial',
+    '향상결과': 'improved'
+  };
+
+  function roleClass(role){
+    return ROLE_CLASS[role] || 'activity';
+  }
+
+  // role 기반 색상을 쓰는 breakdown HTML 빌더 (쇼케이스 전용)
+  function buildRoleBreakdownHtml(tpl){
+    var text = tpl.text;
+    var pos = 0;
+    var resultHtml = '';
+    var legend = [];
+    tpl.breakdown.forEach(function(b, idx){
+      var foundIdx = text.indexOf(b.phrase, pos);
+      if(foundIdx === -1) return;
+      var rc = roleClass(b.role);
+      resultHtml += escapeHtml(text.slice(pos, foundIdx));
+      resultHtml +=
+        '<mark class="brk-mark brk-role-' + rc + '" title="' + escapeHtml(b.label) + '">' +
+        escapeHtml(b.phrase) +
+        '</mark>';
+      pos = foundIdx + b.phrase.length;
+      legend.push(
+        '<li>' +
+          '<span class="bkd-swatch bkd-swatch-' + rc + '"></span>' +
+          '<span><span class="bkd-legend-label">' + escapeHtml(b.label) + '</span>' +
+          ' <span class="bkd-legend-role">(' + escapeHtml(b.role) + ')</span></span>' +
+        '</li>'
+      );
+    });
+    resultHtml += escapeHtml(text.slice(pos));
+    return (
+      '<div class="bkd-text">' + resultHtml + '</div>' +
+      '<ul class="bkd-legend">' + legend.join('') + '</ul>'
+    );
+  }
+
   // ---------- 관점별 구성요소 쇼케이스 (BREAKDOWN 탭) ----------
   function renderBreakdownShowcase(){
     var el = document.getElementById('breakdownShowcase');
@@ -1965,33 +2122,64 @@
     var master = DATA.entries.filter(function(e){
       return e.templates.filter(function(t){ return t.breakdown; }).length >= 2;
     })[0];
-    if(!master){ el.innerHTML = '<div class="card empty">아직 구성요소 분해 예제가 준비되지 않았습니다.</div>'; return; }
+    if(!master){
+      el.innerHTML = '<div class="card"><p class="empty">아직 구성요소 분해 예제가 준비되지 않았습니다.</p></div>';
+      return;
+    }
 
     var rawTpl = master.templates.filter(function(t){ return t.stage === 'raw'; })[0];
     var processed = master.templates.filter(function(t){ return t.breakdown; });
     var order = {};
     DATA.perspectives.forEach(function(p, idx){ order[p.key] = idx; });
-    processed.sort(function(a, b){ return (order[a.perspective] || 0) - (order[b.perspective] || 0); });
+    processed.sort(function(a, b){ return (order[a.perspective]||99) - (order[b.perspective]||99); });
 
-    var html = '<div class="card">' +
-      '<p class="stage-heading" style="margin-top:0;">🗒️ 누가기록 원자료 ('+escapeHtml(master.subject)+' · '+escapeHtml(master.grade)+')</p>';
-    if(rawTpl){
-      html += '<p style="font-size:.88rem;color:var(--ink-soft);line-height:1.7;margin:0;padding:12px 14px;background:var(--neutral-100);border-radius:8px;">'+escapeHtml(rawTpl.text)+'</p>';
-    }
-    html += '</div>';
-
-    html += processed.map(function(tpl, idx){
+    // ---- 2단 레이아웃 HTML ----
+    var tabsHtml = processed.map(function(tpl, idx){
       var p = DATA.perspectives.filter(function(p){ return p.key === tpl.perspective; })[0];
-      var label = p ? (idx+1) + '. ' + p.label : tpl.perspective;
+      var label = p ? p.label : tpl.perspective;
+      return '<button type="button" class="bkd-tab' + (idx===0?' active':'') + '" data-bkd-idx="'+idx+'">' +
+        escapeHtml(label) + '</button>';
+    }).join('');
+
+    var panelsHtml = processed.map(function(tpl, idx){
+      var p = DATA.perspectives.filter(function(p){ return p.key === tpl.perspective; })[0];
       var desc = p ? p.desc : '';
-      return '<div class="card breakdown-showcase-card">' +
-        '<div class="persp-col-label" style="font-size:.92rem;">'+escapeHtml(label)+'</div>' +
-        '<p class="persp-col-desc" style="margin-bottom:14px;">'+escapeHtml(desc)+'</p>' +
-        buildBreakdownHtml(tpl) +
+      return '<div class="bkd-panel' + (idx===0?' active':'') + '" data-bkd-idx="'+idx+'">' +
+        '<p class="bkd-panel-desc">' + escapeHtml(desc) + '</p>' +
+        buildRoleBreakdownHtml(tpl) +
       '</div>';
     }).join('');
 
-    el.innerHTML = html;
+    el.innerHTML =
+      '<div class="bkd-layout">' +
+        '<div class="bkd-raw card">' +
+          '<p class="bkd-raw-head">📋 누가기록 원자료</p>' +
+          '<p style="font-size:.75rem;color:var(--ink-soft);margin:0 0 8px;">' +
+            escapeHtml(master.subject) + ' · ' + escapeHtml(master.grade) +
+          '</p>' +
+          (rawTpl ?
+            '<div class="bkd-raw-text">' + escapeHtml(rawTpl.text) + '</div>' :
+            '<p class="empty">원자료 없음</p>'
+          ) +
+          '<p style="font-size:.76rem;color:var(--neutral-400);margin:12px 0 0;">↑ 이 문장이 오른쪽에서 관점에 따라 다르게 가공됩니다.</p>' +
+        '</div>' +
+        '<div class="card">' +
+          '<p class="bkd-right-head">✏️ 관점별 가공본 — 탭을 눌러 비교하세요</p>' +
+          '<div class="bkd-tabs">' + tabsHtml + '</div>' +
+          '<div id="bkdPanels">' + panelsHtml + '</div>' +
+        '</div>' +
+      '</div>';
+
+    // 탭 클릭 이벤트
+    el.querySelectorAll('.bkd-tab').forEach(function(tab){
+      tab.addEventListener('click', function(){
+        var idx = tab.dataset.bkdIdx;
+        el.querySelectorAll('.bkd-tab').forEach(function(t){ t.classList.remove('active'); });
+        el.querySelectorAll('.bkd-panel').forEach(function(p){ p.classList.remove('active'); });
+        tab.classList.add('active');
+        el.querySelector('.bkd-panel[data-bkd-idx="'+idx+'"]').classList.add('active');
+      });
+    });
   }
 
   loadData();
