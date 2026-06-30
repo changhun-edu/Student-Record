@@ -735,6 +735,10 @@
   @media (max-width:820px){
     .persp-row{grid-template-columns:1fr;}
   }
+  .persp-row-2col{grid-template-columns:1fr 1fr !important;}
+  @media (max-width:600px){
+    .persp-row-2col{grid-template-columns:1fr !important;}
+  }
   .persp-col{
     border-radius:10px;
     padding:14px;
@@ -794,6 +798,13 @@
   .quiz-opt.wrong{background:var(--danger-bg); border-color:var(--danger); color:var(--danger); font-weight:700;}
   .quiz-feedback{font-size:.8rem; color:var(--ink-soft); margin-top:10px; display:none;}
   .quiz-feedback.show{display:block;}
+  .stage-heading{
+    font-size:.78rem;
+    font-weight:700;
+    color:var(--ink-soft);
+    margin:18px 0 8px;
+  }
+  .stage-heading:first-child{margin-top:0;}
 
   /* ===== empty state ===== */
   .empty{
@@ -985,28 +996,43 @@
       <p class="compare-why">왜 좋은가: "출발점 → 구체적 조작활동 → 도착점"의 흐름이 드러나, 단순한 결과 평가가 아니라 학생이 어떻게 성장했는지의 과정 전체가 보입니다. 학부모에게는 성장의 근거 자료가 됩니다.</p>
     </div>
 
-    <div class="section-head" style="margin-top:34px;"><span class="tag">관점</span><h2>같은 관찰, 다른 관점으로 쓰기</h2></div>
-    <p class="lead">"좋은 기재"도 한 가지 모양만 있는 것은 아닙니다. 같은 수업 장면이라도 어디에 초점을 두느냐(관점)에 따라 문장이 달라집니다. 아래 세 학생 사례는 각각 다른 관점을 대표적으로 보여줍니다.</p>
+    <div class="section-head" style="margin-top:34px;"><span class="tag">관점</span><h2>같은 누가기록, 다섯 가지로 가공하기</h2></div>
+    <p class="lead">아래는 '습도' 단원의 같은 누가기록 하나를 다섯 가지 관점으로 각각 가공한 예시입니다. 재료(관찰 사실)는 같아도, 어디에 초점을 두느냐에 따라 완성된 문장이 달라집니다.</p>
 
     <div class="card">
-      <div class="persp-row">
+      <p class="stage-heading" style="margin-top:0;">🗒️ 누가기록 원자료</p>
+      <p style="font-size:.88rem; color:var(--ink-soft); line-height:1.7; margin:0 0 18px; padding:12px 14px; background:var(--neutral-100); border-radius:8px;">
+        2개의 알콜 온도계와 뷰렛집게를 이용하여 건습구 습도계를 만들어 온도를 측정할 때 습구 온도계가 건구온도계에 비하여 왜 온도가 낮은지에 대하여 호기심을 가지고 여러 차례 질문하였으며, 스스로 그 원리를 이해하고 정확하게 찾아냄.
+      </p>
+      <p class="stage-heading">✏️ 다섯 가지 관점으로 가공한 결과</p>
+      <div class="persp-row persp-row-2col" style="margin-bottom:14px;">
         <div class="persp-col">
           <div class="persp-col-label">① 교과역량형</div>
-          <p class="persp-col-desc">공동체 역량 등 교과 역량을 중심에 두고 서술 (1-2학년 통합교과)</p>
-          <p>사람들이 많이 모이는 학교, 도서관, 놀이터, 공원 등 공공장소에서 지켜야 할 일과 그 안에 설치된 시설물의 올바른 사용 방법을 친구와 함께 찾아보고 그 내용을 바르게 정리하며, 스스로 계획을 세워 꾸준히 실천하며 공동체 역량을 키움.</p>
+          <p class="persp-col-desc">교과 역량이 드러난 장면을 중심으로</p>
+          <p>건습구 습도계를 직접 만들어 측정하는 과정에서 모르는 것을 끝까지 질문하고 스스로 원리를 찾아내는 지식정보처리 역량을 보임. 모둠에서 습도가 생활에 미치는 영향을 나눌 때 자신의 의견을 논리적으로 말하고 상대의 의견을 경청하는 의사소통 역량이 돋보임.</p>
         </div>
         <div class="persp-col">
           <div class="persp-col-label">② 구체활동형</div>
-          <p class="persp-col-desc">학생이 실제로 수행한 활동을 중심에 두고 서술 (3-4학년 과학)</p>
-          <p>2개의 알콜 온도계와 뷰렛집게를 이용하여 건습구 습도계를 만들어 온도를 측정할 때 습구 온도계가 건구온도계에 비하여 왜 온도가 낮은지에 대하여 호기심을 가지고 여러 차례 질문하였으며, 스스로 그 원리를 이해하고 정확하게 찾아냄.</p>
+          <p class="persp-col-desc">수행한 행동을 그대로 묘사</p>
+          <p>건습구 습도계의 기본원리를 정확히 알고, 실험 장치를 꾸밀 수 있으며 건습구 습도계로 습도 측정하기 활동을 잘 할 수 있음. 건구와 습구의 온도차와 습도표를 이용하여 습도를 정확하게 파악함.</p>
         </div>
         <div class="persp-col">
           <div class="persp-col-label">③ 성취수준형</div>
-          <p class="persp-col-desc">처음과 나중의 성취수준 변화를 중심에 두고 서술 (3-4학년 수학)</p>
-          <p>입체도형에 대한 이해가 낮고 쌓기나무의 전체 모양과 규칙을 파악하는데 어려움을 겪었으나, 여러 시간에 걸쳐 다양한 쌓기나무를 직접 쌓아보고 층별로 모양과 개수를 파악해 보는 활동을 반복함으로써 개수를 구하는 방법을 알게 되었으며, 입체도형의 이해도가 꾸준히 향상됨.</p>
+          <p class="persp-col-desc">도달한 능력의 정도를 중심으로</p>
+          <p>건구와 습구의 온도차를 이용하여 습도표에서 현재 습도를 정확하게 구할 수 있으며, 온도차가 클수록 건조하다는 원리를 스스로 설명할 수 있음. 습도가 생활에 미치는 영향을 두 가지 이상의 사례로 설명할 수 있는 수준에 도달함.</p>
+        </div>
+        <div class="persp-col">
+          <div class="persp-col-label">④ 성장변화형</div>
+          <p class="persp-col-desc">한 차시 안에서의 출발점→도착점</p>
+          <p>수업 도입부에서는 건구와 습구의 온도가 왜 다른지조차 알지 못했으나, 직접 습도계를 만들고 측정해보는 활동을 거치며 스스로 원리를 찾아내는 모습으로 변화함. 수업이 끝날 무렵에는 습도표를 능숙하게 활용함.</p>
+        </div>
+        <div class="persp-col" style="grid-column:1 / -1;">
+          <div class="persp-col-label">⑤ 피드백향상형</div>
+          <p class="persp-col-desc">여러 차시에 걸친 교사 피드백과 반복을 통한 향상</p>
+          <p>처음에는 건구와 습구의 온도차가 왜 생기는지 이해하지 못해 어려움을 겪었으나, 교사의 안내에 따라 직접 습도계를 만들고 여러 차례 측정을 반복하면서 점차 원리를 이해하게 됨. 이후 습도표를 활용한 문제를 스스로 풀어내는 등 성취수준이 꾸준히 향상됨.</p>
         </div>
       </div>
-      <p class="compare-why">어떻게 다른가: ①은 "이 활동을 통해 어떤 역량이 자랐는가"가 핵심 문장이고, ②는 "무엇을 어떻게 했는가"라는 행동 묘사가 핵심이며, ③은 "전 → 과정 → 후"라는 변화의 흐름이 핵심입니다. 같은 학생, 같은 수업이라도 교사가 어떤 관점을 택하느냐에 따라 강조점이 달라집니다. '직접 써보기'에서 관점을 골라 연습해 보세요.</p>
+      <p class="compare-why">①은 "어떤 역량이 자랐는가", ②는 "무엇을 어떻게 했는가", ③은 "지금 무엇을 할 수 있는가", ④는 "이 차시 안에서 어떻게 달라졌는가", ⑤는 "여러 차시에 걸쳐 어떻게 향상되었는가"가 핵심 질문입니다. '직접 써보기'에서 같은 항목(습도)을 펼치면 이 다섯 가지 가공본을 그대로 다시 볼 수 있습니다.</p>
     </div>
 
     <div class="why-cta card">
@@ -1064,13 +1090,15 @@
 
     <div class="card" style="padding:6px 22px;">
       <div class="acc-item">
-        <button class="acc-head">세부능력 및 특기사항, 세 가지 관점 <span class="arrow">▶</span></button>
+        <button class="acc-head">세부능력 및 특기사항, 다섯 가지 관점 <span class="arrow">▶</span></button>
         <div class="acc-panel"><div class="acc-panel-inner">
-          같은 수업 장면도 어디에 초점을 두느냐에 따라 다르게 쓸 수 있습니다.<br><br>
+          누가기록(원자료)은 하나지만, 이를 가공하는 관점은 다섯 가지입니다. 같은 수업 장면도 어디에 초점을 두느냐에 따라 다르게 쓸 수 있습니다.<br><br>
           <b>① 교과역량형</b> — 공동체, 의사소통, 자기관리 등 교과 역량이 드러난 장면을 중심으로 씁니다.<br>
-          <b>② 구체활동형</b> — 학생이 실제로 수행한 활동(만들기·실험·관찰 등)의 과정을 중심으로 씁니다.<br>
-          <b>③ 성취수준형</b> — "처음엔 ~했으나 → 어떤 활동을 거쳐 → ~하게 됨"처럼 성취수준의 변화 과정을 중심으로 씁니다.<br><br>
-          세 관점 중 하나만 정답인 것은 아니며, 학생의 누가기록 내용과 강조하고 싶은 지점에 따라 골라 쓰면 됩니다. '직접 써보기' 탭에서 관점을 선택해 연습할 수 있습니다.
+          <b>② 구체활동형</b> — 학생이 실제로 수행한 활동(만들기·실험·관찰 등)의 과정을 그대로 묘사합니다.<br>
+          <b>③ 성취수준형</b> — 지금 무엇을 얼마나 정확히 할 수 있는지, 도달한 능력의 정도를 중심으로 씁니다.<br>
+          <b>④ 성장변화형</b> — 한 차시 수업 안에서 학생의 출발점 수준과 도착점 수준이 어떻게 달라졌는지를 씁니다.<br>
+          <b>⑤ 피드백향상형</b> — 처음엔 성취수준이 낮았으나 여러 차시에 걸친 교사 피드백과 반복 활동을 통해 향상된 과정을 씁니다.<br><br>
+          다섯 관점 중 하나만 정답인 것은 아니며, 학생의 누가기록 내용과 강조하고 싶은 지점에 따라 골라 쓰면 됩니다. '직접 써보기' 탭에서 관점을 선택해 연습할 수 있습니다.
         </div></div>
       </div>
       <div class="acc-item">
@@ -1304,7 +1332,7 @@
     var perspectives = DATA.perspectives || [];
     function updatePerspectiveDesc(){
       var p = perspectives.filter(function(p){ return p.key === state.perspective; })[0];
-      perspectiveDesc.textContent = p ? p.desc : '관점을 고르면 해당 관점으로 작성된 예시만 모아 보여줍니다. (행동특성 및 종합의견 예시는 관점 구분 대상이 아니라 항상 표시됩니다)';
+      perspectiveDesc.textContent = p ? p.desc : '관점을 고르면 그 관점으로 가공된 예시만 모아 보여줍니다. 일부 예시(영재·발명교육 이수내용, 행동특성 및 종합의견 등)는 5관점 분류 대상이 아니라 필터 적용 시 보이지 않을 수 있습니다.';
     }
     perspectiveChips.innerHTML = perspectives.map(function(p){
       return '<button type="button" class="persp-chip" data-persp="'+p.key+'">'+p.label+'</button>';
@@ -1427,7 +1455,11 @@
         var hasAny = e.competencies.some(function(c){ return state.competencies.indexOf(c) >= 0; });
         if(!hasAny) return false;
       }
-      if(state.perspective && e.perspective && e.perspective !== state.perspective) return false;
+      if(state.perspective){
+        var entryMatches = e.perspective === state.perspective;
+        var tplMatches = e.templates.some(function(t){ return t.perspective === state.perspective; });
+        if(!entryMatches && !tplMatches) return false;
+      }
       if(!entryMatchesQuery(e, q)) return false;
       return true;
     });
@@ -1467,11 +1499,35 @@
     var codeStr = entry.achievementCode ? entry.achievementCode + ' ' : '';
     var isOpen = !!state.openEntries[entry.id];
     var q = state.query;
-    var perspLabel = perspectiveLabel(entry.perspective);
 
-    var templatesHtml = entry.templates.map(function(tpl, i){
-      return buildTemplateBlockHtml(entry, tpl, i);
-    }).join('');
+    var distinctPersp = {};
+    entry.templates.forEach(function(t){ if(t.perspective) distinctPersp[t.perspective] = true; });
+    var perspCount = Object.keys(distinctPersp).length;
+    var perspBadgeHtml = '';
+    if(perspCount >= 2){
+      perspBadgeHtml = '<span class="badge perspective">'+perspCount+'관점 비교 가능</span>';
+    } else if(entry.perspective){
+      perspBadgeHtml = '<span class="badge perspective">'+escapeHtml(perspectiveLabel(entry.perspective))+'</span>';
+    }
+
+    var rawTpls = entry.templates.filter(function(t){ return t.stage === 'raw'; });
+    var processedTpls = entry.templates.filter(function(t){ return t.stage !== 'raw'; });
+
+    var bodyHtml = '';
+    if(rawTpls.length){
+      bodyHtml += '<p class="stage-heading">🗒️ 누가기록 원자료 (가공 전)</p>' +
+        rawTpls.map(function(tpl){
+          var i = entry.templates.indexOf(tpl);
+          return buildTemplateBlockHtml(entry, tpl, i);
+        }).join('');
+    }
+    if(processedTpls.length){
+      bodyHtml += '<p class="stage-heading">✏️ 관점별로 가공한 기재 예시</p>' +
+        processedTpls.map(function(tpl){
+          var i = entry.templates.indexOf(tpl);
+          return buildTemplateBlockHtml(entry, tpl, i);
+        }).join('');
+    }
 
     return (
       '<div class="ledger" data-entry-id="'+escapeHtml(entry.id)+'">' +
@@ -1480,7 +1536,7 @@
             '<span class="summary-title">' +
               '<span class="subj-name">'+highlight(entry.subject, q)+'</span>' +
               '<span class="grade-tag">'+escapeHtml(entry.grade)+'</span>' +
-              (perspLabel ? '<span class="badge perspective">'+escapeHtml(perspLabel)+'</span>' : '') +
+              perspBadgeHtml +
               (entry.templates.length>1 ? '<span class="tpl-count">예시 '+entry.templates.length+'개</span>' : '') +
               (codeStr ? '<span class="tpl-count">'+escapeHtml(codeStr.trim())+'</span>' : '') +
             '</span>' +
@@ -1490,7 +1546,7 @@
         '</button>' +
         '<div class="ledger-body" id="body-'+escapeHtml(entry.id)+'">' +
           '<div class="ledger-body-inner">' +
-            templatesHtml +
+            bodyHtml +
           '</div>' +
         '</div>' +
       '</div>'
@@ -1510,6 +1566,7 @@
         '<div class="meta">' +
           '<span class="badge type">'+escapeHtml(tpl.type)+'</span>' +
           '<span class="badge level">'+escapeHtml(tpl.level)+'</span>' +
+          (tpl.perspective ? '<span class="badge perspective">'+escapeHtml(perspectiveLabel(tpl.perspective))+'</span>' : '') +
         '</div>' +
         '<div class="blank-text" data-raw="'+escapeHtml(tpl.text)+'">'+displayHtml+'</div>' +
         (hasBlanks ?
@@ -1755,9 +1812,11 @@
   function renderQuiz(perspectives){
     if(!quizArea || !perspectives.length) return;
     var quizItems = [
-      { text: '공동체 역량을 중심으로 두고, 학교·도서관 등 공공장소에서 지켜야 할 일을 친구와 함께 찾아보고 정리하며 공동체 역량을 키웠다고 서술함.', correct: 'competency' },
-      { text: '온도계 두 개로 직접 습도계를 만들어 측정하면서, 왜 온도가 다른지 여러 차례 질문하고 스스로 원리를 찾아낸 과정을 그대로 서술함.', correct: 'activity' },
-      { text: '처음엔 입체도형에 대한 이해가 낮았으나, 여러 차례 조작 활동을 반복한 끝에 이해도가 꾸준히 향상되었다고 서술함.', correct: 'level' }
+      { text: '건습구 습도계를 만드는 과정에서 모르는 것을 끝까지 질문하고, 스스로 원리를 찾아내는 지식정보처리 역량을 보였다고 서술함.', correct: 'competency' },
+      { text: '건습구 습도계의 기본원리를 알고, 실험 장치를 직접 꾸며 습도 측정하기 활동을 잘 수행했다고 그 행동을 그대로 서술함.', correct: 'activity' },
+      { text: '온도차가 클수록 건조하다는 원리를 스스로 설명할 수 있고, 습도가 생활에 미치는 영향을 두 가지 이상 사례로 설명할 수 있는 수준에 도달했다고 서술함.', correct: 'level' },
+      { text: '수업 도입부에는 온도차가 왜 생기는지 몰랐으나, 수업이 끝날 무렵에는 습도표를 능숙하게 활용하게 되었다며 한 차시 안에서의 변화를 서술함.', correct: 'growth' },
+      { text: '처음에는 원리를 이해하지 못해 어려움을 겪었으나, 교사의 안내에 따라 여러 차례 반복하며 점차 성취수준이 향상되었다고 서술함.', correct: 'feedback' }
     ];
     quizArea.innerHTML = quizItems.map(function(item, idx){
       var optsHtml = perspectives.map(function(p){
