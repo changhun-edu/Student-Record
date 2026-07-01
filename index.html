@@ -911,7 +911,24 @@
     color:var(--ink); font-weight:700;
     background:var(--card);
   }
-  .bkd-desc-fixed{
+  .bkd-selector-wrap{margin-bottom:16px;}
+  .bkd-selector-label{font-size:.72rem; font-weight:700; letter-spacing:.07em; color:var(--ink-soft); margin:0 0 8px;}
+  .bkd-selector-btns{display:flex; gap:8px; flex-wrap:wrap;}
+  .bkd-sel-btn{
+    display:flex; align-items:center; gap:6px;
+    padding:8px 16px;
+    border:1.5px solid var(--paper-line);
+    border-radius:999px;
+    background:var(--card);
+    color:var(--ink-soft);
+    font-size:.82rem;
+    cursor:pointer;
+    transition:all .15s;
+  }
+  .bkd-sel-btn:hover{border-color:var(--ink-soft); color:var(--ink);}
+  .bkd-sel-btn.active{background:var(--ink); border-color:var(--ink); color:#fff; font-weight:600;}
+  .bkd-sel-grade{font-size:.7rem; opacity:.75;}
+    .bkd-desc-fixed{
     padding:10px 16px;
     background:var(--neutral-100);
     border-bottom:1px dashed var(--neutral-200);
@@ -1010,8 +1027,11 @@
   border-bottom:2px solid var(--paper-line);
   flex-wrap:nowrap;
   overflow-x:auto;
+  overflow-y:hidden;
   -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
 }
+.beh-tabs-wrap::-webkit-scrollbar{display:none;}
 .beh-tab-btn{
   padding:10px 18px;
   border:none;
@@ -1527,7 +1547,13 @@
   <section class="view" id="view-breakdown">
     <div class="section-head"><span class="tag">핵심</span><h2>같은 누가기록, 다섯 가지 구성요소로 뜯어보기</h2></div>
     <p class="lead">왼쪽의 누가기록 원자료가 어떤 관점을 택하느냐에 따라 오른쪽 문장의 구성요소 자체가 달라집니다. 탭을 눌러 비교해 보세요.</p>
-    <div id="breakdownShowcase"></div>
+    <div id="breakdownShowcase">
+      <div class="bkd-selector-wrap">
+        <p class="bkd-selector-label">예제 선택</p>
+        <div id="bkdSelectorBtns" class="bkd-selector-btns"></div>
+      </div>
+      <div id="bkdDisplay"></div>
+    </div>
   </section>
 
   <!-- ===================== VIEW: COMPARE ===================== -->
@@ -2106,94 +2132,120 @@
   }
 
   function renderBreakdownShowcase(){
-    var el = document.getElementById('breakdownShowcase');
-    if(!el || !DATA) return;
-    var master = DATA.entries.filter(function(e){
+    var showcaseEl = document.getElementById('breakdownShowcase');
+    if(!showcaseEl || !DATA) return;
+
+    // 마스터 예제 목록: breakdown 이 2개 이상인 entry 수집
+    var masters = DATA.entries.filter(function(e){
       return e.templates.filter(function(t){ return t.breakdown; }).length >= 2;
-    })[0];
-    if(!master){
-      el.innerHTML = '<div class="card"><p class="empty">준비 중입니다.</p></div>';
+    });
+    if(!masters.length){
+      showcaseEl.innerHTML = '<div class="card"><p class="empty">아직 구성요소 분해 예제가 준비되지 않았습니다.</p></div>';
       return;
     }
 
-    var rawTpl = master.templates.filter(function(t){ return t.stage === 'raw'; })[0];
-    var processed = master.templates.filter(function(t){ return t.breakdown; });
-    var order = {};
-    DATA.perspectives.forEach(function(p, idx){ order[p.key] = idx; });
-    processed.sort(function(a, b){ return (order[a.perspective]||99) - (order[b.perspective]||99); });
+    var selBtns = document.getElementById('bkdSelectorBtns');
+    var displayEl = document.getElementById('bkdDisplay');
 
-    var tabsHtml = processed.map(function(tpl, idx){
-      var p = DATA.perspectives.filter(function(p){ return p.key === tpl.perspective; })[0];
-      var label = p ? p.label : tpl.perspective;
-      var accent = PERSP_ACCENT[tpl.perspective] || 'var(--ink)';
+    // 선택 버튼 생성
+    selBtns.innerHTML = masters.map(function(e, idx){
       return (
-        '<button type="button" class="bkd-tab' + (idx===0?' active':'') + '"' +
-        ' data-bkd-idx="'+idx+'" data-bkd-accent="'+accent+'"' +
-        ' style="'+(idx===0?'--bkd-accent:'+accent+';border-color:'+accent:'')+'">' +
-          '<span class="bkd-tab-num">' + (idx+1) + '</span>' +
-          escapeHtml(label) +
+        '<button type="button" class="bkd-sel-btn' + (idx===0?' active':'') + '" data-master-idx="'+idx+'">' +
+          '<span>' + escapeHtml(e.subject) + '</span>' +
+          '<span class="bkd-sel-grade">' + escapeHtml(e.grade) + '</span>' +
         '</button>'
       );
     }).join('');
 
-    var panelsHtml = processed.map(function(tpl, idx){
-      return (
-        '<div class="bkd-panel' + (idx===0?' active':'') + '" data-bkd-idx="'+idx+'">' +
-          buildRoleBreakdownHtml(tpl) +
-        '</div>'
-      );
-    }).join('');
+    function renderMaster(masterIdx){
+      var master = masters[masterIdx];
+      var rawTpl = master.templates.filter(function(t){ return t.stage === 'raw'; })[0];
+      var processed = master.templates.filter(function(t){ return t.breakdown; });
+      var order = {};
+      DATA.perspectives.forEach(function(p, idx){ order[p.key] = idx; });
+      processed.sort(function(a, b){ return (order[a.perspective]||99) - (order[b.perspective]||99); });
 
-    var firstP = DATA.perspectives.filter(function(p){ return p.key === processed[0].perspective; })[0];
-
-    el.innerHTML =
-      '<div class="bkd-layout">' +
-        '<div class="bkd-raw">' +
-          '<span class="bkd-raw-badge">원자료 (누가기록)</span>' +
-          '<p class="bkd-raw-meta">' + escapeHtml(master.subject) + ' · ' + escapeHtml(master.grade) + '</p>' +
-          (rawTpl ? '<div class="bkd-raw-text">' + escapeHtml(rawTpl.text) + '</div>' : '') +
-          '<p class="bkd-raw-hint">→ 이 관찰 기록을 바탕으로 오른쪽 다섯 가지 관점 중 하나로 가공합니다.</p>' +
-        '</div>' +
-        '<div class="bkd-arrow-col">→</div>' +
-        '<div class="bkd-right">' +
-          '<div class="bkd-tabs-wrap">' +
-            '<p class="bkd-tabs-label">관점을 선택하세요</p>' +
-            '<div class="bkd-tabs">' + tabsHtml + '</div>' +
-          '</div>' +
-          '<div class="bkd-desc-fixed" id="bkdDescFixed">' + escapeHtml(firstP ? firstP.desc : '') + '</div>' +
-          '<div class="bkd-panels">' + panelsHtml + '</div>' +
-        '</div>' +
-      '</div>';
-
-    var descEl = el.querySelector('#bkdDescFixed');
-    el.querySelectorAll('.bkd-tab').forEach(function(tab){
-      tab.addEventListener('click', function(){
-        var idx = tab.dataset.bkdIdx;
-        var accent = tab.dataset.bkdAccent || 'var(--ink)';
-        el.querySelectorAll('.bkd-tab').forEach(function(t){ t.classList.remove('active'); t.style.cssText=''; });
-        el.querySelectorAll('.bkd-panel').forEach(function(p){ p.classList.remove('active'); });
-        tab.classList.add('active');
-        tab.style.cssText = '--bkd-accent:'+accent+';border-color:'+accent;
-        el.querySelector('.bkd-panel[data-bkd-idx="'+idx+'"]').classList.add('active');
-        var tpl = processed[parseInt(idx, 10)];
+      var tabsHtml = processed.map(function(tpl, idx){
         var p = DATA.perspectives.filter(function(p){ return p.key === tpl.perspective; })[0];
-        if(descEl) descEl.textContent = p ? p.desc : '';
+        var label = p ? p.label : tpl.perspective;
+        var accent = PERSP_ACCENT[tpl.perspective] || 'var(--ink)';
+        return (
+          '<button type="button" class="bkd-tab' + (idx===0?' active':'') + '"' +
+          ' data-bkd-idx="'+idx+'" data-bkd-accent="'+accent+'"' +
+          ' style="'+(idx===0?'--bkd-accent:'+accent+';border-color:'+accent:'')+'">' +
+            '<span class="bkd-tab-num">' + (idx+1) + '</span>' +
+            escapeHtml(label) +
+          '</button>'
+        );
+      }).join('');
+
+      var panelsHtml = processed.map(function(tpl, idx){
+        return (
+          '<div class="bkd-panel' + (idx===0?' active':'') + '" data-bkd-idx="'+idx+'">' +
+            buildRoleBreakdownHtml(tpl) +
+          '</div>'
+        );
+      }).join('');
+
+      var firstP = DATA.perspectives.filter(function(p){ return p.key === processed[0].perspective; })[0];
+
+      // 통합교과 안내
+      var noticeHtml = '';
+      if(master.subject === '통합교과' || master.grade === '1-2학년'){
+        noticeHtml = '<div class="bkd-panel-desc" style="margin-bottom:12px; border-left-color:var(--gold);">💡 1-2학년 통합교과는 바른생활·슬기로운생활·즐거운생활 세 교과의 성취수준에 따른 특성을 <b>종합하여 하나의 문장으로 기재</b>합니다. 특정 교과가 누락되지 않도록 유의합니다.</div>';
+      }
+
+      displayEl.innerHTML =
+        noticeHtml +
+        '<div class="bkd-layout">' +
+          '<div class="bkd-raw">' +
+            '<span class="bkd-raw-badge">원자료 (누가기록)</span>' +
+            '<p class="bkd-raw-meta">' + escapeHtml(master.subject) + ' · ' + escapeHtml(master.grade) + '</p>' +
+            (rawTpl ? '<div class="bkd-raw-text">' + escapeHtml(rawTpl.text) + '</div>' : '') +
+            '<p class="bkd-raw-hint">→ 이 관찰 기록을 바탕으로 오른쪽 다섯 가지 관점 중 하나로 가공합니다.</p>' +
+          '</div>' +
+          '<div class="bkd-arrow-col">→</div>' +
+          '<div class="bkd-right">' +
+            '<div class="bkd-tabs-wrap">' +
+              '<p class="bkd-tabs-label">관점을 선택하세요</p>' +
+              '<div class="bkd-tabs">' + tabsHtml + '</div>' +
+            '</div>' +
+            '<div class="bkd-desc-fixed" id="bkdDescFixed">' + escapeHtml(firstP ? firstP.desc : '') + '</div>' +
+            '<div class="bkd-panels">' + panelsHtml + '</div>' +
+          '</div>' +
+        '</div>';
+
+      // 관점 탭 이벤트
+      var descEl = displayEl.querySelector('#bkdDescFixed');
+      displayEl.querySelectorAll('.bkd-tab').forEach(function(tab){
+        tab.addEventListener('click', function(){
+          var idx = tab.dataset.bkdIdx;
+          var accent = tab.dataset.bkdAccent || 'var(--ink)';
+          displayEl.querySelectorAll('.bkd-tab').forEach(function(t){ t.classList.remove('active'); t.style.cssText=''; });
+          displayEl.querySelectorAll('.bkd-panel').forEach(function(p){ p.classList.remove('active'); });
+          tab.classList.add('active');
+          tab.style.cssText = '--bkd-accent:'+accent+';border-color:'+accent;
+          displayEl.querySelector('.bkd-panel[data-bkd-idx="'+idx+'"]').classList.add('active');
+          var tpl = processed[parseInt(idx, 10)];
+          var p = DATA.perspectives.filter(function(p){ return p.key === tpl.perspective; })[0];
+          if(descEl) descEl.textContent = p ? p.desc : '';
+        });
+      });
+    }
+
+    // 예제 선택 버튼 이벤트
+    selBtns.querySelectorAll('.bkd-sel-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        selBtns.querySelectorAll('.bkd-sel-btn').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        renderMaster(parseInt(btn.dataset.masterIdx, 10));
       });
     });
+
+    renderMaster(0);
   }
 
-  // ===== 데이터 로드 =====
-  function loadData(){
-    fetch('data/phrases.json')
-      .then(function(res){ return res.json(); })
-      .then(function(json){
-        DATA = json;
-        renderBreakdownShowcase();
-      })
-      .catch(function(){ console.warn('phrases.json 로드 실패'); });
-  }
-
-  loadData();
+    loadData();
 })();
 </script>
 </body>
