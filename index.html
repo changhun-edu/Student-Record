@@ -969,6 +969,48 @@
     background:var(--ink-soft); border-radius:4px; padding:1px 5px; margin-left:3px;
   }
 
+  /* ===== 영역 분류 시각화 ===== */
+  .area-sort-grid{display:grid; grid-template-columns:1fr 28px repeat(4,1fr); gap:0; align-items:start; margin-top:4px;}
+  @media(max-width:900px){.area-sort-grid{grid-template-columns:1fr;}}
+  .area-diary-col{background:var(--card); border:2px solid var(--ink); border-radius:var(--radius); padding:14px 16px;}
+  .area-diary-badge{display:inline-block; font-size:.68rem; font-weight:800; letter-spacing:.06em; background:var(--ink); color:var(--card); padding:2px 8px; border-radius:4px; margin-bottom:10px;}
+  .area-diary-item{display:flex; gap:8px; padding:6px 0; border-bottom:1px dashed var(--neutral-200); font-size:.8rem; line-height:1.55;}
+  .area-diary-item:last-child{border-bottom:none;}
+  .area-diary-date{font-size:.72rem; font-weight:700; white-space:nowrap; padding-top:1px; min-width:30px;}
+  .area-diary-date.school{color:var(--pine);}
+  .area-diary-date.char{color:var(--gold);}
+  .area-diary-date.subj{color:#6B5BAF;}
+  .area-diary-date.arts{color:var(--seal);}
+  .area-sort-arrow{display:flex; align-items:center; justify-content:center; padding-top:50px; color:var(--ink-soft); font-size:1.1rem;}
+  @media(max-width:900px){.area-sort-arrow{display:none;}}
+  .area-bucket{background:var(--neutral-100); border-radius:var(--radius); padding:11px 13px; border-top:3px solid var(--neutral-400);}
+  .area-bucket.school{border-top-color:var(--pine);}
+  .area-bucket.char  {border-top-color:var(--gold);}
+  .area-bucket.subj  {border-top-color:#6B5BAF;}
+  .area-bucket.arts  {border-top-color:var(--seal);}
+  .area-bucket-label{font-size:.72rem; font-weight:800; margin:0 0 7px; color:var(--ink-soft);}
+  .area-bucket-item{font-size:.78rem; line-height:1.55; color:var(--ink); padding:4px 0; border-bottom:1px dashed var(--neutral-200);}
+  .area-bucket-item:last-child{border-bottom:none;}
+  /* 연결 표현 테이블 */
+  .conn-table{width:100%; border-collapse:collapse; font-size:.84rem;}
+  .conn-table th{background:var(--neutral-100); padding:9px 12px; text-align:left; font-weight:700; border:1px solid var(--neutral-200); color:var(--ink-soft); font-size:.78rem;}
+  .conn-table td{padding:9px 12px; border:1px solid var(--neutral-200); vertical-align:top; line-height:1.75;}
+  .conn-table tr:nth-child(even) td{background:var(--neutral-100);}
+  .conn-badge{display:inline-block; font-size:.68rem; font-weight:700; color:#fff; padding:2px 7px; border-radius:4px; white-space:nowrap;}
+  /* 비중 체크리스트 */
+  .checklist-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:4px;}
+  @media(max-width:700px){.checklist-grid{grid-template-columns:1fr;}}
+  .checklist-card{background:var(--neutral-100); border:1px solid var(--neutral-200); border-radius:10px; padding:14px 16px;}
+  .checklist-grade{font-size:.8rem; font-weight:800; color:var(--card); padding:2px 10px; border-radius:4px; display:inline-block; margin-bottom:10px;}
+  .checklist-grade.g12{background:var(--pine);}
+  .checklist-grade.g34{background:var(--gold);}
+  .checklist-grade.g56{background:#6B5BAF;}
+  .checklist-item{display:flex; align-items:flex-start; gap:7px; padding:5px 0; border-bottom:1px dashed var(--neutral-200); font-size:.82rem; line-height:1.55;}
+  .checklist-item:last-child{border-bottom:none;}
+  .checklist-icon{flex-shrink:0; margin-top:1px;}
+  .checklist-warn{background:var(--danger-bg); border-radius:6px; padding:7px 10px; font-size:.78rem; color:var(--danger); margin-top:8px; line-height:1.6;}
+
+
   /* role 기반 고정 색상 */
   .brk-role-competency{background:#EFE6D1; box-shadow:inset 0 -2px 0 #9C7B41; border-radius:4px; padding:1px 3px;}
   .brk-role-activity  {background:#E0F2F1; box-shadow:inset 0 -2px 0 #2E7D72; border-radius:4px; padding:1px 3px;}
@@ -1863,6 +1905,111 @@
           <span class="beh-legend-item"><span class="beh-legend-dot char"></span>인성 (단점→성장가능성)</span>
           <span class="beh-legend-item"><span class="beh-legend-dot subj"></span>교과·예체능 두각</span>
         </div>
+      </div>
+    </div>
+    <!-- 섹션: 누가기록 → 영역 분류 시각화 -->
+    <div class="section-head" style="margin-top:28px;"><span class="tag">분류</span><h2>누가기록을 영역별로 분류하기</h2></div>
+    <p class="lead">날짜별 누가기록을 4개 영역으로 분류한 뒤, 각 영역의 핵심 장면을 연결하면 자연스러운 문장이 됩니다.</p>
+    <div class="card">
+      <div class="area-sort-grid">
+        <div class="area-diary-col">
+          <span class="area-diary-badge">누가기록 원자료</span>
+          <div class="area-diary-item"><span class="area-diary-date school">4.20</span><span>학급회의에서 의견이 다른 친구들을 설득하여 자신의 생각을 표현함.</span></div>
+          <div class="area-diary-item"><span class="area-diary-date char">5.14</span><span>쉬는 시간에 혼자 있는 친구에게 먼저 다가가 함께 놀이에 참여할 수 있도록 배려함.</span></div>
+          <div class="area-diary-item"><span class="area-diary-date subj">5.29</span><span>수학 모둠 활동에서 부장을 맡아 친구들의 발표 자료를 정리하여 발표를 도움.</span></div>
+          <div class="area-diary-item"><span class="area-diary-date school">6.4</span><span>학급 자치회의에서 학급 문화 개선 방향을 제안함.</span></div>
+          <div class="area-diary-item"><span class="area-diary-date char">9.15</span><span>뒷산 탐방 시간에 늦게 오는 친구를 기다려 함께 정상까지 오름.</span></div>
+          <div class="area-diary-item"><span class="area-diary-date arts">10.9</span><span>학예회에서 리코더를 정확한 음정으로 연주하여 친구들의 박수를 받음.</span></div>
+          <div class="area-diary-item"><span class="area-diary-date subj">11.4</span><span>과학 실험 보고서를 만화 형식으로 창의적으로 작성하여 제출함.</span></div>
+        </div>
+        <div class="area-sort-arrow">→</div>
+        <div class="area-bucket school">
+          <p class="area-bucket-label">🏫 학교생활</p>
+          <div class="area-bucket-item">학급회의 개선 제안 (4.20, 6.4)</div>
+        </div>
+        <div class="area-bucket char">
+          <p class="area-bucket-label">💛 인성</p>
+          <div class="area-bucket-item">혼자 있는 친구 배려 (5.14)</div>
+          <div class="area-bucket-item">친구 기다려 동행 (9.15)</div>
+        </div>
+        <div class="area-bucket subj">
+          <p class="area-bucket-label">📖 교과활동</p>
+          <div class="area-bucket-item">수학 모둠 부장 (5.29)</div>
+          <div class="area-bucket-item">과학 보고서 창의 작성 (11.4)</div>
+        </div>
+        <div class="area-bucket arts">
+          <p class="area-bucket-label">🎨 예술활동</p>
+          <div class="area-bucket-item">학예회 리코더 (10.9)</div>
+        </div>
+      </div>
+      <p class="compare-why" style="margin-top:14px;">모든 날짜를 다 쓸 필요는 없습니다. 각 영역에서 <b>가장 구체적이고 인상적인 장면 1~2개</b>를 골라 연결하세요.</p>
+    </div>
+
+    <!-- 섹션: 영역 연결 표현 패턴 -->
+    <div class="section-head" style="margin-top:28px;"><span class="tag">표현</span><h2>영역 연결 표현 패턴</h2></div>
+    <p class="lead">영역이 바뀔 때 자연스럽게 이어주는 표현 패턴입니다. 직접 활용하거나 변형하세요.</p>
+    <div class="card">
+      <table class="conn-table">
+        <thead>
+          <tr><th>전환 방향</th><th>연결 표현 예시</th><th>활용 팁</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="conn-badge" style="background:var(--pine);">학교생활</span> → <span class="conn-badge" style="background:var(--gold);">인성</span></td>
+            <td>~한 모습에서 <b>배려심을 엿볼 수 있음</b><br>~뿐만 아니라 <b>어려운 친구를 먼저 도와주는</b> 모습도 보임<br><b>특히</b> ~하는 장면은 다른 학생들에게 모범이 됨</td>
+            <td>학교생활 기술 후 "특히"로 인성 장면 부각</td>
+          </tr>
+          <tr>
+            <td><span class="conn-badge" style="background:var(--gold);">인성</span> → <span class="conn-badge" style="background:#6B5BAF;">교과활동</span></td>
+            <td><b>학업에서도</b> 이런 성격이 드러나~<br><b>수업 시간에는</b> ~하여 리더의 자질을 보임<br>~한 인성을 바탕으로 <b>모둠 활동에서도</b>~</td>
+            <td>"~에서도"로 자연스럽게 영역 전환</td>
+          </tr>
+          <tr>
+            <td><span class="conn-badge" style="background:#6B5BAF;">교과활동</span> → <span class="conn-badge" style="background:var(--seal);">예술활동</span></td>
+            <td><b>교과 활동 외에도</b> 음악·미술 시간에는~<br><b>학예회에서는</b> ~하여 뛰어난 재능을 선보임<br><b>예술 분야에서도</b> 두각을 나타내어~</td>
+            <td>"교과 외에도"로 예술 영역 자연 전환</td>
+          </tr>
+          <tr>
+            <td><span class="conn-badge" style="background:var(--danger);">단점</span> → <span class="conn-badge" style="background:var(--pine);">성장가능성</span></td>
+            <td>~이 미숙하지만 <b>~하려는 태도가 좋으므로</b>~<br>~하는 경우가 있으나 <b>스스로 반성하고</b>~<br>~에 어려움을 겪었으나 <b>꾸준히 노력하여</b>~</td>
+            <td>단점 서술 후 반드시 긍정 근거 → 기대 3단 구조</td>
+          </tr>
+          <tr>
+            <td><span class="conn-badge" style="background:var(--gold);">1학기</span> → <span class="conn-badge" style="background:#6B5BAF;">2학기</span></td>
+            <td><b>2학기에는</b> ~ 분야에서 두각을 드러내며~<br><b>하반기 들어</b> ~하는 태도가 정착되고 있음<br><b>학기 후반에는</b> ~로 성장이 기대되는 학생임</td>
+            <td>5-6학년은 반드시 학기 구분 후 전환 표현 사용</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 섹션: 학년군별 비중 체크리스트 -->
+    <div class="section-head" style="margin-top:28px;"><span class="tag">체크</span><h2>학년군별 영역 비중 체크리스트</h2></div>
+    <p class="lead">기재 전 이 체크리스트로 영역 누락·편중을 점검하세요.</p>
+    <div class="checklist-grid">
+      <div class="checklist-card">
+        <span class="checklist-grade g12">1–2학년</span>
+        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>학교생활 모습</b> — 쉬는 시간·학급 활동 등 일상 적응</span></div>
+        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>인성</b> — 배려·나눔의 구체 장면 1개 이상</span></div>
+        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>교과 활동</b> — 수업 태도·참여·발표 등</span></div>
+        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>예술 활동</b> — 음악·미술·체육 재능 (있을 때)</span></div>
+        <div class="checklist-warn">⚠️ 영역 라벨("학교생활:", "인성:")을 문장에 쓰지 않기</div>
+      </div>
+      <div class="checklist-card">
+        <span class="checklist-grade g34">3–4학년</span>
+        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>학교생활 모습</b> — 기본생활습관·규칙 준수 구체적으로</span></div>
+        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>인성</b> — 구체 행동 장면(날짜·상황) 포함</span></div>
+        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>교과 활동</b> — 리더십·역할·창의 표현 연결</span></div>
+        <div class="checklist-item"><span class="checklist-icon">⬜</span><span><b>예술 활동</b> — 두드러진 재능 있을 때만</span></div>
+        <div class="checklist-warn">⚠️ 특정 영역(보통 인성)만 길면 다른 영역 보강하기</div>
+      </div>
+      <div class="checklist-card">
+        <span class="checklist-grade g56">5–6학년</span>
+        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>[1학기]</b> 학교생활·인성 중심 기술</span></div>
+        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>[1학기]</b> 단점 → 성장가능성 전환 포함</span></div>
+        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>[2학기]</b> 학업역량 or 예체능 두각 기술</span></div>
+        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>[2학기]</b> 성장 모습 or 변화 마무리</span></div>
+        <div class="checklist-warn">⚠️ 학기 구분 없이 쓰거나 단점만 서술하지 않기</div>
       </div>
     </div>
   </div>
