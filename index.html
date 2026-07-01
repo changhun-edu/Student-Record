@@ -969,27 +969,108 @@
     background:var(--ink-soft); border-radius:4px; padding:1px 5px; margin-left:3px;
   }
 
+  /* 연계유형 서브탭 색상 테마 */
+  .conv-key-note{
+    padding:10px 14px; border-radius:8px;
+    border-left:3px solid var(--neutral-400);
+    background:var(--neutral-100);
+    font-size:.82rem; line-height:1.65;
+    margin-bottom:14px;
+  }
+  .conv-key-note.club    {border-left-color:var(--pine);}
+  .conv-key-note.career  {border-left-color:#6B5BAF;}
+  .conv-key-note.service {border-left-color:var(--seal);}
+  .conv-key-note.character{border-left-color:var(--gold);}
+  /* 선별기준 설명박스 */
+  .conv-selection-note{
+    margin-top:12px; padding:10px 14px;
+    background:var(--neutral-100); border-radius:8px;
+    font-size:.8rem; color:var(--ink-soft); line-height:1.65;
+    border-top:1px dashed var(--neutral-200);
+  }
+  .conv-selection-note b{color:var(--ink);}
+  /* 말풍선 하이라이트 */
+  .conv-callout{
+    display:inline-block; position:relative;
+    border-bottom:2px dashed var(--pine);
+    cursor:default;
+  }
+  .conv-callout-tip{
+    display:none; position:absolute; bottom:calc(100% + 6px); left:0;
+    background:var(--ink); color:var(--card);
+    font-size:.74rem; line-height:1.5;
+    padding:6px 10px; border-radius:6px;
+    white-space:nowrap; z-index:10;
+    pointer-events:none;
+  }
+  .conv-callout:hover .conv-callout-tip{display:block;}
+
+  /* 분류 연습 퀴즈 */
+  .quiz-intro{font-size:.86rem; color:var(--ink-soft); margin-bottom:16px; line-height:1.65;}
+  .quiz-entry{
+    background:var(--neutral-100); border:1.5px solid var(--neutral-200);
+    border-radius:10px; padding:14px 16px; margin-bottom:10px;
+    transition:border-color .2s;
+  }
+  .quiz-entry.answered-correct{border-color:var(--pine); background:var(--pine-soft);}
+  .quiz-entry.answered-wrong{border-color:var(--danger); background:var(--danger-bg);}
+  .quiz-entry-header{display:flex; gap:10px; align-items:flex-start; margin-bottom:10px;}
+  .quiz-entry-date{font-size:.75rem; font-weight:700; color:var(--gold); white-space:nowrap; padding-top:1px; min-width:34px;}
+  .quiz-entry-text{font-size:.86rem; line-height:1.6; color:var(--ink);}
+  .quiz-area-btns{display:flex; gap:6px; flex-wrap:wrap;}
+  .quiz-area-btn{
+    padding:5px 12px; border-radius:999px; border:1.5px solid var(--neutral-200);
+    background:var(--card); font-size:.78rem; cursor:pointer;
+    transition:all .15s; color:var(--ink-soft);
+  }
+  .quiz-area-btn:hover:not(:disabled){border-color:var(--ink); color:var(--ink);}
+  .quiz-area-btn:disabled{cursor:default; opacity:.7;}
+  .quiz-area-btn.selected-correct{background:var(--pine); border-color:var(--pine); color:#fff; font-weight:700;}
+  .quiz-area-btn.selected-wrong{background:var(--danger); border-color:var(--danger); color:#fff; font-weight:700;}
+  .quiz-area-btn.reveal-answer{background:var(--pine-soft); border-color:var(--pine); color:var(--pine); font-weight:700;}
+  .quiz-feedback{font-size:.78rem; margin-top:8px; line-height:1.5;}
+  .quiz-feedback.correct{color:var(--pine); font-weight:600;}
+  .quiz-feedback.wrong{color:var(--danger);}
+  .quiz-score{
+    background:var(--card); border:2px solid var(--ink); border-radius:12px;
+    padding:16px 20px; text-align:center; margin-top:16px; display:none;
+  }
+  .quiz-score.show{display:block;}
+  .quiz-score-num{font-size:1.6rem; font-weight:800; color:var(--ink);}
+  .quiz-score-msg{font-size:.86rem; color:var(--ink-soft); margin-top:4px;}
+  .quiz-retry-btn{margin-top:12px; padding:8px 20px; background:var(--ink); color:var(--card); border:none; border-radius:8px; cursor:pointer; font-size:.84rem; font-weight:600;}
+
+  /* 압축 원칙 카드 */
+  .compress-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px;}
+  @media(max-width:640px){.compress-grid{grid-template-columns:1fr;}}
+  .compress-card{background:var(--neutral-100); border:1px solid var(--neutral-200); border-left:4px solid var(--ink); border-radius:0 10px 10px 0; padding:14px 16px; font-size:.86rem; line-height:1.75;}
+  .compress-card-title{font-weight:700; color:var(--ink); margin:0 0 8px; font-size:.88rem;}
+  .compress-before{color:var(--ink-soft); margin:6px 0 4px; font-size:.82rem;}
+  .compress-after{color:var(--pine); font-weight:600; font-size:.84rem;}
   /* ===== 영역 분류 시각화 ===== */
-  .area-sort-grid{display:grid; grid-template-columns:1fr 28px repeat(4,1fr); gap:0; align-items:start; margin-top:4px;}
-  @media(max-width:900px){.area-sort-grid{grid-template-columns:1fr;}}
+  .area-sort-grid{display:grid; grid-template-columns:1fr 28px 1fr; gap:0; align-items:start; margin-top:4px;}
+  @media(max-width:820px){.area-sort-grid{grid-template-columns:1fr; gap:12px;}}
   .area-diary-col{background:var(--card); border:2px solid var(--ink); border-radius:var(--radius); padding:14px 16px;}
   .area-diary-badge{display:inline-block; font-size:.68rem; font-weight:800; letter-spacing:.06em; background:var(--ink); color:var(--card); padding:2px 8px; border-radius:4px; margin-bottom:10px;}
-  .area-diary-item{display:flex; gap:8px; padding:6px 0; border-bottom:1px dashed var(--neutral-200); font-size:.8rem; line-height:1.55;}
+  .area-diary-item{display:flex; gap:8px; padding:6px 0; border-bottom:1px dashed var(--neutral-200); font-size:.84rem; line-height:1.6;}
   .area-diary-item:last-child{border-bottom:none;}
-  .area-diary-date{font-size:.72rem; font-weight:700; white-space:nowrap; padding-top:1px; min-width:30px;}
+  .area-diary-date{font-size:.74rem; font-weight:700; white-space:nowrap; padding-top:2px; min-width:34px;}
   .area-diary-date.school{color:var(--pine);}
   .area-diary-date.char{color:var(--gold);}
   .area-diary-date.subj{color:#6B5BAF;}
   .area-diary-date.arts{color:var(--seal);}
   .area-sort-arrow{display:flex; align-items:center; justify-content:center; padding-top:50px; color:var(--ink-soft); font-size:1.1rem;}
-  @media(max-width:900px){.area-sort-arrow{display:none;}}
-  .area-bucket{background:var(--neutral-100); border-radius:var(--radius); padding:11px 13px; border-top:3px solid var(--neutral-400);}
+  @media(max-width:820px){.area-sort-arrow{display:none;}}
+  /* 오른쪽: 2×2 그리드 */
+  .area-bucket-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  @media(max-width:480px){.area-bucket-grid{grid-template-columns:1fr;}}
+  .area-bucket{background:var(--neutral-100); border-radius:var(--radius); padding:12px 14px; border-top:3px solid var(--neutral-400);}
   .area-bucket.school{border-top-color:var(--pine);}
   .area-bucket.char  {border-top-color:var(--gold);}
   .area-bucket.subj  {border-top-color:#6B5BAF;}
   .area-bucket.arts  {border-top-color:var(--seal);}
-  .area-bucket-label{font-size:.72rem; font-weight:800; margin:0 0 7px; color:var(--ink-soft);}
-  .area-bucket-item{font-size:.78rem; line-height:1.55; color:var(--ink); padding:4px 0; border-bottom:1px dashed var(--neutral-200);}
+  .area-bucket-label{font-size:.75rem; font-weight:800; margin:0 0 8px; color:var(--ink-soft);}
+  .area-bucket-item{font-size:.82rem; line-height:1.6; color:var(--ink); padding:4px 0; border-bottom:1px dashed var(--neutral-200);}
   .area-bucket-item:last-child{border-bottom:none;}
   /* 연결 표현 테이블 */
   .conn-table{width:100%; border-collapse:collapse; font-size:.84rem;}
@@ -1923,23 +2004,25 @@
           <div class="area-diary-item"><span class="area-diary-date subj">11.4</span><span>과학 실험 보고서를 만화 형식으로 창의적으로 작성하여 제출함.</span></div>
         </div>
         <div class="area-sort-arrow">→</div>
-        <div class="area-bucket school">
-          <p class="area-bucket-label">🏫 학교생활</p>
-          <div class="area-bucket-item">학급회의 개선 제안 (4.20, 6.4)</div>
-        </div>
-        <div class="area-bucket char">
-          <p class="area-bucket-label">💛 인성</p>
-          <div class="area-bucket-item">혼자 있는 친구 배려 (5.14)</div>
-          <div class="area-bucket-item">친구 기다려 동행 (9.15)</div>
-        </div>
-        <div class="area-bucket subj">
-          <p class="area-bucket-label">📖 교과활동</p>
-          <div class="area-bucket-item">수학 모둠 부장 (5.29)</div>
-          <div class="area-bucket-item">과학 보고서 창의 작성 (11.4)</div>
-        </div>
-        <div class="area-bucket arts">
-          <p class="area-bucket-label">🎨 예술활동</p>
-          <div class="area-bucket-item">학예회 리코더 (10.9)</div>
+        <div class="area-bucket-grid">
+          <div class="area-bucket school">
+            <p class="area-bucket-label">🏫 학교생활</p>
+            <div class="area-bucket-item">학급회의 개선 제안 (4.20, 6.4)</div>
+          </div>
+          <div class="area-bucket char">
+            <p class="area-bucket-label">💛 인성</p>
+            <div class="area-bucket-item">혼자 있는 친구 배려 (5.14)</div>
+            <div class="area-bucket-item">친구 기다려 동행 (9.15)</div>
+          </div>
+          <div class="area-bucket subj">
+            <p class="area-bucket-label">📖 교과활동</p>
+            <div class="area-bucket-item">수학 모둠 부장 (5.29)</div>
+            <div class="area-bucket-item">과학 보고서 창의 작성 (11.4)</div>
+          </div>
+          <div class="area-bucket arts">
+            <p class="area-bucket-label">🎨 예술활동</p>
+            <div class="area-bucket-item">학예회 리코더 (10.9)</div>
+          </div>
         </div>
       </div>
       <p class="compare-why" style="margin-top:14px;">모든 날짜를 다 쓸 필요는 없습니다. 각 영역에서 <b>가장 구체적이고 인상적인 장면 1~2개</b>를 골라 연결하세요.</p>
@@ -2024,10 +2107,31 @@
       <button class="conv-type-btn" data-type="career">진로활동 연계</button>
       <button class="conv-type-btn" data-type="service">봉사활동 연계</button>
       <button class="conv-type-btn" data-type="character">인성 연계</button>
+      <button class="conv-type-btn" data-type="grade12">1–2학년 예시</button>
+      <button class="conv-type-btn" data-type="grade34">3–4학년 예시</button>
+      <button class="conv-type-btn" data-type="grade56">5–6학년 예시</button>
+      <button class="conv-type-btn" data-type="quiz">🎯 분류 연습</button>
+    </div>
+
+    <!-- 압축 원칙 -->
+    <div class="compress-grid">
+      <div class="compress-card">
+        <p class="compress-card-title">📌 묶기 패턴 — 같은 주제 기록 → 한 문장</p>
+        <p>비슷한 맥락의 기록 여러 개를 <b>하나의 주어</b>로 묶고, 동사를 나열해 압축합니다.</p>
+        <p class="compress-before">기록: 4.20 학급회의에서 의견 표현 / 6.4 자치회의에서 개선 방향 제안 / 11.4 재치 있는 말로 친구들에게 인기</p>
+        <p class="compress-after">→ 학급 자치회의에서 자신의 의견을 논리적으로 개진하며 친구들로부터 신뢰를 얻고, 재치 있는 말과 행동으로 학급 분위기를 밝게 이끔.</p>
+      </div>
+      <div class="compress-card">
+        <p class="compress-card-title">📌 흐름 패턴 — 낮은 수준 → 변화 → 향상</p>
+        <p>초기 부족했던 점과 이후 변화가 보이는 기록을 <b>시간 순서</b>로 연결해 성장을 드러냅니다.</p>
+        <p class="compress-before">기록: 3월 감정 조절 미숙 / 9월 친구 갈등 후 스스로 반성하는 모습 / 11월 차분하게 대화하는 태도 정착</p>
+        <p class="compress-after">→ 화가 났을 때 감정을 조절하는 것이 미숙하였으나, 자신의 잘못을 솔직하게 인정하려는 태도가 좋으므로 바른 언행을 위해 노력한다면 더 즐거운 학교생활을 할 수 있을 것으로 기대됨.</p>
+      </div>
     </div>
 
     <!-- 자율·동아리 연계 -->
     <div class="conv-type-panel active" id="conv-club">
+      <p class="conv-key-note club">💡 <b>자율·동아리 연계 핵심</b>: 동아리 활동에서 드러난 <b>학생의 강점·태도</b>와 자율활동의 <b>자치·참여 모습</b>을 연결해, 학생만의 흐름(관심사 → 활동 → 진로)을 만드는 것이 핵심입니다.</p>
       <div class="beh-convert-layout card" style="padding:18px 20px; gap:16px;">
         <div class="beh-conv-raw">
           <span class="beh-conv-raw-badge">누가기록 원자료</span>
@@ -2044,16 +2148,18 @@
           <span class="beh-conv-badge">완성된 종합의견</span>
           <div class="beh-conv-text">
             <p><span class="beh-mark-a">상대방을 존중하면서도 재치 있는 말과 행동으로 주변을 즐겁게 하여</span> 친구들의 호감을 얻고 있어 교우관계가 좋은 학생임. <span class="beh-mark-a">학급 자치회의에서 함께 살아가는 방법에 대해 의견을 제시하여 친구들로부터 신뢰를 얻음.</span></p>
-            <p><span class="beh-mark-b">티볼에 관심이 많아 방과후학교 스포츠클럽활동에 참여하여 기본 기술 및 경기 규칙을 습득하고, 공격수로서 탁월한 경기 운영 능력을 발휘함. 경기 과정에서 팀이 지고 있을 때도 팀원들을 격려하여 스포츠맨 정신을 실천함.</span></p>
-            <p>학업 성적이 전반적으로 낮은 편이었으나, <span class="beh-mark-d">체육교사라는 꿈을 갖게 되면서부터 학업에서도 열정적 투지를 발휘하여</span> 성적이 꾸준히 향상되고 있어 앞으로의 성장이 기대되는 학생임.</p>
+            <p><span class="beh-mark-b">티볼에 관심이 많아 방과후학교 스포츠클럽활동에 참여하여 기본 기술 및 경기 규칙을 습득하고, <span class="conv-callout">공격수로서 탁월한 경기 운영 능력을 발휘함<span class="conv-callout-tip">활동명 → 구체 역할 → 능력으로 연결</span></span>. 경기 과정에서 팀이 지고 있을 때도 <span class="conv-callout">팀원들을 격려하여 스포츠맨 정신을 실천함<span class="conv-callout-tip">동아리 기록에서 인성을 도출하는 핵심 기법</span></span>.</span></p>
+            <p>학업 성적이 전반적으로 낮은 편이었으나, <span class="beh-mark-d"><span class="conv-callout">체육교사라는 꿈을 갖게 되면서부터 학업에서도 열정적 투지를 발휘하여<span class="conv-callout-tip">진로 희망 → 학업 변화 연결 흐름 패턴</span></span></span> 성적이 꾸준히 향상되고 있어 앞으로의 성장이 기대되는 학생임.</p>
           </div>
           <div style="padding:0 16px 14px;"><p class="compare-why"><span class="beh-mark-a">금색</span> = 학급회의·교우관계 &nbsp;|&nbsp; <span class="beh-mark-b">초록</span> = 티볼·스포츠클럽 &nbsp;|&nbsp; <span class="beh-mark-d">보라</span> = 진로. 자율·동아리 활동 기록이 인성과 진로로 연결됩니다.</p></div>
+        <div class="conv-selection-note">📌 <b>선별 기준</b>: 7개 기록 중 완성본에는 5개가 반영됐습니다. <b>9.1(보조교사 역할)</b>은 티볼과 맥락이 겹쳐 생략했고, <b>11.4(인기)</b>는 6.4(자치회의)와 합쳐 교우관계 흐름으로 통합했습니다. 비슷한 내용은 하나로 묶고, 진로와 연결되는 기록을 마지막에 배치해 흐름을 만드세요.</div>
         </div>
       </div>
     </div>
 
     <!-- 진로활동 연계 -->
     <div class="conv-type-panel" id="conv-career">
+      <p class="conv-key-note career">💡 <b>진로활동 연계 핵심</b>: 진로 희망이 단순 꿈에서 끝나지 않고 <b>인성·학업·활동이 진로와 일치하는 흐름</b>으로 이어질 때 강력한 종합의견이 됩니다. 학생의 진로 인식이 마지막 문장으로 자연스럽게 귀결되도록 구성하세요.</p>
       <div class="beh-convert-layout card" style="padding:18px 20px; gap:16px;">
         <div class="beh-conv-raw">
           <span class="beh-conv-raw-badge">누가기록 원자료</span>
@@ -2075,6 +2181,7 @@
             <p><span class="beh-mark-d">장래 희망에 대한 진로 인식이 뚜렷하며 남을 돕고 가르쳐 주는 일을 즐기는 등 교사로서의 자질이 엿보임.</span></p>
           </div>
           <div style="padding:0 16px 14px;"><p class="compare-why"><span class="beh-mark-a">금색</span> = 자기주도·의견 표현 &nbsp;|&nbsp; <span class="beh-mark-b">초록</span> = 배려·중재 활동 &nbsp;|&nbsp; <span class="beh-mark-d">보라</span> = 진로 인식. 인성 누가기록이 진로 희망과 연결되는 구조입니다.</p></div>
+        <div class="conv-selection-note">📌 <b>선별 기준</b>: 7개 기록 중 <b>10.12(소신·주장)</b>는 토론 활동(4.15)과 맥락이 겹쳐 통합했습니다. 자기주도(금색)→배려(초록)→진로(보라) 순서로 기록을 배치해 학생의 성격·활동·꿈이 하나의 흐름으로 읽히도록 구성했습니다.</div>
         </div>
       </div>
     </div>
@@ -2101,12 +2208,14 @@
             <p>몸이 민첩하고 순발력이 좋아 체육활동에서 두각을 나타내었으며, <span class="beh-mark-b">학교스포츠클럽 중 줄넘기부에서 활동하며 남다른 승부욕으로 높은 집중도를 보임. 단체줄넘기의 기록을 갱신하는 과정에서 잘하지 못하는 학생을 소외시키지 않고 독려하여 다함께 성취감을 갖도록 하는데 중간자적 역할을 하여 학급의 화합에 기여함.</span></p>
           </div>
           <div style="padding:0 16px 14px;"><p class="compare-why"><span class="beh-mark-a">금색</span> = 학교생활·학습·책임감 &nbsp;|&nbsp; <span class="beh-mark-b">초록</span> = 스포츠클럽·봉사 장면. 날짜별 기록이 쌓여 봉사정신과 인성이 입증됩니다.</p></div>
+        <div class="conv-selection-note">📌 <b>선별 기준</b>: 7개 기록 중 <b>10.8(자발적 도움)</b>은 3.15(인간관계)와 같은 맥락이라 완성본에 통합했습니다. 봉사활동은 "학교 밖 대외 봉사"보다 <b>일상 속 자발적 도움 장면</b>이 더 설득력 있게 인성을 드러냅니다.</div>
         </div>
       </div>
     </div>
 
     <!-- 인성 연계 -->
     <div class="conv-type-panel" id="conv-character">
+      <p class="conv-key-note character">💡 <b>인성 연계 핵심</b>: 학습 태도·또래 관계·배려 등 여러 인성 요소를 각각 나열하지 않고, <b>자기주도 → 리더십 → 공감·배려</b> 순으로 연결해 "한 명의 학생"으로 읽히게 하는 것이 핵심입니다.</p>
       <div class="beh-convert-layout card" style="padding:18px 20px; gap:16px;">
         <div class="beh-conv-raw">
           <span class="beh-conv-raw-badge">누가기록 원자료</span>
@@ -2115,6 +2224,7 @@
           <div class="beh-diary-row"><span class="beh-diary-date">5.21</span><span class="beh-diary-text"><span class="beh-mark-b">학년별 멘토링에 적극적으로 참여해 멘토로서 친구의 수학 공부를 체계적으로 도와주었으며, 멘티 학생의 수학 성적 향상에 큰 도움을 줌.</span></span></div>
           <div class="beh-diary-row"><span class="beh-diary-date">6.29</span><span class="beh-diary-text"><span class="beh-mark-b">학기초 말하기 어려웠던 학급 학생들의 의견과 생각들을 선생님께 전달해줌으로써 학급운영에 갈등을 줄이고 이끌어 갈 수 있도록 도와주었으며, 급우들 사이에 사소한 갈등이 있을 때 합리적인 의견으로 중재하는 모습을 보임.</span></span></div>
           <div class="beh-diary-row"><span class="beh-diary-date">9.15</span><span class="beh-diary-text"><span class="beh-mark-b">학교 뒷산 탐방 시 동반하며 힘들어하는 친구를 도와 정상에 함께 오르고 가방을 들어주는 등 친구를 배려하는 모습을 보임.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">10.20</span><span class="beh-diary-text"><span class="beh-mark-d">학급 내 친구들 사이에서 갈등이 생겼을 때 어느 편도 들지 않고 양쪽의 이야기를 경청하며 합리적인 해결 방법을 제안하는 중재자 역할을 함.</span></span></div>
           <div class="beh-diary-row"><span class="beh-diary-date">11.15</span><span class="beh-diary-text"><span class="beh-mark-d">친구들의 고민이나 걱정거리를 잘 들어줌. 후배들에게 항상 친절하며 성적이나 친구문제로 고민할 때 격려하고 위로해주는 모습을 보임.</span></span></div>
         </div>
         <div class="bkd-arrow-col" style="padding-top:40px;">→</div>
@@ -2126,11 +2236,105 @@
             <p><span class="beh-mark-d">또한 친구들의 고민이나 걱정거리를 잘 들어줌. 후배들에게 항상 친절하며 성적이나 친구문제로 고민할 때 격려하고 위로해주는 모습을 보임.</span></p>
           </div>
           <div style="padding:0 16px 14px;"><p class="compare-why"><span class="beh-mark-a">금색</span> = 자기주도학습·토론 &nbsp;|&nbsp; <span class="beh-mark-b">초록</span> = 멘토링·중재·배려 활동 &nbsp;|&nbsp; <span class="beh-mark-d">보라</span> = 공감·후배 배려. 인성 관련 누가기록이 종합 인격으로 통합됩니다.</p></div>
+        <div class="conv-selection-note">📌 <b>선별 기준</b>: 7개 기록 중 <b>10.20(갈등 중재)</b>는 6.29(의견 전달)와 맥락이 겹쳐 완성본에서 통합했습니다. 인성 연계는 <b>자기 자신(학습)</b> → <b>또래(멘토링·중재)</b> → <b>공동체(후배 배려)</b> 순으로 배치하면 학생의 인격이 입체적으로 드러납니다.</div>
         </div>
       </div>
     </div>
+
+    <!-- 1-2학년 예시 -->
+    <div class="conv-type-panel" id="conv-grade12">
+      <p class="conv-key-note club">💡 <b>1–2학년 누가기록의 특징</b>: 짧고 관찰 중심입니다. 구체적 장면 하나가 완성본의 핵심 문장이 됩니다. 활동·인성·예술이 고루 들어가도록 구성하세요.</p>
+      <div class="beh-convert-layout card" style="padding:18px 20px; gap:16px;">
+        <div class="beh-conv-raw">
+          <span class="beh-conv-raw-badge">누가기록 원자료 (1–2학년)</span>
+          <div class="beh-diary-row"><span class="beh-diary-date">4.3</span><span class="beh-diary-text"><span class="beh-mark-a">쉬는 시간에 친구들과 여러 놀이를 하며 즐겁게 어울림. 학급 청소 시간에 자발적으로 참여하여 도움을 줌.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">5.18</span><span class="beh-diary-text"><span class="beh-mark-a">팔을 다쳐 급식에 어려움을 겪는 친구의 식판을 들어주는 모습이 관찰됨.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">6.10</span><span class="beh-diary-text"><span class="beh-mark-b">바른 생활 시간에 공공장소 예절을 조사하고 친구 앞에서 발표할 때 목소리가 또렷하고 내용이 잘 정리되어 있음.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">9.7</span><span class="beh-diary-text"><span class="beh-mark-a">학급 자치 시간에 학급 규칙을 정하는 과정에서 자신의 의견을 분명하게 말하고 친구 의견도 경청함.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">10.15</span><span class="beh-diary-text"><span class="beh-mark-d">학예회에서 리듬 악기 연주에 적극적으로 참여하여 박자를 정확하게 맞추며 즐겁게 연주함.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">11.22</span><span class="beh-diary-text"><span class="beh-mark-b">즐거운 생활 시간에 여름 계절 특징을 담은 그림을 그릴 때 다양한 색을 창의적으로 사용하여 표현함.</span></span></div>
+        </div>
+        <div class="bkd-arrow-col" style="padding-top:40px;">→</div>
+        <div class="beh-conv-processed">
+          <span class="beh-conv-badge">완성된 종합의견</span>
+          <div class="beh-conv-text">
+            <p><span class="beh-mark-a">쉬는 시간과 점심시간 등 남는 시간 동안 다양한 놀이와 신체활동을 통해 여러 친구들과 소통하며 학교생활에 잘 적응함. 학급 청소 및 자치 활동에도 적극적으로 참여하며 의견을 분명하게 말하고 친구 의견도 경청함. 팔을 다쳐 급식에 어려움을 겪는 친구의 식판을 들어주는 모습에서 배려심을 엿볼 수 있음.</span></p>
+            <p><span class="beh-mark-b">바른 생활 시간에 공공장소 예절을 조사하고 발표할 때 내용이 잘 정리되어 있으며, 즐거운 생활 시간에 여름 특징을 담은 그림에서 다양한 색을 창의적으로 사용하여 표현함.</span></p>
+            <p><span class="beh-mark-d">학예회에서 리듬 악기 연주에 적극 참여하여 박자를 정확하게 맞추며 즐겁게 연주하는 등 뛰어난 음악적 감각을 보임.</span></p>
+          </div>
+          <div style="padding:0 16px 14px;"><p class="compare-why"><span class="beh-mark-a">금색</span> = 학교생활·인성 &nbsp;|&nbsp; <span class="beh-mark-b">초록</span> = 교과활동(바른·즐거운 생활) &nbsp;|&nbsp; <span class="beh-mark-d">보라</span> = 예술활동. 1-2학년은 <b>바른·슬기·즐거운 3교과를 통합</b>해 한 문장으로 씁니다.</p></div>
+        </div>
+      </div>
+      <div class="conv-selection-note">📌 <b>선별 기준</b>: 6개 기록을 학교생활·인성(금색), 교과활동(초록), 예술(보라) 3영역으로 분류했습니다. <b>4.3·5.18·9.7</b>은 학교생활·인성으로, <b>6.10·11.22</b>는 통합교과로, <b>10.15</b>는 예술로 배치했습니다.</div>
+    </div>
+
+    <!-- 3-4학년 예시 -->
+    <div class="conv-type-panel" id="conv-grade34">
+      <p class="conv-key-note character">💡 <b>3–4학년 누가기록의 특징</b>: 기본생활습관, 교과 활동에서의 역할, 인성 장면이 구체화됩니다. <b>기본생활습관(학교생활) → 인성 → 교과 리더십</b> 순서로 구성하면 자연스럽습니다.</p>
+      <div class="beh-convert-layout card" style="padding:18px 20px; gap:16px;">
+        <div class="beh-conv-raw">
+          <span class="beh-conv-raw-badge">누가기록 원자료 (3–4학년)</span>
+          <div class="beh-diary-row"><span class="beh-diary-date">3.28</span><span class="beh-diary-text"><span class="beh-mark-a">좋아하지 않는 반찬도 골고루 먹으려 노력하며, 책상과 사물함을 항상 깨끗하게 정리함.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">4.19</span><span class="beh-diary-text"><span class="beh-mark-a">복도와 교실에서 뛰지 않고 정해진 활동 시간을 정확하게 지키는 모습이 관찰됨.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">5.24</span><span class="beh-diary-text"><span class="beh-mark-b">체험학습 보고서를 만화 형식으로 창의적으로 작성하여 제출함. 내용 구성이 탄탄하고 표현이 인상적임.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">6.11</span><span class="beh-diary-text"><span class="beh-mark-d">수학 모둠 부장을 맡아 자료 준비를 도맡았으며, 풀이에 어려움을 느끼는 친구들에게 도움을 줌.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">9.9</span><span class="beh-diary-text"><span class="beh-mark-b">과학 실험 시간에 실험 과정을 꼼꼼히 기록하고 결과를 친구들에게 명확하게 설명함.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">10.25</span><span class="beh-diary-text"><span class="beh-mark-d">모둠 발표 준비 시 서로 다른 친구들의 의견을 정리하여 발표 자료를 완성하고, 발표 시 자신감 있게 앞장서는 모습을 보임.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">11.8</span><span class="beh-diary-text"><span class="beh-mark-a">1인 1역 활동(칠판닦기)을 하루도 빠짐없이 실천하며, 다른 친구가 잊었을 때 대신 해주는 모습이 관찰됨.</span></span></div>
+        </div>
+        <div class="bkd-arrow-col" style="padding-top:40px;">→</div>
+        <div class="beh-conv-processed">
+          <span class="beh-conv-badge">완성된 종합의견</span>
+          <div class="beh-conv-text">
+            <p><span class="beh-mark-a">좋아하지 않는 반찬도 골고루 먹기 위해 노력하며, 책상과 사물함 등을 항상 깨끗하게 정리하는 등 기본생활습관이 바르게 형성되어 있음. 복도와 교실에서 뛰지 않으며, 정해진 활동시간을 정확하게 지키고 1인 1역 활동을 빠짐없이 실천하는 모습에서 규칙과 질서를 소중히 생각하는 올바른 태도를 엿볼 수 있음.</span></p>
+            <p><span class="beh-mark-b">체험학습을 다녀와서 작성한 보고서를 재미있는 만화 형식으로 작성하여 다양한 방법으로 자신의 생각을 창의적으로 표현함. 과학 실험 시간에도 실험 과정을 꼼꼼히 기록하고 결과를 명확하게 설명하는 성실한 탐구 자세가 돋보임.</span></p>
+            <p><span class="beh-mark-d">수학 부장을 맡아 자료 준비를 도맡았으며, 모둠 활동 시 좋은 결과물을 얻기 위해 항상 서로 다른 친구들의 생각을 정리하고 발표에 앞장서는 등 리더의 자질을 보여줌.</span></p>
+          </div>
+          <div style="padding:0 16px 14px;"><p class="compare-why"><span class="beh-mark-a">금색</span> = 기본생활습관·학교생활 &nbsp;|&nbsp; <span class="beh-mark-b">초록</span> = 교과활동(체험·과학) &nbsp;|&nbsp; <span class="beh-mark-d">보라</span> = 리더십·모둠 역할. 3-4학년은 기본생활습관에서 출발해 교과 리더십으로 마무리하는 흐름이 효과적입니다.</p></div>
+        </div>
+      </div>
+      <div class="conv-selection-note">📌 <b>선별 기준</b>: 7개 기록 중 <b>9.9(과학 기록)</b>와 <b>5.24(만화 보고서)</b>를 교과활동으로 묶었고, <b>6.11·10.25</b>를 리더십 흐름으로 통합했습니다. 기본생활습관은 반복되는 내용이라 대표 사례 2개만 선별했습니다.</div>
+    </div>
+
+    <!-- 5-6학년 예시 -->
+    <div class="conv-type-panel" id="conv-grade56">
+      <p class="conv-key-note career">💡 <b>5–6학년 누가기록의 특징</b>: <b>1학기·2학기를 반드시 구분</b>합니다. 단점이 있으면 성장가능성으로 전환하고, 학업 태도·진로 인식·예체능 두각이 연결될 때 완성도가 높아집니다.</p>
+      <div class="beh-convert-layout card" style="padding:18px 20px; gap:16px;">
+        <div class="beh-conv-raw">
+          <span class="beh-conv-raw-badge">누가기록 원자료 (5–6학년)</span>
+          <div class="beh-diary-row"><span class="beh-diary-date">3.20</span><span class="beh-diary-text"><span class="beh-mark-a">학급 배움 멘토링에 참여하여 어려운 수학 문제를 친구에게 쉽게 설명해 줌.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">4.17</span><span class="beh-diary-text"><span class="beh-mark-a">발표할 때 재미있는 말과 실감나는 행동으로 표현하여 학습 분위기를 유쾌하게 만듦.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">5.28</span><span class="beh-diary-text"><span class="beh-mark-b">화가 났을 때 감정 조절이 미숙하여 친구와 다투는 경우가 있음. 그러나 이후 스스로 찾아가 먼저 사과하는 모습이 관찰됨.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">9.5</span><span class="beh-diary-text"><span class="beh-mark-a">과학 수업에서 자연재해를 막는 장치를 고안하는 활동에서 창의적인 아이디어를 제안하여 친구들의 박수를 받음.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">10.14</span><span class="beh-diary-text"><span class="beh-mark-d">체육 시간에 두각을 드러내며 운동을 잘 못하는 친구들을 자연스럽게 도와주고 배려하는 모습이 인상적임.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">11.3</span><span class="beh-diary-text"><span class="beh-mark-a">학업 성적이 꾸준히 향상되고 있으며, 교사에게 체육교사가 꿈이라고 말하며 관련 활동에 더 열심히 임하는 모습을 보임.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">12.1</span><span class="beh-diary-text"><span class="beh-mark-b">최근 들어 감정을 조절하며 차분하게 의사소통하려는 태도가 정착되고 있음. 바르고 고운 언어를 사용하려 노력함.</span></span></div>
+        </div>
+        <div class="bkd-arrow-col" style="padding-top:40px;">→</div>
+        <div class="beh-conv-processed">
+          <span class="beh-conv-badge">완성된 종합의견</span>
+          <div class="beh-conv-text">
+            <p><b>[1학기]</b> <span class="beh-mark-a">학급 배움 멘토링 활동에 참여하여 어려운 수학 문제를 친구에게 쉽고 친절하게 설명해주는 등 성실하게 활동하여 친구들의 학업 향상에 많은 도움을 줌. 발표할 때 재미있는 말과 실감나는 행동으로 표현하여 학습 분위기를 재미있고 유쾌하게 만듦.</span> <span class="beh-mark-b"><span class="conv-callout">화가 났을 때 감정을 조절하는 것이 미숙하여 친구와 다툴 때가 있지만 자신의 잘못을 솔직하게 인정하고 반성하려는 태도가 좋으므로<span class="conv-callout-tip">단점 → 긍정 근거 → 기대 3단 흐름 패턴</span></span> 상대방을 배려하는 바른 언행을 위해 노력한다면 더 즐거운 학교생활을 할 수 있을 것으로 기대됨.</span></p>
+            <p><b>[2학기]</b> <span class="beh-mark-a">과학 수업에서 남다른 창의성을 보여주기도 하고</span> <span class="beh-mark-d">체육시간에 두각을 드러내면서 운동을 잘못하는 친구들을 배려함.</span> <span class="beh-mark-b">바르고 고운 언어로 상대방과 의사소통하려는 태도가 정착되고 있음.</span> <span class="beh-mark-a"><span class="conv-callout">체육교사라는 꿈을 갖게 되면서부터 학업에서도 열정적 투지를 발휘하여 성적이 꾸준히 향상되고 있어 앞으로의 성장이 기대되는 학생임.<span class="conv-callout-tip">진로 희망 → 학업 변화 연결: 흐름 패턴 마무리</span></span></span></p>
+          </div>
+          <div style="padding:0 16px 14px;"><p class="compare-why"><span class="beh-mark-a">금색</span> = 학교생활·학업·진로 &nbsp;|&nbsp; <span class="beh-mark-b">초록</span> = 단점→성장가능성·언어태도 &nbsp;|&nbsp; <span class="beh-mark-d">보라</span> = 예체능 두각. 5-6학년은 <b>1학기·2학기 구분</b>이 필수입니다.</p></div>
+        </div>
+      </div>
+      <div class="conv-selection-note">📌 <b>선별 기준</b>: 1학기 기록(3.20·4.17·5.28)은 학교생활+단점→성장으로, 2학기 기록(9.5·10.14·12.1·11.3)은 학업역량+예체능+성장 마무리로 배치했습니다. <b>단점(5.28)은 부정으로 끝내지 않고 12.1(태도 정착)과 연결</b>해 흐름 패턴으로 마무리했습니다.</div>
+    </div>
   </div>
 
+
+    <!-- 분류 연습 퀴즈 -->
+    <div class="conv-type-panel" id="conv-quiz">
+      <p class="quiz-intro">아래 7개 누가기록을 각각 어느 영역에 해당하는지 선택해 보세요. 정답을 확인하고 영역 분류 감각을 키워보세요.</p>
+      <div id="quizContainer"></div>
+      <div class="quiz-score" id="quizScore">
+        <div class="quiz-score-num" id="quizScoreNum"></div>
+        <div class="quiz-score-msg" id="quizScoreMsg"></div>
+        <button class="quiz-retry-btn" id="quizRetryBtn">다시 풀기</button>
+      </div>
+    </div>
   <!-- BEH: 나쁜 예 vs 좋은 예 -->
   <div class="beh-panel" id="beh-compare">
     <div class="section-head"><span class="tag">비교</span><h2>나쁜 예 vs 좋은 예 — 학년군별</h2></div>
@@ -2343,6 +2547,97 @@
       btn.classList.add('active');
       document.getElementById('conv-' + btn.dataset.type).classList.add('active');
     });
+  });
+
+  // 누가기록 분류 연습 퀴즈
+  var QUIZ_DATA = [
+    { date:'4.20', text:'학급회의에서 의견이 다른 친구들을 설득하여 자신의 생각을 표현함.', answer:'school', explain:'학급 자치 활동에서 보인 참여 모습 → 학교생활' },
+    { date:'5.14', text:'쉬는 시간에 혼자 있는 친구에게 먼저 다가가 함께 놀이에 참여할 수 있도록 배려함.', answer:'char', explain:'타인을 먼저 배려하는 구체 장면 → 인성' },
+    { date:'5.29', text:'수학 모둠 활동에서 부장을 맡아 친구들의 발표 자료를 꼼꼼하게 정리하여 발표를 도움.', answer:'subj', explain:'수업 중 역할 수행·리더십 → 교과 활동' },
+    { date:'6.4', text:'학급 자치회의에서 친구들의 관심사를 알고 학급 문화 개선 방향을 제안함.', answer:'school', explain:'학급 자치 참여·의사표현 → 학교생활' },
+    { date:'9.15', text:'뒷산 탐방 시간에 늦게 오는 친구를 기다려 함께 정상까지 오름.', answer:'char', explain:'친구를 위해 불편을 감수하는 배려 → 인성' },
+    { date:'10.9', text:'학예회에서 리코더를 정확한 음정으로 연주하여 친구들의 박수를 받음.', answer:'arts', explain:'음악 표현 능력·예술적 재능 → 예술 활동' },
+    { date:'11.4', text:'과학 실험 보고서를 만화 형식으로 창의적으로 작성하여 제출함.', answer:'subj', explain:'교과 수업에서 창의적 표현·탐구 결과 → 교과 활동' }
+  ];
+  var AREA_LABELS = { school:'🏫 학교생활', char:'💛 인성', subj:'📖 교과활동', arts:'🎨 예술활동' };
+  var AREA_COLORS = { school:var_pine='var(--pine)', char:var_gold='var(--gold)', subj:'#6B5BAF', arts:'var(--seal)' };
+
+  function renderQuiz(){
+    var container = document.getElementById('quizContainer');
+    var scoreBox = document.getElementById('quizScore');
+    if(!container) return;
+    scoreBox.classList.remove('show');
+    var answered = 0;
+    var correct = 0;
+
+    container.innerHTML = QUIZ_DATA.map(function(q, qi){
+      var btns = Object.keys(AREA_LABELS).map(function(key){
+        return '<button type="button" class="quiz-area-btn" data-qi="'+qi+'" data-key="'+key+'">'+AREA_LABELS[key]+'</button>';
+      }).join('');
+      return (
+        '<div class="quiz-entry" id="qe-'+qi+'">' +
+          '<div class="quiz-entry-header">' +
+            '<span class="quiz-entry-date">'+q.date+'</span>' +
+            '<span class="quiz-entry-text">'+escapeHtml(q.text)+'</span>' +
+          '</div>' +
+          '<div class="quiz-area-btns">'+btns+'</div>' +
+          '<div class="quiz-feedback" id="qf-'+qi+'"></div>' +
+        '</div>'
+      );
+    }).join('');
+
+    container.querySelectorAll('.quiz-area-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var qi = parseInt(btn.dataset.qi);
+        var key = btn.dataset.key;
+        var q = QUIZ_DATA[qi];
+        var entry = document.getElementById('qe-'+qi);
+        var feedback = document.getElementById('qf-'+qi);
+        // 이미 답한 경우 무시
+        if(entry.classList.contains('answered-correct') || entry.classList.contains('answered-wrong')) return;
+        // 모든 버튼 비활성화
+        entry.querySelectorAll('.quiz-area-btn').forEach(function(b){ b.disabled = true; });
+        // 정답 표시
+        entry.querySelectorAll('.quiz-area-btn').forEach(function(b){
+          if(b.dataset.key === q.answer) b.classList.add('reveal-answer');
+        });
+        if(key === q.answer){
+          btn.classList.add('selected-correct');
+          entry.classList.add('answered-correct');
+          feedback.className = 'quiz-feedback correct';
+          feedback.textContent = '✓ 정답! ' + q.explain;
+          correct++;
+        } else {
+          btn.classList.add('selected-wrong');
+          entry.classList.add('answered-wrong');
+          feedback.className = 'quiz-feedback wrong';
+          feedback.textContent = '✗ 오답. ' + q.explain;
+        }
+        answered++;
+        if(answered === QUIZ_DATA.length){
+          var scoreEl = document.getElementById('quizScoreNum');
+          var msgEl = document.getElementById('quizScoreMsg');
+          scoreEl.textContent = correct + ' / ' + QUIZ_DATA.length;
+          msgEl.textContent = correct === QUIZ_DATA.length ? '완벽합니다! 영역 분류 감각이 뛰어납니다.' :
+                              correct >= 5 ? '좋아요! 대부분의 영역을 잘 구분하셨습니다.' :
+                              '조금 더 연습해 보세요. 위 예시를 다시 확인하시면 도움이 됩니다.';
+          scoreBox.classList.add('show');
+        }
+      });
+    });
+
+    document.getElementById('quizRetryBtn').addEventListener('click', function(){
+      renderQuiz();
+    });
+  }
+
+  // 퀴즈 탭 진입 시 렌더링
+  document.querySelectorAll('.conv-type-btn').forEach(function(btn){
+    if(btn.dataset.type === 'quiz'){
+      btn.addEventListener('click', function(){
+        setTimeout(renderQuiz, 50);
+      });
+    }
   });
 
   // ===== breakdown 빌더 =====
