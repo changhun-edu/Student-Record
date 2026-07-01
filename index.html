@@ -1129,6 +1129,22 @@
 .beh-mark-a{background:var(--gold-bg); box-shadow:inset 0 -2px 0 var(--gold); border-radius:3px; padding:1px 3px;}
 .beh-mark-b{background:var(--pine-soft); box-shadow:inset 0 -2px 0 var(--pine); border-radius:3px; padding:1px 3px;}
 .beh-mark-d{background:#EEE8F8; box-shadow:inset 0 -2px 0 #6B5BAF; border-radius:3px; padding:1px 3px;}
+.beh-mark-e{background:#FFF3E0; box-shadow:inset 0 -2px 0 #D48C2A; border-radius:3px; padding:1px 3px;}
+/* 영역별 인라인 하이라이트 (완성본 구절 표시용) */
+.beh-hl-school{background:#E0F2F1; border-radius:3px; padding:1px 3px;}
+.beh-hl-char  {background:#EFE6D1; border-radius:3px; padding:1px 3px;}
+.beh-hl-subj  {background:#EEE8F8; border-radius:3px; padding:1px 3px;}
+.beh-hl-arts  {background:#FFF3E0; border-radius:3px; padding:1px 3px;}
+/* 완성본 하이라이트 범례 */
+.beh-legend{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; padding-top:12px; border-top:1px dashed var(--neutral-200); font-size:.8rem;}
+.beh-legend-item{display:flex; align-items:center; gap:5px;}
+.beh-legend-dot{width:10px; height:10px; border-radius:2px; flex-shrink:0;}
+.beh-legend-dot.school{background:#2E7D72;}
+.beh-legend-dot.char  {background:#9C7B41;}
+.beh-legend-dot.subj  {background:#6B5BAF;}
+.beh-legend-dot.arts  {background:#D48C2A;}
+/* 완성본 박스 */
+.beh-finished-text{font-size:.9rem; line-height:1.9; color:var(--ink); padding:14px 16px; background:var(--card); border:1.5px solid var(--paper-line); border-radius:10px; margin-top:14px;}
 .beh-diary-row .beh-mark-a,
 .beh-diary-row .beh-mark-b,
 .beh-diary-row .beh-mark-d{padding:0; box-shadow:none;}
@@ -1769,6 +1785,19 @@
           </div>
         </div>
         <p class="compare-why">실제 작성 시 영역을 구분해 쓰되, 제출 문서에 "학교생활 모습:", "인성:" 같은 라벨을 명시하면 안 됩니다. 구분은 작성 편의를 위한 것입니다.</p>
+        <p class="stage-heading" style="margin-top:18px;">✏️ 위 영역이 합쳐진 완성된 행동특성 및 종합의견</p>
+        <div class="beh-finished-text">
+          <span class="beh-hl-school">쉬는 시간과 점심시간 등 남는 시간 동안 다양한 놀이와 신체활동을 통해 여러 친구들과 소통하며 학교생활에 잘 적응함. 대청소, 학급문고 정리, 학급행사 준비 등 학급에서 일어나는 일에 대해 관심이 많고 적극 참여하여 도움을 줌.</span>
+          <span class="beh-hl-char">놀이에 참여하지 못하는 친구를 위하여 참여의 기회를 만들어 주는 모습에서 배려심을 엿볼 수 있음. 특히 팔을 다쳐 급식에 어려움을 겪는 친구의 식판을 들어주는 모습은 다른 친구들에게 모범이 됨.</span>
+          <span class="beh-hl-subj">수업 시간에 배운 내용에 새로운 상황을 가정하여 질문하는 등 자신의 생각과 의견을 적극 표현함. 소집단 활동 시 대표가 되어 모둠을 이끌며 여러 발표를 도맡아 하는 등 적극적인 자세가 돋보임.</span>
+          <span class="beh-hl-arts">수업 중 정확한 음정과 자연스러운 발성으로 노래를 부르고, 학예회에서는 리코더를 아름답게 연주하는 등 뛰어난 음악적 재능을 보임.</span>
+        </div>
+        <div class="beh-legend">
+          <span class="beh-legend-item"><span class="beh-legend-dot school"></span>학교생활 모습</span>
+          <span class="beh-legend-item"><span class="beh-legend-dot char"></span>인성</span>
+          <span class="beh-legend-item"><span class="beh-legend-dot subj"></span>교과 활동</span>
+          <span class="beh-legend-item"><span class="beh-legend-dot arts"></span>예술 활동</span>
+        </div>
       </div>
     </div>
 
@@ -1791,6 +1820,17 @@
           </div>
         </div>
         <p class="compare-why">3-4학년은 기본생활습관(학교생활)과 리더십(교과·인성)이 함께 드러나는 기재가 신뢰도를 높입니다.</p>
+        <p class="stage-heading" style="margin-top:18px;">✏️ 위 영역이 합쳐진 완성된 행동특성 및 종합의견</p>
+        <div class="beh-finished-text">
+          <span class="beh-hl-school">좋아하지 않는 반찬도 골고루 먹기 위해 노력하며, 책상과 사물함 등을 항상 깨끗하게 정리하는 등 기본생활습관이 바르게 형성되어 있음. 복도와 교실에서 뛰지 않으며, 정해진 활동시간을 정확하게 지킴. 또한 학급에서 정한 약속을 잘 지키려는 모습에서 규칙과 질서를 소중히 생각하는 올바른 태도를 엿볼 수 있음.</span>
+          <span class="beh-hl-char">풀이에 어려움을 느끼는 친구들에게 많은 도움을 주었음. 체험학습을 다녀와서 작성한 보고서를 재미있는 만화 형식으로 작성하여 다양한 방법으로 자신의 생각을 창의적으로 표현함.</span>
+          <span class="beh-hl-subj">수학 부장을 맡아 자료 준비를 도맡았으며, 모둠 활동 시 좋은 결과물을 얻기 위해 항상 서로 다른 친구들의 생각을 정리하고 발표에 앞장서는 등 리더의 자질을 보여줌.</span>
+        </div>
+        <div class="beh-legend">
+          <span class="beh-legend-item"><span class="beh-legend-dot school"></span>학교생활 모습</span>
+          <span class="beh-legend-item"><span class="beh-legend-dot char"></span>인성</span>
+          <span class="beh-legend-item"><span class="beh-legend-dot subj"></span>교과 활동</span>
+        </div>
       </div>
     </div>
 
@@ -1811,6 +1851,18 @@
           </div>
         </div>
         <p class="compare-why">단점은 꼭 부정적으로 쓰지 않고 "성장 가능성"으로 전환하는 것이 핵심입니다. "미숙하지만 … 노력한다면 기대됨" 형태가 대표적입니다.</p>
+        <p class="stage-heading" style="margin-top:18px;">✏️ 위 내용이 합쳐진 완성된 행동특성 및 종합의견</p>
+        <div class="beh-finished-text">
+          <span class="beh-hl-school">학급의 배움 멘토링 활동에 참여하여 어려운 수학 문제를 친구에게 쉽고 친절하게 설명해주는 등 성실하게 활동하여 친구들의 학업 향상에 많은 도움을 줌. 발표할 때 재미있는 말과 실감나는 행동으로 표현하여 학습 분위기를 재미있고 유쾌하게 만듦.</span>
+          <span class="beh-hl-char">화가 났을 때 감정을 조절하는 것이 미숙하여 친구와 다툴 때가 있지만 자신의 잘못을 솔직하게 인정하고 반성하려는 태도가 좋으므로 상대방을 배려하는 바른 언행을 위해 노력한다면 더 즐거운 학교생활을 할 수 있을 것으로 기대됨.</span>
+          [2학기] <span class="beh-hl-subj">과학 수업에서 남다른 창의성을 보여주기도 하고 체육시간에 두각을 드러내면서 운동을 잘못하는 친구들을 배려함.</span>
+          <span class="beh-hl-school">바르고 고운 언어로 상대방과 의사소통하려는 태도가 정착되고 있음.</span>
+        </div>
+        <div class="beh-legend">
+          <span class="beh-legend-item"><span class="beh-legend-dot school"></span>학교생활·성장 모습</span>
+          <span class="beh-legend-item"><span class="beh-legend-dot char"></span>인성 (단점→성장가능성)</span>
+          <span class="beh-legend-item"><span class="beh-legend-dot subj"></span>교과·예체능 두각</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1882,22 +1934,26 @@
 
     <!-- 봉사활동 연계 -->
     <div class="conv-type-panel" id="conv-service">
+      <p class="bkd-panel-desc" style="margin-bottom:12px; border-left-color:var(--seal);">💡 봉사활동 연계 핵심: 봉사 활동 자체보다 <b>봉사 과정에서 드러난 인성(배려·책임·협력)</b>을 종합의견과 연결하는 것이 핵심입니다.</p>
       <div class="beh-convert-layout card" style="padding:18px 20px; gap:16px;">
         <div class="beh-conv-raw">
           <span class="beh-conv-raw-badge">누가기록 원자료 (학교스포츠클럽 줄넘기부)</span>
-          <div class="beh-diary-row"><span class="beh-diary-date">특징</span><span class="beh-diary-text"><span class="beh-mark-a">사교성이 좋고 성격이 활달하여 인간관계 형성 능력이 뛰어나며, 어려운 친구를 잘 도와주고 맡은 일에 책임감이 강함.</span></span></div>
-          <div class="beh-diary-row"><span class="beh-diary-date">활동</span><span class="beh-diary-text"><span class="beh-mark-b">학교스포츠클럽 중 줄넘기부에서 활동하며 남다른 승부욕으로 높은 집중도를 보임.</span></span></div>
-          <div class="beh-diary-row"><span class="beh-diary-date">봉사</span><span class="beh-diary-text"><span class="beh-mark-b">단체줄넘기의 기록을 갱신하는 과정에서 잘하지 못하는 학생을 소외시키지 않고 독려하여 다함께 성취감을 갖도록 하는데 중간자적 역할을 함.</span></span></div>
-          <div class="beh-diary-row"><span class="beh-diary-date">학습</span><span class="beh-diary-text"><span class="beh-mark-a">자신만의 학습 계획을 수립하고 꾸준히 실천하는 학습 습관을 지니고 있어 앞으로 높은 성취 가능성이 기대됨.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">3.15</span><span class="beh-diary-text"><span class="beh-mark-a">사교성이 좋고 성격이 활달하여 인간관계 형성 능력이 뛰어나며, 어려운 친구를 잘 도와주고 맡은 일에 책임감이 강함.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">4.22</span><span class="beh-diary-text"><span class="beh-mark-a">자신만의 학습 계획을 수립하고 꾸준히 실천하는 학습 습관을 지니고 있어 앞으로 높은 성취 가능성이 기대됨.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">5.17</span><span class="beh-diary-text"><span class="beh-mark-b">학교스포츠클럽 줄넘기부에서 활동하며 남다른 승부욕으로 높은 집중도를 보임.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">6.12</span><span class="beh-diary-text"><span class="beh-mark-b">단체줄넘기의 기록을 갱신하는 과정에서 잘하지 못하는 학생을 소외시키지 않고 독려하여 다함께 성취감을 갖도록 하는데 중간자적 역할을 함.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">9.10</span><span class="beh-diary-text"><span class="beh-mark-b">몸이 민첩하고 순발력이 좋아 체육활동에서 두각을 나타내었으며, 경쟁 활동에서도 항상 규칙을 지키고 상대방을 배려하는 모습을 보임.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">10.8</span><span class="beh-diary-text"><span class="beh-mark-a">학급 내 어려운 친구들을 도와주려는 마음이 강하여 급식 시간, 청소 시간 등에서 자발적으로 도움을 주는 모습이 자주 관찰됨.</span></span></div>
+          <div class="beh-diary-row"><span class="beh-diary-date">11.20</span><span class="beh-diary-text"><span class="beh-mark-a">맡은 1인 1역 활동을 매일 빠짐없이 실천하며, 자신의 역할 외에도 다른 친구가 잊었을 때 대신 도와주는 책임감을 보임.</span></span></div>
         </div>
-        <div class="bkd-arrow-col" style="padding-top:40px;">→</div>
+        <div class="bkd-arrow-col" style="padding-top:60px;">→</div>
         <div class="beh-conv-processed">
           <span class="beh-conv-badge">완성된 종합의견</span>
           <div class="beh-conv-text">
-            <p><span class="beh-mark-a">사교성이 좋고 성격이 활달하여 인간관계 형성 능력이 뛰어나며, 어려운 친구를 잘 도와주고 맡은 일에 책임감이 강한 학생임. 자신만의 학습 계획을 수립하고 꾸준히 실천하는 학습 습관을 지니고 있어 앞으로 높은 성취 가능성이 기대됨.</span></p>
+            <p><span class="beh-mark-a">사교성이 좋고 성격이 활달하여 인간관계 형성 능력이 뛰어나며, 어려운 친구를 잘 도와주고 맡은 일에 책임감이 강한 학생임. 학급 내 어려운 친구들을 도와주려는 마음이 강하여 급식·청소 시간 등에서 자발적으로 도움을 주는 모습이 자주 관찰됨. 자신만의 학습 계획을 수립하고 꾸준히 실천하는 학습 습관을 지니고 있어 앞으로 높은 성취 가능성이 기대됨.</span></p>
             <p>몸이 민첩하고 순발력이 좋아 체육활동에서 두각을 나타내었으며, <span class="beh-mark-b">학교스포츠클럽 중 줄넘기부에서 활동하며 남다른 승부욕으로 높은 집중도를 보임. 단체줄넘기의 기록을 갱신하는 과정에서 잘하지 못하는 학생을 소외시키지 않고 독려하여 다함께 성취감을 갖도록 하는데 중간자적 역할을 하여 학급의 화합에 기여함.</span></p>
           </div>
-          <div style="padding:0 16px 14px;"><p class="compare-why"><span class="beh-mark-a">금색</span> = 학교생활·학습 태도 &nbsp;|&nbsp; <span class="beh-mark-b">초록</span> = 줄넘기부·봉사 활동. 봉사정신이 구체적 장면으로 드러나 인성과 연결됩니다.</p></div>
+          <div style="padding:0 16px 14px;"><p class="compare-why"><span class="beh-mark-a">금색</span> = 학교생활·학습·책임감 &nbsp;|&nbsp; <span class="beh-mark-b">초록</span> = 스포츠클럽·봉사 장면. 날짜별 기록이 쌓여 봉사정신과 인성이 입증됩니다.</p></div>
         </div>
       </div>
     </div>
@@ -1981,6 +2037,38 @@
       </div>
       <p class="compare-why">수정 전은 학기 구분이 없고 단점("미숙하지만")이 부정적으로만 기재됩니다. 수정 후는 <b>1학기 단점을 성장가능성으로 전환</b>하고, 2학기에 실제로 개선된 모습을 "정착되고 있음"으로 연결합니다.</p>
     </div>
+    <!-- 실수 유형 4: 단점 부정 표현 -->
+    <div class="compare-card card">
+      <div class="compare-tag" style="background:var(--danger-bg); color:var(--danger); border-color:var(--danger);">실수 유형 ① — 단점을 부정적으로만 쓰기 (5-6학년)</div>
+      <div class="compare-row">
+        <div class="compare-col bad">
+          <div class="compare-label">✕ 잘못된 기재</div>
+          <p>화가 났을 때 감정 조절이 잘 되지 않아 친구들과 자주 다투는 편임. 수업 시간에 집중력이 부족하고 과제를 제때 제출하지 못하는 경우가 많아 개선이 필요함.</p>
+        </div>
+        <div class="compare-col good">
+          <div class="compare-label">✓ 성장가능성으로 전환</div>
+          <p>화가 났을 때 감정을 조절하는 것이 미숙하여 친구와 다툴 때가 있지만 <b>자신의 잘못을 솔직하게 인정하고 반성하려는 태도가 좋으므로</b> 상대방을 배려하는 바른 언행을 위해 노력한다면 더 즐거운 학교생활을 할 수 있을 것으로 기대됨.</p>
+        </div>
+      </div>
+      <p class="compare-why">왜 다른가: 단점을 단독으로 서술하면 "지적 기록"이 됩니다. 수정 후는 <b>단점(미숙) → 긍정적 근거(반성하는 태도) → 기대(기대됨)</b> 3단 구조로 단점을 성장 가능성으로 전환합니다. 학생·학부모에게 지도 자료이자 격려의 메시지가 됩니다.</p>
+    </div>
+
+    <!-- 실수 유형 5: 특정 영역 편중 -->
+    <div class="compare-card card">
+      <div class="compare-tag" style="background:var(--danger-bg); color:var(--danger); border-color:var(--danger);">실수 유형 ② — 특정 영역만 길고 다른 영역이 빠지기 (3-4학년)</div>
+      <div class="compare-row">
+        <div class="compare-col bad">
+          <div class="compare-label">✕ 영역 편중 기재</div>
+          <p>항상 밝고 명랑한 성격으로 친구들과 사이좋게 지내며, 어려운 친구가 있으면 먼저 도움을 주는 따뜻한 마음씨를 지닌 학생임. 학급 친구들의 고민을 들어주고 갈등이 생겼을 때 중재하는 역할을 자발적으로 맡음. 급우들에게 항상 예의 바르게 대하며 어른들에게도 공손한 태도를 잃지 않음.</p>
+        </div>
+        <div class="compare-col good">
+          <div class="compare-label">✓ 영역 균형 기재</div>
+          <p>좋아하지 않는 반찬도 골고루 먹기 위해 노력하며 책상을 항상 깨끗이 정리하는 등 <b>기본생활습관이 바르게 형성</b>되어 있음. 어려운 친구가 있으면 먼저 도움을 주고 갈등 상황에서 중재 역할을 자발적으로 맡는 <b>따뜻한 인성</b>을 지님. <b>수학 부장을 맡아 자료 준비를 도맡았으며</b> 풀이에 어려움을 느끼는 친구들에게 많은 도움을 주는 등 <b>교과 활동에서도 리더십</b>을 보여줌.</p>
+        </div>
+      </div>
+      <p class="compare-why">왜 다른가: 수정 전은 "인성" 영역만 3문장이 이어집니다. 수정 후는 <b>학교생활 모습 + 인성 + 교과 활동</b> 세 영역이 고르게 담겨 더 입체적인 학생 모습을 전달합니다. 영역이 편중되면 다른 영역을 놓친 것처럼 보여 기록의 완성도가 떨어집니다.</p>
+    </div>
+
   </div>
 
   </div><!-- /panel-behavior -->
