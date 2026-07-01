@@ -852,6 +852,11 @@
   }
   .bkd-raw-meta{font-size:.75rem; color:var(--ink-soft); margin:0 0 10px;}
   .bkd-raw-text{font-size:.88rem; line-height:1.9; color:var(--ink);}
+  .bkd-raw-text + .bkd-raw-text{
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px dashed var(--neutral-200);
+  }
   .bkd-raw-hint{
     display:flex; align-items:center; gap:6px;
     font-size:.74rem; color:var(--ink-soft);
@@ -2158,7 +2163,7 @@
 
     function renderMaster(masterIdx){
       var master = masters[masterIdx];
-      var rawTpl = master.templates.filter(function(t){ return t.stage === 'raw'; })[0];
+      var rawTpls = master.templates.filter(function(t){ return t.stage === 'raw'; });
       var processed = master.templates.filter(function(t){ return t.breakdown; });
       var order = {};
       DATA.perspectives.forEach(function(p, idx){ order[p.key] = idx; });
@@ -2188,10 +2193,22 @@
 
       var firstP = DATA.perspectives.filter(function(p){ return p.key === processed[0].perspective; })[0];
 
-      // 통합교과 안내
+      // 원자료 HTML — 여러 개일 경우 모두 표시
+      var rawHtml = rawTpls.length
+        ? rawTpls.map(function(t, i){
+            return (
+              (rawTpls.length > 1 ? '<p style="font-size:.68rem;font-weight:700;color:var(--ink-soft);margin:' + (i===0?'0':'12px') + ' 0 4px;">관찰내용 ' + (i+1) + '</p>' : '') +
+              '<div class="bkd-raw-text">' + escapeHtml(t.text) + '</div>'
+            );
+          }).join('')
+        : '';
+
+      // 학년군별 안내 메시지
       var noticeHtml = '';
       if(master.subject === '통합교과' || master.grade === '1-2학년'){
-        noticeHtml = '<div class="bkd-panel-desc" style="margin-bottom:12px; border-left-color:var(--gold);">💡 1-2학년 통합교과는 바른생활·슬기로운생활·즐거운생활 세 교과의 성취수준에 따른 특성을 <b>종합하여 하나의 문장으로 기재</b>합니다. 특정 교과가 누락되지 않도록 유의합니다.</div>';
+        noticeHtml = '<div class="bkd-panel-desc" style="margin-bottom:12px;border-left-color:var(--gold);">💡 1-2학년 통합교과는 바른생활·슬기로운생활·즐거운생활 세 교과의 성취수준에 따른 특성을 <b>종합하여 하나의 문장으로 기재</b>합니다. 특정 교과가 누락되지 않도록 유의합니다.</div>';
+      } else if(master.grade === '5-6학년'){
+        noticeHtml = '<div class="bkd-panel-desc" style="margin-bottom:12px;border-left-color:var(--pine);">💡 5-6학년은 단순 활동 묘사보다 <b>자기주도적 학습 태도·복합적 역량·실생활 적용</b>이 드러나는 기재가 핵심입니다. 성취기준 도달 여부와 함께 변화 과정을 함께 서술합니다.</div>';
       }
 
       displayEl.innerHTML =
@@ -2200,7 +2217,7 @@
           '<div class="bkd-raw">' +
             '<span class="bkd-raw-badge">원자료 (누가기록)</span>' +
             '<p class="bkd-raw-meta">' + escapeHtml(master.subject) + ' · ' + escapeHtml(master.grade) + '</p>' +
-            (rawTpl ? '<div class="bkd-raw-text">' + escapeHtml(rawTpl.text) + '</div>' : '') +
+            rawHtml +
             '<p class="bkd-raw-hint">→ 이 관찰 기록을 바탕으로 오른쪽 다섯 가지 관점 중 하나로 가공합니다.</p>' +
           '</div>' +
           '<div class="bkd-arrow-col">→</div>' +
@@ -2232,7 +2249,16 @@
       });
     }
 
-    // 예제 선택 버튼 이벤트
+    // 예제 선택 버튼 이벤트 (교과+학년 중복 시 학년 표기 강화)
+    selBtns.innerHTML = masters.map(function(e, idx){
+      return (
+        '<button type="button" class="bkd-sel-btn' + (idx===0?' active':'') + '" data-master-idx="'+idx+'">' +
+          '<span>' + escapeHtml(e.subject) + '</span>' +
+          '<span class="bkd-sel-grade">' + escapeHtml(e.grade) + '</span>' +
+        '</button>'
+      );
+    }).join('');
+
     selBtns.querySelectorAll('.bkd-sel-btn').forEach(function(btn){
       btn.addEventListener('click', function(){
         selBtns.querySelectorAll('.bkd-sel-btn').forEach(function(b){ b.classList.remove('active'); });
