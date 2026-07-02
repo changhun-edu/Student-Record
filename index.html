@@ -917,8 +917,20 @@
     background:var(--card);
   }
   .bkd-selector-wrap{margin-bottom:16px;}
-  .bkd-selector-label{font-size:.72rem; font-weight:700; letter-spacing:.07em; color:var(--ink-soft); margin:0 0 8px;}
+  .bkd-selector-label{font-size:.72rem; font-weight:700; letter-spacing:.07em; color:var(--ink-soft); margin:0 0 6px;}
   .bkd-selector-btns{display:flex; gap:8px; flex-wrap:wrap;}
+  /* 2단계 필터 */
+  .bkd-grade-btns{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;}
+  .bkd-grade-btn{
+    padding:7px 18px; border-radius:999px;
+    border:1.5px solid var(--paper-line);
+    background:var(--card); color:var(--ink-soft);
+    font-size:.82rem; cursor:pointer; transition:all .15s; font-weight:600;
+  }
+  .bkd-grade-btn:hover{border-color:var(--ink-soft); color:var(--ink);}
+  .bkd-grade-btn.active{background:var(--ink); border-color:var(--ink); color:#fff;}
+  .bkd-subj-wrap{min-height:36px;}
+  .bkd-subj-btns{display:flex; gap:6px; flex-wrap:wrap;}
   .bkd-sel-btn{
     display:flex; align-items:center; gap:6px;
     padding:8px 16px;
@@ -1453,6 +1465,12 @@
   }
   .acc-head .arrow{transition:transform .2s; color:var(--seal); font-size:.8rem;}
   .acc-head.open .arrow{transform:rotate(90deg);}
+  .acc-badge{
+    margin-left:auto; margin-right:8px;
+    font-size:.7rem; font-weight:700;
+    background:var(--neutral-200); color:var(--ink-soft);
+    padding:2px 7px; border-radius:999px;
+  }
   .acc-panel{
     max-height:0;
     overflow:hidden;
@@ -1772,8 +1790,10 @@
     <p class="lead">왼쪽의 누가기록 원자료가 어떤 관점을 택하느냐에 따라 오른쪽 문장의 구성요소 자체가 달라집니다. 탭을 눌러 비교해 보세요.</p>
     <div id="breakdownShowcase">
       <div class="bkd-selector-wrap">
-        <p class="bkd-selector-label">예제 선택</p>
-        <div id="bkdSelectorBtns" class="bkd-selector-btns"></div>
+        <p class="bkd-selector-label">① 학년군 선택</p>
+        <div id="bkdGradeBtns" class="bkd-grade-btns"></div>
+        <p class="bkd-selector-label" style="margin-top:10px;">② 교과 선택</p>
+        <div class="bkd-subj-wrap"><div id="bkdSubjBtns" class="bkd-subj-btns"></div></div>
       </div>
       <div id="bkdDisplay"></div>
     </div>
@@ -1982,18 +2002,50 @@
     </div>
 
     <div class="section-head" style="margin-top:10px;"><span class="tag">주의</span><h2>입력 불가 항목</h2></div>
-    <div class="card">
-      <ul class="forbidden-list">
-        <li><span class="forbidden-x">✕</span><span>각종 공인어학시험 참여 사실과 그 성적 및 수상 실적</span></li>
-        <li><span class="forbidden-x">✕</span><span>교과·비교과 관련 교외대회 참여 사실과 그 성적 및 수상 실적 (학교장 허가 교외대회 포함)</span></li>
-        <li><span class="forbidden-x">✕</span><span>교외 기관·단체에서 수상한 교외상 (표창장, 감사장, 공로상 등)</span></li>
-        <li><span class="forbidden-x">✕</span><span>교내·외 참여 사실이나 그 성적 / 교내대회 참여 사실과 그 성적 및 수상 실적</span></li>
-        <li><span class="forbidden-x">✕</span><span>논문을 학회지 등에 투고 또는 등재하거나 학회 등에서 발표한 사실</span></li>
-        <li><span class="forbidden-x">✕</span><span>도서 출간 사실 / 지식재산권(특허, 실용신안, 상표, 디자인) 출원 또는 등록 사실</span></li>
-        <li><span class="forbidden-x">✕</span><span>K-MOOC, MOOC, KOCW 이수 내용</span></li>
-        <li><span class="forbidden-x">✕</span><span>대회와 관련하여 대회의 명칭을 단순 행사로 변경하여 입력하는 행위</span></li>
-        <li><span class="forbidden-x">✕</span><span>주말·방학 기간의 개별학습 결과물 (과제형 수행평가는 정규교육과정에서만 실시)</span></li>
-      </ul>
+    <p style="font-size:.82rem; color:var(--ink-soft); margin-bottom:12px;">카테고리를 클릭해 세부 항목을 확인하세요.</p>
+    <div class="acc-wrap">
+      <div class="acc-item">
+        <button type="button" class="acc-head">
+          <span>🏆 수상·성적·대회 관련</span><span class="acc-badge">4항목</span><span class="arrow">▶</span>
+        </button>
+        <div class="acc-panel">
+          <div class="acc-panel-inner">
+            <ul class="forbidden-list">
+              <li><span class="forbidden-x">✕</span><span>각종 공인어학시험 참여 사실과 그 성적 및 수상 실적</span></li>
+              <li><span class="forbidden-x">✕</span><span>교과·비교과 관련 교외대회 참여 사실과 그 성적 및 수상 실적 (학교장 허가 교외대회 포함)</span></li>
+              <li><span class="forbidden-x">✕</span><span>교외 기관·단체에서 수상한 교외상 (표창장, 감사장, 공로상 등)</span></li>
+              <li><span class="forbidden-x">✕</span><span>교내·외 참여 사실이나 그 성적 / 교내대회 참여 사실과 그 성적 및 수상 실적</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button type="button" class="acc-head">
+          <span>📚 출판·지재권·연구 관련</span><span class="acc-badge">3항목</span><span class="arrow">▶</span>
+        </button>
+        <div class="acc-panel">
+          <div class="acc-panel-inner">
+            <ul class="forbidden-list">
+              <li><span class="forbidden-x">✕</span><span>논문을 학회지 등에 투고 또는 등재하거나 학회 등에서 발표한 사실</span></li>
+              <li><span class="forbidden-x">✕</span><span>도서 출간 사실 / 지식재산권(특허, 실용신안, 상표, 디자인) 출원 또는 등록 사실</span></li>
+              <li><span class="forbidden-x">✕</span><span>K-MOOC, MOOC, KOCW 이수 내용</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button type="button" class="acc-head">
+          <span>🏫 교육과정 외 활동 관련</span><span class="acc-badge">2항목</span><span class="arrow">▶</span>
+        </button>
+        <div class="acc-panel">
+          <div class="acc-panel-inner">
+            <ul class="forbidden-list">
+              <li><span class="forbidden-x">✕</span><span>대회와 관련하여 대회의 명칭을 단순 행사로 변경하여 입력하는 행위</span></li>
+              <li><span class="forbidden-x">✕</span><span>주말·방학 기간의 개별학습 결과물 (과제형 수행평가는 정규교육과정에서만 실시)</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="section-head" style="margin-top:24px;"><span class="tag">Q&A</span><h2>자주 묻는 질문</h2></div>
@@ -2023,7 +2075,7 @@
   <div class="section-panel" id="panel-behavior">
 
   <nav class="beh-tabs-wrap" role="tablist">
-    <button class="beh-tab-btn active" data-beh="role">💡 역할과 특징</button>
+    <button class="beh-tab-btn active" data-beh="role">📋 작성 원칙</button>
     <button class="beh-tab-btn" data-beh="area">🗂️ 영역 구성요소</button>
     <button class="beh-tab-btn" data-beh="convert">🔄 누가기록 → 종합의견</button>
     <button class="beh-tab-btn" data-beh="compare">📝 기재 개선 사례</button>
@@ -2031,54 +2083,43 @@
 
   <!-- BEH: 역할과 특징 -->
   <div class="beh-panel active" id="beh-role">
-    <div class="section-head"><span class="tag">의의</span><h2>행동특성 및 종합의견이란</h2></div>
-    <p class="lead">교과 세부능력이 수업 속 학습 역량에 초점을 맞춘다면, 행동특성 및 종합의견은 학생의 종합적인 학교생활 전체를 담아내는 기록입니다.</p>
-    <div class="card">
-      <div class="compare-row" style="grid-template-columns:1fr 1fr;">
-        <div class="compare-col good">
-          <div class="compare-label">추천서 역할</div>
-          <p>누가기록을 바탕으로 학생의 학교생활·인성·교과활동을 구체적 사례로 엮어, 상급학교 진학 시 추천서에 준하는 신뢰도를 갖습니다.</p>
-        </div>
-        <div class="compare-col good">
-          <div class="compare-label">지도 자료 역할</div>
-          <p>학습·생활지도, 진로 탐색 활동의 밑거름이 되는 기록으로, 교사와 학부모 모두에게 학생 성장을 돕는 데 필요한 정보를 제공합니다.</p>
-        </div>
+    <div class="section-head"><span class="tag">원칙</span><h2>행동특성 및 종합의견 작성 원칙</h2></div>
+    <p class="lead">교과 세부능력이 <b>관점(어떻게 쓸까)</b>이 핵심이라면, 행동특성은 <b>영역(무엇을) + 연결(어떻게 이을까)</b>이 핵심입니다.</p>
+
+    <div class="compare-row card" style="margin-bottom:16px;">
+      <div style="flex:1; padding:14px 16px; background:var(--neutral-100); border-radius:8px; border-left:4px solid var(--pine);">
+        <p style="font-size:.78rem; font-weight:800; color:var(--pine); margin:0 0 6px;">📚 교과 세부능력 및 특기사항</p>
+        <p style="font-size:.86rem; line-height:1.7; margin:0;">어떤 <b>관점</b>(역량·활동·수준·성장·향상)으로 쓸지가 핵심. 특정 수업 장면의 학습 역량 기록.</p>
+      </div>
+      <div style="flex:1; padding:14px 16px; background:var(--neutral-100); border-radius:8px; border-left:4px solid var(--gold);">
+        <p style="font-size:.78rem; font-weight:800; color:var(--gold); margin:0 0 6px;">🧑 행동특성 및 종합의견</p>
+        <p style="font-size:.86rem; line-height:1.7; margin:0;">어떤 <b>영역</b>(학교생활·인성·교과·예술)을 어떻게 <b>연결</b>할지가 핵심. 학년 1년간의 학교생활 전반 종합 기록.</p>
       </div>
     </div>
-    <div class="card" style="margin-top:16px;">
-      <h3 style="font-size:1rem; margin:0 0 14px;">교과 세부능력과 무엇이 다른가</h3>
-      <div class="compare-row" style="grid-template-columns:1fr 1fr;">
-        <div class="beh-role-compare-col col-subject">
-          <p class="beh-role-compare-label">📚 교과 세부능력 및 특기사항</p>
-          <p>어떤 <b>관점</b>(역량·활동·수준·성장·향상)으로 쓸지가 핵심. 특정 수업 장면에서 드러난 학습 역량의 기록.</p>
-        </div>
-        <div class="beh-role-compare-col col-behavior">
-          <p class="beh-role-compare-label">🧑 행동특성 및 종합의견</p>
-          <p>어떤 <b>영역</b>(학교생활·인성·교과·예체능)을 어떻게 <b>연결</b>할지가 핵심. 학년 1년간의 학교생활 전반을 종합하는 기록.</p>
-        </div>
+
+    <div class="principle-grid">
+      <div class="principle-card">
+        <p class="principle-num">원칙 ①</p>
+        <p class="principle-title">영역별로 구분해 작성하기</p>
+        <p>학교생활·인성·교과활동·예술활동 영역을 염두에 두고 구성합니다. 단, 제출 문서에 "학교생활:", "인성:" 같은 라벨은 명시하지 않습니다.</p>
+      </div>
+      <div class="principle-card">
+        <p class="principle-num">원칙 ②</p>
+        <p class="principle-title">누가기록 표현이 드러나도록</p>
+        <p>날짜별 누가기록의 구체 장면(어떤 활동, 어떤 행동)이 완성 문장에 살아 있어야 합니다. 추상 칭찬은 누구에게나 쓸 수 있어 신뢰도가 낮습니다.</p>
+      </div>
+      <div class="principle-card">
+        <p class="principle-num">원칙 ③</p>
+        <p class="principle-title">자율·동아리·진로·봉사·인성 연계</p>
+        <p>다양한 활동 기록을 연결해 학생만의 흐름(예: 스포츠 관심→스포츠클럽→체육교사 진로)을 만드는 것이 핵심입니다.</p>
       </div>
     </div>
-    <div class="why-cta card" style="margin-top:0; background:var(--neutral-100); border:1px solid var(--neutral-200); box-shadow:none;">
-      <p style="color:var(--ink); font-weight:700; margin-bottom:12px;">행동특성 및 종합의견, 잘 쓰려면?</p>
-      <div class="principle-grid">
-        <div class="principle-card">
-          <p class="principle-num">원칙 ①</p>
-          <p class="principle-title">영역별로 구분해 작성하기</p>
-          <p>학교생활 모습·인성·교과활동·예술활동 영역을 염두에 두고 구성합니다. 단, 제출 문서에 "학교생활:", "인성:" 같은 라벨은 명시하지 않습니다.</p>
-        </div>
-        <div class="principle-card">
-          <p class="principle-num">원칙 ②</p>
-          <p class="principle-title">누가기록 표현이 드러나도록</p>
-          <p>날짜별 누가기록의 구체적 장면(어떤 활동, 어떤 행동)이 완성된 문장에 그대로 살아 있어야 합니다. 추상적 칭찬은 누구에게나 붙일 수 있어 신뢰도가 낮습니다.</p>
-        </div>
-        <div class="principle-card">
-          <p class="principle-num">원칙 ③</p>
-          <p class="principle-title">자율·동아리·진로·봉사·인성 연계</p>
-          <p>학교생활의 다양한 활동 기록을 연결해 학생만의 흐름(예: 스포츠 관심 → 스포츠클럽 → 체육교사 진로)을 만드는 것이 핵심입니다.</p>
-        </div>
-      </div>
+
+    <div class="card" style="margin-top:16px; background:var(--neutral-100); border-color:var(--neutral-200); box-shadow:none;">
+      <p style="font-size:.82rem; color:var(--ink-soft); margin:0; line-height:1.7;">💡 <b>역할</b>: 행동특성 및 종합의견은 학생의 학교생활 전반을 담아내는 <b>추천서이자 지도 자료</b>입니다. 상급학교 진학 시 추천서에 준하는 신뢰도를 가지며, 학부모 상담 및 진로 지도의 근거 자료가 됩니다.</p>
     </div>
   </div>
+
   <div class="beh-panel" id="beh-area">
     <div class="section-head"><span class="tag">구조</span><h2>학년군별 영역 구성요소</h2></div>
     <p class="lead">행동특성은 학교생활 모습·인성·교과활동·예술활동 영역으로 구성되며, 학년군이 올라갈수록 구성이 달라집니다. 학년군을 선택해 비교해 보세요.</p>
@@ -3012,32 +3053,68 @@
     var showcaseEl = document.getElementById('breakdownShowcase');
     if(!showcaseEl || !DATA) return;
 
-    // 마스터 예제 목록: breakdown 이 2개 이상인 entry 수집
     var masters = DATA.entries.filter(function(e){
       return e.templates.filter(function(t){ return t.breakdown; }).length >= 2;
     });
     if(!masters.length){
-      showcaseEl.innerHTML = '<div class="card"><p class="empty">아직 구성요소 분해 예제가 준비되지 않았습니다.</p></div>';
+      document.getElementById('bkdDisplay').innerHTML = '<div class="card"><p class="empty">준비 중입니다.</p></div>';
       return;
     }
 
-    var selBtns = document.getElementById('bkdSelectorBtns');
+    // 학년군별 그룹핑
+    var GRADE_ORDER = ['1-2학년','3-4학년','5-6학년'];
+    var gradeMap = {};
+    masters.forEach(function(m){
+      var g = m.grade || '기타';
+      if(!gradeMap[g]) gradeMap[g] = [];
+      gradeMap[g].push(m);
+    });
+    var grades = GRADE_ORDER.filter(function(g){ return gradeMap[g]; });
+
+    var gradeBtns = document.getElementById('bkdGradeBtns');
+    var subjBtns  = document.getElementById('bkdSubjBtns');
     var displayEl = document.getElementById('bkdDisplay');
 
-    // 선택 버튼 생성
-    selBtns.innerHTML = masters.map(function(e, idx){
-      var label = e.selectorLabel || e.subject;
-      var grade = e.selectorLabel ? '' : e.grade;
-      return (
-        '<button type="button" class="bkd-sel-btn' + (idx===0?' active':'') + '" data-master-idx="'+idx+'">' +
-          '<span>' + escapeHtml(label) + '</span>' +
-          (grade ? '<span class="bkd-sel-grade">' + escapeHtml(grade) + '</span>' : '') +
-        '</button>'
-      );
+    // 학년군 버튼 생성
+    gradeBtns.innerHTML = grades.map(function(g){
+      return '<button type="button" class="bkd-grade-btn" data-grade="'+g+'">'+g+'</button>';
     }).join('');
 
-    function renderMaster(masterIdx){
-      var master = masters[masterIdx];
+    var currentMaster = null;
+
+    function renderSubjBtns(grade){
+      var list = gradeMap[grade] || [];
+      subjBtns.innerHTML = list.map(function(m, idx){
+        var label = m.selectorLabel || m.subject;
+        return (
+          '<button type="button" class="bkd-sel-btn" data-master-id="'+m.id+'">' +
+            '<span>'+escapeHtml(label)+'</span>' +
+          '</button>'
+        );
+      }).join('');
+      subjBtns.querySelectorAll('.bkd-sel-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          subjBtns.querySelectorAll('.bkd-sel-btn').forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+          var mid = btn.dataset.masterId;
+          currentMaster = masters.filter(function(m){ return m.id === mid; })[0];
+          if(currentMaster) renderMaster(currentMaster);
+        });
+      });
+      // 첫 번째 자동 선택
+      var first = subjBtns.querySelector('.bkd-sel-btn');
+      if(first) first.click();
+    }
+
+    gradeBtns.querySelectorAll('.bkd-grade-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        gradeBtns.querySelectorAll('.bkd-grade-btn').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        renderSubjBtns(btn.dataset.grade);
+      });
+    });
+
+    function renderMaster(master){
       var rawTpls = master.templates.filter(function(t){ return t.stage === 'raw'; });
       var processed = master.templates.filter(function(t){ return t.breakdown; });
       var order = {};
@@ -3049,45 +3126,34 @@
         var label = p ? p.label : tpl.perspective;
         var accent = PERSP_ACCENT[tpl.perspective] || 'var(--ink)';
         return (
-          '<button type="button" class="bkd-tab' + (idx===0?' active':'') + '"' +
+          '<button type="button" class="bkd-tab'+(idx===0?' active':'')+'"' +
           ' data-bkd-idx="'+idx+'" data-bkd-accent="'+accent+'"' +
           ' style="'+(idx===0?'--bkd-accent:'+accent+';border-color:'+accent:'')+'">' +
-            '<span class="bkd-tab-num">' + (idx+1) + '</span>' +
-            escapeHtml(label) +
+            '<span class="bkd-tab-num">'+(idx+1)+'</span>'+escapeHtml(label)+
           '</button>'
         );
       }).join('');
 
       var panelsHtml = processed.map(function(tpl, idx){
-        return (
-          '<div class="bkd-panel' + (idx===0?' active':'') + '" data-bkd-idx="'+idx+'">' +
-            buildRoleBreakdownHtml(tpl) +
-          '</div>'
-        );
+        return '<div class="bkd-panel'+(idx===0?' active':'')+'" data-bkd-idx="'+idx+'">'+buildRoleBreakdownHtml(tpl)+'</div>';
+      }).join('');
+
+      var rawHtml = rawTpls.map(function(t, i){
+        return (rawTpls.length>1 ? '<p style="font-size:.68rem;font-weight:700;color:var(--ink-soft);margin:'+(i===0?'0':'12px')+' 0 4px;">관찰내용 '+(i+1)+'</p>' : '') +
+          '<div class="bkd-raw-text">'+escapeHtml(t.text)+'</div>';
       }).join('');
 
       var firstP = DATA.perspectives.filter(function(p){ return p.key === processed[0].perspective; })[0];
 
-      // 원자료 HTML — 여러 개일 경우 모두 표시
-      var rawHtml = rawTpls.length
-        ? rawTpls.map(function(t, i){
-            return (
-              (rawTpls.length > 1 ? '<p style="font-size:.68rem;font-weight:700;color:var(--ink-soft);margin:' + (i===0?'0':'12px') + ' 0 4px;">관찰내용 ' + (i+1) + '</p>' : '') +
-              '<div class="bkd-raw-text">' + escapeHtml(t.text) + '</div>'
-            );
-          }).join('')
-        : '';
-
-      // 학년군별 안내 메시지
       var noticeHtml = '';
       if(master.subject === '통합교과' || master.grade === '1-2학년'){
-        noticeHtml = '<div class="bkd-panel-desc" style="margin-bottom:12px;border-left-color:var(--gold);">💡 1-2학년 통합교과는 바른생활·슬기로운생활·즐거운생활 세 교과의 성취수준에 따른 특성을 <b>종합하여 하나의 문장으로 기재</b>합니다. 특정 교과가 누락되지 않도록 유의합니다.</div>';
+        noticeHtml = '<div class="bkd-panel-desc" style="margin-bottom:12px;border-left-color:var(--gold);">💡 1-2학년 통합교과는 바른생활·슬기로운생활·즐거운생활 세 교과의 성취수준을 <b>종합하여 하나의 문장으로 기재</b>합니다.</div>';
       } else if(master.grade === '5-6학년'){
-        noticeHtml = '<div class="bkd-panel-desc" style="margin-bottom:12px;border-left-color:var(--pine);">💡 5-6학년은 단순 활동 묘사보다 <b>자기주도적 학습 태도·복합적 역량·실생활 적용</b>이 드러나는 기재가 핵심입니다. 성취기준 도달 여부와 함께 변화 과정을 함께 서술합니다.</div>';
+        noticeHtml = '<div class="bkd-panel-desc" style="margin-bottom:12px;border-left-color:var(--pine);">💡 5-6학년은 단순 활동 묘사보다 <b>자기주도적 학습 태도·복합적 역량·실생활 적용</b>이 드러나는 기재가 핵심입니다.</div>';
       } else if(master.subject === '도덕'){
-        noticeHtml = '<div class="bkd-panel-desc" style="margin-bottom:12px;border-left-color:var(--gold);">💡 도덕 교과는 지식 습득보다 <b>가치 내면화와 생활 속 실천</b>이 드러나도록 기재합니다. 역할극·사례 분석 등 구체적 활동과 학생의 태도 변화를 함께 서술하는 것이 핵심입니다.</div>';
-      } else if(master.subject === '체육' || master.subject === '음악' || master.subject === '미술'){
-        noticeHtml = '<div class="bkd-panel-desc" style="margin-bottom:12px;border-left-color:var(--seal);">💡 예체능 교과는 지식보다 <b>기능 발달·표현력·태도·협력</b>이 구성요소의 중심이 됩니다. 성취수준형도 "무엇을 알 수 있는가"가 아니라 "어떻게 할 수 있는가"로 서술합니다.</div>';
+        noticeHtml = '<div class="bkd-panel-desc" style="margin-bottom:12px;border-left-color:var(--gold);">💡 도덕 교과는 <b>가치 내면화와 생활 속 실천</b>이 드러나도록 기재합니다.</div>';
+      } else if(['체육','음악','미술'].indexOf(master.subject)>=0){
+        noticeHtml = '<div class="bkd-panel-desc" style="margin-bottom:12px;border-left-color:var(--seal);">💡 예체능 교과는 <b>기능 발달·표현력·태도·협력</b>이 구성요소의 중심이 됩니다.</div>';
       }
 
       displayEl.innerHTML =
@@ -3095,22 +3161,19 @@
         '<div class="bkd-layout">' +
           '<div class="bkd-raw">' +
             '<span class="bkd-raw-badge">원자료 (누가기록)</span>' +
-            '<p class="bkd-raw-meta">' + escapeHtml(master.subject) + ' · ' + escapeHtml(master.grade) + '</p>' +
+            '<p class="bkd-raw-meta">'+escapeHtml(master.subject)+' · '+escapeHtml(master.grade)+'</p>' +
             rawHtml +
             '<p class="bkd-raw-hint">→ 이 관찰 기록을 바탕으로 오른쪽 다섯 가지 관점 중 하나로 가공합니다.</p>' +
           '</div>' +
           '<div class="bkd-arrow-col">→</div>' +
           '<div class="bkd-right">' +
-            '<div class="bkd-tabs-wrap">' +
-              '<p class="bkd-tabs-label">관점을 선택하세요</p>' +
-              '<div class="bkd-tabs">' + tabsHtml + '</div>' +
-            '</div>' +
-            '<div class="bkd-desc-fixed" id="bkdDescFixed">' + escapeHtml(firstP ? firstP.desc : '') + '</div>' +
-            '<div class="bkd-panels">' + panelsHtml + '</div>' +
+            '<div class="bkd-tabs-wrap"><p class="bkd-tabs-label">관점을 선택하세요</p>' +
+            '<div class="bkd-tabs">'+tabsHtml+'</div></div>' +
+            '<div class="bkd-desc-fixed" id="bkdDescFixed">'+escapeHtml(firstP ? firstP.desc : '')+'</div>' +
+            '<div class="bkd-panels">'+panelsHtml+'</div>' +
           '</div>' +
         '</div>';
 
-      // 관점 탭 이벤트
       var descEl = displayEl.querySelector('#bkdDescFixed');
       displayEl.querySelectorAll('.bkd-tab').forEach(function(tab){
         tab.addEventListener('click', function(){
@@ -3121,37 +3184,19 @@
           tab.classList.add('active');
           tab.style.cssText = '--bkd-accent:'+accent+';border-color:'+accent;
           displayEl.querySelector('.bkd-panel[data-bkd-idx="'+idx+'"]').classList.add('active');
-          var tpl = processed[parseInt(idx, 10)];
+          var tpl = processed[parseInt(idx,10)];
           var p = DATA.perspectives.filter(function(p){ return p.key === tpl.perspective; })[0];
           if(descEl) descEl.textContent = p ? p.desc : '';
         });
       });
     }
 
-    // 예제 선택 버튼 이벤트 (교과+학년 중복 시 학년 표기 강화)
-    selBtns.innerHTML = masters.map(function(e, idx){
-      var label = e.selectorLabel || e.subject;
-      var grade = e.selectorLabel ? '' : e.grade;
-      return (
-        '<button type="button" class="bkd-sel-btn' + (idx===0?' active':'') + '" data-master-idx="'+idx+'">' +
-          '<span>' + escapeHtml(label) + '</span>' +
-          (grade ? '<span class="bkd-sel-grade">' + escapeHtml(grade) + '</span>' : '') +
-        '</button>'
-      );
-    }).join('');
-
-    selBtns.querySelectorAll('.bkd-sel-btn').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        selBtns.querySelectorAll('.bkd-sel-btn').forEach(function(b){ b.classList.remove('active'); });
-        btn.classList.add('active');
-        renderMaster(parseInt(btn.dataset.masterIdx, 10));
-      });
-    });
-
-    renderMaster(0);
+    // 첫 학년군 자동 선택
+    var firstGradeBtn = gradeBtns.querySelector('.bkd-grade-btn');
+    if(firstGradeBtn) firstGradeBtn.click();
   }
 
-  // ===== 데이터 로드 =====
+    // ===== 데이터 로드 =====
   function loadData(){
     fetch('data/phrases.json')
       .then(function(res){ return res.json(); })
