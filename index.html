@@ -2440,9 +2440,11 @@
     </div>
 
     <div class="compare-think-bar">
-      <span>💡 <b>먼저 생각하기</b> 모드: 좋은 예를 가리고 수정 전 문장만 보면서 스스로 고쳐보세요.</span>
+      <span>💡 <b>먼저 생각하기</b>: 좋은 예를 가리고 수정 전 문장만 보면서 스스로 고쳐보세요.</span>
       <button class="compare-think-btn" id="compareThinkToggle">좋은 예 가리기</button>
     </div>
+
+    <div id="compareEmpty" style="display:none; text-align:center; padding:32px; color:var(--ink-soft); font-size:.88rem;">해당 학년군 카드가 없습니다.</div>
 
     <!-- 학년군별 카드 -->
     <div class="compare-card card" data-grade="g12">
@@ -2461,7 +2463,6 @@
       <p class="compare-why">핵심: "착하다"·"적극적이다"는 어떤 학생에게나 붙일 수 있는 표현입니다. <b>급식 식판을 들어주는 장면</b>처럼 그 학생만의 행동으로 바꾸면 신뢰도가 생깁니다.</p>
     </div>
 
-    <div class="compare-card card">
     <div class="compare-card card" data-grade="g34">
       <div class="compare-tag">3–4학년 — 선언형 → 사례 중심</div>
       <div class="compare-row">
@@ -2478,7 +2479,6 @@
       <p class="compare-why">핵심: "리더의 자질이 보임"을 증명하는 사례(수학 부장)를 함께 써야 신뢰도가 생깁니다. 역량 선언 + 사례 증거가 세트입니다.</p>
     </div>
 
-    <div class="compare-card card">
     <div class="compare-card card" data-grade="g56">
       <div class="compare-tag">5–6학년 — 학기 미구분 → 1·2학기 흐름</div>
       <div class="compare-row">
@@ -2735,13 +2735,14 @@
       compareFilterBtns.forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
       var filter = btn.dataset.filter;
+      var visible = 0;
       document.querySelectorAll('#beh-compare .compare-card').forEach(function(card){
-        if(filter === 'all'){
-          card.style.display = '';
-        } else {
-          card.style.display = card.dataset.grade === filter ? '' : 'none';
-        }
+        var show = filter === 'all' || card.dataset.grade === filter;
+        card.style.display = show ? '' : 'none';
+        if(show) visible++;
       });
+      var emptyMsg = document.getElementById('compareEmpty');
+      if(emptyMsg) emptyMsg.style.display = visible === 0 ? 'block' : 'none';
     });
   });
 
