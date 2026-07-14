@@ -1007,6 +1007,14 @@
     border-bottom:2px dashed var(--pine);
     cursor:default;
   }
+  /* beh-mark 하이라이트 안에서는 inline으로 전환해
+     줄바꿈 시 배경(box-decoration-break)이 끊기지 않도록 함 */
+  .beh-mark-a .conv-callout,
+  .beh-mark-b .conv-callout,
+  .beh-mark-c .conv-callout,
+  .beh-mark-d .conv-callout {
+    display:inline;
+  }
   .conv-callout-tip{
     display:none; position:absolute; bottom:calc(100% + 6px); left:0;
     background:var(--ink); color:var(--card);
@@ -1296,9 +1304,9 @@
   color:var(--ink);
 }
 /* 누가기록 매핑 색상 — 3종으로 통합 */
-.beh-mark-a{background:#FFE082; box-shadow:inset 0 -2px 0 var(--gold); border-radius:3px; padding:1px 4px;}
-.beh-mark-b{background:#B2DFDB; box-shadow:inset 0 -2px 0 var(--pine); border-radius:3px; padding:1px 4px;}
-.beh-mark-d{background:#C5B3E8; box-shadow:inset 0 -2px 0 #6B5BAF; border-radius:3px; padding:1px 4px;}
+.beh-mark-a{background:#FFE082; box-shadow:inset 0 -2px 0 var(--gold); border-radius:3px; padding:1px 4px; -webkit-box-decoration-break:clone; box-decoration-break:clone;}
+.beh-mark-b{background:#B2DFDB; box-shadow:inset 0 -2px 0 var(--pine); border-radius:3px; padding:1px 4px; -webkit-box-decoration-break:clone; box-decoration-break:clone;}
+.beh-mark-d{background:#C5B3E8; box-shadow:inset 0 -2px 0 #6B5BAF; border-radius:3px; padding:1px 4px; -webkit-box-decoration-break:clone; box-decoration-break:clone;}
 .beh-mark-e{background:#FFF3E0; box-shadow:inset 0 -2px 0 #D48C2A; border-radius:3px; padding:1px 3px;}
 /* 영역별 인라인 하이라이트 (완성본 구절 표시용) */
 .beh-hl-school{background:#B2DFDB; box-shadow:inset 0 -2px 0 var(--pine); border-radius:3px; padding:1px 4px;}
