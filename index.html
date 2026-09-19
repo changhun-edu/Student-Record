@@ -3334,7 +3334,7 @@
       var firstP = DATA.perspectives.filter(function(p){ return p.key === processed[0].perspective; })[0];
 
       var noticeHtml = '';
-      if(master.subject === '통합교과' || master.grade === '1-2학년'){
+      if(['통합교과','바른생활','슬기로운생활','즐거운생활'].indexOf(master.subject) >= 0){
         noticeHtml = '<div class="bkd-panel-desc" style="margin-bottom:12px;border-left-color:var(--gold);">💡 1-2학년 통합교과는 바른생활·슬기로운생활·즐거운생활 세 교과의 성취수준을 <b>종합하여 하나의 문장으로 기재</b>합니다.</div>';
       } else if(master.grade === '5-6학년'){
         noticeHtml = '<div class="bkd-panel-desc" style="margin-bottom:12px;border-left-color:var(--pine);">💡 5-6학년은 단순 활동 묘사보다 <b>자기주도적 학습 태도·복합적 역량·실생활 적용</b>이 드러나는 기재가 핵심입니다.</div>';
