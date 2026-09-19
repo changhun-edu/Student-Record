@@ -1663,7 +1663,7 @@
 <div class="wrap">
 
   <header class="top">
-    <a class="brand" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" style="text-decoration:none; cursor:pointer;">
+    <a class="brand" href="#view-why" title="처음 화면(왜 필요한가)으로" onclick="goHome();return false;" style="text-decoration:none; cursor:pointer;">
       <div class="seal-mark">記錄</div>
       <div class="brand-text">
         <h1>생활기록부 작성 <span class="accent">연구소</span></h1>
@@ -3274,6 +3274,16 @@
     });
   });
 })();
+</script>
+<script>
+/* 로고를 누르면 '교과 성취수준 및 특기사항 > 왜 필요한가' 화면으로 이동 */
+function goHome(){
+  var sec = document.querySelector('.sec-btn[data-section="subject"]');
+  if(sec && !sec.classList.contains('active')) sec.click();
+  var why = document.querySelector('.tab-btn[data-view="why"]');
+  if(why) why.click();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
 </script>
 </body>
 </html>
