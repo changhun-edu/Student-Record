@@ -3254,5 +3254,26 @@
     loadData();
 })();
 </script>
+<script>
+/* 입력 불가 항목 아코디언: 머리글을 누르면 펼치고 접기 */
+(function(){
+  document.querySelectorAll('.acc-head').forEach(function(head){
+    var panel = head.nextElementSibling;
+    if(!panel || !panel.classList.contains('acc-panel')) return;
+    head.setAttribute('aria-expanded','false');
+    head.addEventListener('click', function(){
+      var open = head.classList.toggle('open');
+      head.setAttribute('aria-expanded', open ? 'true' : 'false');
+      panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '0px';
+    });
+  });
+  window.addEventListener('resize', function(){
+    document.querySelectorAll('.acc-head.open').forEach(function(head){
+      var panel = head.nextElementSibling;
+      if(panel) panel.style.maxHeight = panel.scrollHeight + 'px';
+    });
+  });
+})();
+</script>
 </body>
 </html>
