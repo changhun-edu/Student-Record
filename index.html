@@ -1505,6 +1505,23 @@
     margin-top:40px;
   }
 
+  /* ===== 푸터 ===== */
+  .site-footer{word-break:keep-all; margin-top:48px; padding:28px 0 8px; border-top:1px solid var(--paper-line); text-align:left; font-size:.78rem; color:var(--ink-soft);}
+  .ft-refs{background:var(--neutral-100); border:1px solid var(--neutral-200); border-radius:12px; padding:18px 20px;}
+  .ft-title{font-family:var(--serif); font-size:.92rem; font-weight:700; color:var(--ink); margin:0 0 12px;}
+  .ft-groups{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:700px){.ft-groups{grid-template-columns:1fr;}}
+  .ft-group-label{font-size:.7rem; font-weight:700; letter-spacing:.03em; color:var(--pine); margin:0 0 6px;}
+  .ft-group ul{list-style:none; margin:0; padding:0;}
+  .ft-group li{padding:6px 0; border-bottom:1px dashed var(--neutral-200); line-height:1.6; color:var(--ink);}
+  .ft-group li:last-child{border-bottom:none;}
+  .ft-org{display:block; font-size:.68rem; font-weight:600; color:var(--ink-soft);}
+  .ft-note{margin:14px 0 0; padding-top:12px; border-top:1px solid var(--neutral-200); font-size:.74rem; line-height:1.7;}
+  .ft-bottom{display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:6px 10px; margin-top:18px; font-size:.78rem;}
+  .ft-bottom a{color:var(--ink); text-decoration:underline; text-underline-offset:3px; text-decoration-color:var(--neutral-400);}
+  .ft-bottom a:hover{color:var(--pine); text-decoration-color:var(--pine);}
+  .ft-dot{color:var(--neutral-400);}
+
   /* ===== 수행평가 → 세특 4단계 흐름 ===== */
   .process-flow{
     display:grid;
@@ -1680,7 +1697,7 @@
     </button>
     <button class="sec-btn" data-section="behavior">
       🧑 행동특성 및 종합의견
-      <span class="sec-btn-sub">누가기록 기반 종합 기재</span>
+      <span class="sec-btn-sub">한 해 관찰 기반 종합 기재</span>
     </button>
   </div>
 
@@ -1719,6 +1736,7 @@
           <p class="process-title">수행평가 설계</p>
           <p class="process-desc">수업 목표에 맞는 활동과, 그 활동을 확인할 평가 과제를 함께 계획합니다.</p>
           <p class="process-check">✓ 성취기준과 연결된 과제인가?</p>
+          <p class="process-check">✓ AI를 쓴다면 금지 행위를 정하고 미리 안내했는가?</p>
         </div>
         <div class="process-step">
           <div class="process-num">2</div>
@@ -1794,8 +1812,20 @@
 
   <!-- ===================== VIEW: BREAKDOWN (관점별 구성요소) ===================== -->
   <section class="view" id="view-breakdown">
-    <div class="section-head"><span class="tag">핵심</span><h2>같은 누가기록, 다섯 가지 구성요소로 뜯어보기</h2></div>
-    <p class="lead">같은 누가기록이라도 어떤 관점으로 쓰느냐에 따라 문장을 이루는 요소가 달라집니다.<br>탭을 눌러 비교해 보세요.</p>
+    <div class="section-head"><span class="tag">핵심</span><h2>같은 관찰 기록, 다섯 가지 구성요소로 뜯어보기</h2></div>
+    <p class="lead">같은 관찰·평가 기록이라도 어떤 관점으로 쓰느냐에 따라 문장을 이루는 요소가 달라집니다.<br>탭을 눌러 비교해 보세요.</p>
+
+    <div class="card" style="padding:16px 18px;">
+      <p style="font-size:.84rem; line-height:1.7; margin:0 0 10px;">2026학년도 기재요령은 '성취수준 및 특기사항'을 <b>성취기준에 따른 성취수준의 특성</b>, <b>학습활동 참여도</b>, <b>자기주도적 학습에 의한 변화와 성장 정도</b>를 중심으로 쓰도록 정했습니다. 다섯 관점은 이 세 가지를 문장으로 옮기는 방법입니다.</p>
+      <table class="conn-table">
+        <thead><tr><th>기재요령이 말하는 중심 내용</th><th>이 사이트의 관점</th></tr></thead>
+        <tbody>
+          <tr><td>성취수준의 특성</td><td><span class="conn-badge" style="background:#6B5BAF;">도달점형</span> <span class="conn-badge" style="background:#9C7B41;">역량근거형</span></td></tr>
+          <tr><td>학습활동 참여도</td><td><span class="conn-badge" style="background:#2E7D72;">장면중심형</span></td></tr>
+          <tr><td>자기주도적 학습에 의한 변화와 성장 정도</td><td><span class="conn-badge" style="background:#D48C2A;">전후비교형</span> <span class="conn-badge" style="background:#B33B30;">누적향상형</span></td></tr>
+        </tbody>
+      </table>
+    </div>
     <div id="breakdownShowcase">
       <div class="bkd-selector-wrap">
         <p class="bkd-selector-label">① 학년군 선택</p>
@@ -2153,7 +2183,24 @@
       </div>
     </div>
 
-    <div class="section-head" style="margin-top:10px;"><span class="tag">주의</span><h2>입력 불가 항목</h2></div>
+    <div class="section-head" style="margin-top:10px;"><span class="tag">형식</span><h2>입력할 때의 형식</h2></div>
+    <p style="font-size:.82rem; color:var(--ink-soft); margin-bottom:12px;">2026학년도 기재요령(제4조 처리요령)에서 서술형 항목의 입력 형식을 이렇게 정했습니다.</p>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <p class="guide-card-title">명사형 어미로 끝맺기</p>
+        <p>문장은 <b>'~함', '~임', '~됨'</b>처럼 명사형 어미로 끝냅니다.</p>
+      </div>
+      <div class="guide-card">
+        <p class="guide-card-title">특수문자·문단 번호 쓰지 않기</p>
+        <p>※, ●, ▶ 같은 <b>특수문자</b>와 ①, 1., 가. 같은 <b>문단구분 기호(번호)</b>는 넣지 않습니다. '(1학기)'처럼 문단 앞에 붙이는 표시도 같은 이유로 쓰지 않는 편이 좋습니다. 따옴표도 꼭 필요할 때만 씁니다.</p>
+      </div>
+      <div class="guide-card" style="grid-column:1/-1;">
+        <p class="guide-card-title">문단 단위로 줄 바꾸기 (2026 새로 허용)</p>
+        <p>내용이 달라지는 곳에서 <b>줄을 바꾸어 문단을 나눌 수 있습니다.</b> 학기나 영역을 나누어 쓰고 싶을 때는 이름표 대신 줄바꿈으로 구분하세요.</p>
+      </div>
+    </div>
+
+    <div class="section-head" style="margin-top:24px;"><span class="tag">주의</span><h2>입력 불가 항목</h2></div>
     <p style="font-size:.82rem; color:var(--ink-soft); margin-bottom:12px;">카테고리를 클릭해 세부 항목을 확인하세요. 근거는 교육부 훈령 「학교생활기록 작성 및 관리지침」과 교육부 「학교생활기록부 기재요령」이며, 해마다 바뀔 수 있으니 올해 판으로 꼭 확인하세요.</p>
     <div class="acc-wrap">
       <div class="acc-item">
@@ -2220,9 +2267,10 @@
     <div class="section-head" style="margin-top:24px;"><span class="tag">AI</span><h2>AI·예시 문장을 쓸 때 꼭 지킬 것</h2></div>
     <div class="card" style="border-left:4px solid var(--seal);">
       <ul style="margin:0; padding-left:18px; font-size:.86rem; line-height:1.8;">
-        <li><b>AI로 만든 문장을 서술형 항목에 그대로 입력하면 안 됩니다.</b> 다듬는 데 도움을 받았다면, 입력 전에 학생의 실제 모습과 다르거나 부풀린 내용이 없는지 반드시 확인하세요.</li>
+        <li><b>AI로 만든 문장을 서술형 항목에 그대로 입력하면 안 됩니다.</b> 다듬는 데 도움을 받았다면, 입력 전에 학생의 실제 모습과 다르거나 부풀린 내용이 없는지, 입력 불가 항목처럼 기재요령의 유의사항을 어긴 내용이 섞이지 않았는지 반드시 확인하세요.</li>
         <li>이 사이트의 예시 문장도 <b>참고용</b>입니다. 그대로 붙여 넣지 말고, 선생님이 직접 관찰한 기록으로 바꿔 쓰세요.</li>
         <li>서술형 항목에 들어갈 내용을 <b>학생에게 써 오게 해서는 안 됩니다.</b></li>
+        <li><b>수행평가에서 AI 도구를 쓸 때</b>는 교사가 학생의 활동을 직접 관찰할 수 있는 방식으로 하고, AI 사용이 금지되는 행위를 정해 학생·학부모에게 미리 알립니다. 평가의 공정성과 신뢰성이 흔들리지 않게 하는 것이 먼저입니다.</li>
         <li>기재요령의 '기재방법'은 지켜야 하지만, '기재예시'는 뜻이 달라지지 않는 범위에서 다르게 쓸 수 있습니다.</li>
       </ul>
     </div>
@@ -2285,7 +2333,7 @@
       </div>
       <div class="principle-card">
         <p class="principle-num">원칙 ②</p>
-        <p class="principle-title">누가기록 표현이 드러나도록</p>
+        <p class="principle-title">관찰한 장면이 드러나도록</p>
         <p>메모해 둔 장면(무엇을 했고 어떻게 행동했는지)이 완성 문장 안에 남아 있어야 합니다. 누구에게나 붙일 수 있는 칭찬은 기록으로서 힘이 없습니다.</p>
       </div>
       <div class="principle-card">
@@ -2300,6 +2348,7 @@
       <ul style="font-size:.8rem; color:var(--ink-soft); margin:8px 0 0; padding-left:18px; line-height:1.7;">
         <li>담임교사가 모든 학생에 대해 입력합니다. 누가기록을 할지, 어떤 방법으로 할지는 학교장이 정합니다.</li>
         <li>부정적인 행동특성을 쓸 때는 그 모습이 구체적으로 드러나도록 누가기록해 두기를 권장합니다.</li>
+        <li>예전의 "부정적 행동특성은 변화 가능성을 함께 입력"이라는 문구는 2026년에 빠지고, <b>성장 정도와 발전 가능성 등을 고려해 성장을 지원하는 교육적 관점</b>으로 쓰도록 바뀌었습니다. 이 사이트의 ‘있는 그대로 → 기댈 강점 → 다음 걸음’ 흐름은 그 관점을 문장으로 옮기는 권장 방법입니다.</li>
         <li>학교 교육활동으로 한 체육·예술활동은 종합해서 쓸 수 있고, 학교교육계획에 따른 봉사활동에서 교사가 직접 관찰한 특기사항도 필요하면 쓸 수 있습니다.</li>
         <li>영재교육기관 수료 내용은 여기에 쓰지 않고 관련 교과 란에 씁니다.</li>
       </ul>
@@ -2406,9 +2455,9 @@
         <p class="compare-why">본 것을 그대로 옮기기보다 학생이 더 자랄 수 있도록 돕는 눈으로 씁니다. 아쉬운 점을 적을 때는 "~할 때가 있었으나 … 연습하며 노력함"처럼 그것을 넘어서려고 <b>실제로 한 노력과 달라진 모습</b>을 함께 적으세요.</p>
         <p class="stage-heading" style="margin-top:18px;">✏️ 위 내용이 합쳐진 완성된 행동특성 및 종합의견</p>
         <div class="beh-finished-text">
-          (1학기) <span class="beh-hl-char">학급 또래 도우미로 활동하며 분수의 나눗셈을 어려워하는 친구에게 그림으로 단계를 나누어 설명하고, 친구가 스스로 풀 때까지 기다려 주는 인내심을 보임.</span>
+          <span class="beh-hl-char">학급 또래 도우미로 활동하며 분수의 나눗셈을 어려워하는 친구에게 그림으로 단계를 나누어 설명하고, 친구가 스스로 풀 때까지 기다려 주는 인내심을 보임.</span>
           <span class="beh-hl-school">문제를 끝까지 읽지 않고 서둘러 답을 적어 아는 내용도 틀릴 때가 있었으나, 문제의 조건에 밑줄을 긋고 답을 쓴 뒤 한 번 더 확인하는 연습을 한 학기 동안 꾸준히 하며 실수를 줄이려 노력함.</span>
-          (2학기) <span class="beh-hl-subj">국어 시간에 이야기 속 인물이 다른 선택을 했다면 어떻게 되었을지 뒷이야기를 새로 써서 친구들과 돌려 읽고, 음악 합주를 앞두고는 자신이 맡은 부분을 녹음해 들으며 틀린 마디를 스스로 고쳐 옴.</span>
+          <br><br><span class="beh-hl-subj">국어 시간에 이야기 속 인물이 다른 선택을 했다면 어떻게 되었을지 뒷이야기를 새로 써서 친구들과 돌려 읽고, 음악 합주를 앞두고는 자신이 맡은 부분을 녹음해 들으며 틀린 마디를 스스로 고쳐 옴.</span>
           <span class="beh-hl-school">조건을 확인하는 습관이 다른 과목 문제를 풀 때에도 이어져 2학기에는 실수가 눈에 띄게 줄어듦.</span>
         </div>
         <div class="beh-legend">
@@ -2490,7 +2539,7 @@
           <tr>
             <td><span class="conn-badge" style="background:var(--gold);">1학기</span> → <span class="conn-badge" style="background:#6B5BAF;">2학기</span></td>
             <td><b>2학기에는</b> ~ 분야에서 두각을 드러내며~<br><b>하반기 들어</b> ~하는 습관이 자리 잡아 가고 있음<br><b>학기 후반에는</b> ~로 성장이 기대되는 학생임</td>
-            <td>학기를 나누어 쓸 수도 있으며, 이때는 '(1학기)', '(2학기)'로 직접 적음</td>
+            <td>학기를 나누어 쓸 때는 '(1학기)' 같은 표시를 붙이지 않고 문단을 줄바꿈하여 구분함</td>
           </tr>
         </tbody>
       </table>
@@ -2518,11 +2567,11 @@
       </div>
       <div class="checklist-card">
         <span class="checklist-grade g56">5–6학년</span>
-        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>(1학기)</b> 스스로 생활하는 모습·함께 지내는 모습 중심 기술</span></div>
-        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>(1학기)</b> 아쉬운 점은 노력과 변화까지 함께 기술</span></div>
-        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>(2학기)</b> 배우는 모습 or 표현하는 모습(예체능 두각) 기술</span></div>
-        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>(2학기)</b> 성장 모습 or 변화 마무리</span></div>
-        <div class="checklist-warn">⚠️ 아쉬운 점만 적고 끝내지 않기</div>
+        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>1학기 문단</b> 스스로 생활하는 모습·함께 지내는 모습 중심 기술</span></div>
+        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>1학기 문단</b> 아쉬운 점은 노력과 변화까지 함께 기술</span></div>
+        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>2학기 문단</b> 배우는 모습 or 표현하는 모습(예체능 두각) 기술</span></div>
+        <div class="checklist-item"><span class="checklist-icon">✅</span><span><b>2학기 문단</b> 성장 모습 or 변화 마무리</span></div>
+        <div class="checklist-warn">⚠️ 아쉬운 점만 적고 끝내지 않기<br>⚠️ 학기는 '(1학기)' 표시 대신 줄바꿈으로 구분</div>
       </div>
     </div>
   </div>
@@ -2530,7 +2579,7 @@
   <!-- BEH: 누가기록 → 종합의견 변환 -->
   <div class="beh-panel" id="beh-convert">
     <div class="section-head"><span class="tag">변환</span><h2>누가기록 → 종합의견으로 가공하기</h2></div>
-    <p class="lead">메모가 종합의견으로 줄어드는 과정을 학년별·활동별로 살펴보세요.<br>같은 색끼리 원자료와 완성 문장이 이어집니다.</p>
+    <p class="lead">메모가 종합의견으로 줄어드는 과정을 학년별·활동별로 살펴보세요.<br>같은 색끼리 원자료와 완성 문장이 이어집니다.<br>누가기록을 할지, 어떻게 할지는 학교장이 정합니다. 누가기록을 하지 않는 학교라면 수업 메모나 관찰 기록장처럼 평소 적어 둔 기록으로 같은 방법을 쓸 수 있습니다.</p>
 
     <div class="conv-type-tabs">
       <button class="conv-type-btn active" data-type="grade12">1–2학년 예시</button>
@@ -2633,10 +2682,10 @@
         <div class="beh-conv-processed">
           <span class="beh-conv-badge">완성된 종합의견</span>
           <div class="beh-conv-text">
-            <p><b>(1학기)</b> <span class="beh-mark-a">학급 또래 도우미로 활동하며 분수의 나눗셈을 어려워하는 친구에게 그림으로 단계를 나누어 설명하고, 친구가 스스로 풀 때까지 기다려 주는 인내심을 보임.</span> <span class="beh-mark-b"><span class="conv-callout">문제를 끝까지 읽지 않고 서둘러 답을 적어 아는 문제도 틀릴 때가 있었으나, 조건에 밑줄을 긋고 답을 한 번 더 확인하는 연습을 꾸준히 하며<span class="conv-callout-tip">단점 → 구체적 노력 → 변화 흐름 패턴</span></span> 스스로 실수를 줄이려 노력함.</span></p>
-            <p><b>(2학기)</b> <span class="beh-mark-a">국어 시간에 이야기 속 인물이 다른 선택을 했다면 어떻게 되었을지 뒷이야기를 새로 써서 친구들과 돌려 읽고,</span> <span class="beh-mark-d">음악 합주를 앞두고 자신이 맡은 부분을 녹음해 들으며 틀린 마디를 스스로 고쳐 오는 등 연주를 꼼꼼히 준비함.</span> <span class="beh-mark-b">문제의 조건을 먼저 짚고 답을 다시 확인하는 습관이 자리 잡아 실수가 크게 줄어듦.</span> <span class="beh-mark-a"><span class="conv-callout">또래 도우미 활동 기록장을 스스로 만들어 돕는 방법을 다듬으면서 누군가를 가르치는 일에 대한 꿈을 키워 가고 있어 앞으로의 성장이 기대됨.<span class="conv-callout-tip">진로 희망 → 활동 변화 연결: 흐름 패턴 마무리</span></span></span></p>
+            <p><span class="beh-mark-a">학급 또래 도우미로 활동하며 분수의 나눗셈을 어려워하는 친구에게 그림으로 단계를 나누어 설명하고, 친구가 스스로 풀 때까지 기다려 주는 인내심을 보임.</span> <span class="beh-mark-b"><span class="conv-callout">문제를 끝까지 읽지 않고 서둘러 답을 적어 아는 문제도 틀릴 때가 있었으나, 조건에 밑줄을 긋고 답을 한 번 더 확인하는 연습을 꾸준히 하며<span class="conv-callout-tip">단점 → 구체적 노력 → 변화 흐름 패턴</span></span> 스스로 실수를 줄이려 노력함.</span></p>
+            <p><span class="beh-mark-a">국어 시간에 이야기 속 인물이 다른 선택을 했다면 어떻게 되었을지 뒷이야기를 새로 써서 친구들과 돌려 읽고,</span> <span class="beh-mark-d">음악 합주를 앞두고 자신이 맡은 부분을 녹음해 들으며 틀린 마디를 스스로 고쳐 오는 등 연주를 꼼꼼히 준비함.</span> <span class="beh-mark-b">문제의 조건을 먼저 짚고 답을 다시 확인하는 습관이 자리 잡아 실수가 크게 줄어듦.</span> <span class="beh-mark-a"><span class="conv-callout">또래 도우미 활동 기록장을 스스로 만들어 돕는 방법을 다듬으면서 누군가를 가르치는 일에 대한 꿈을 키워 가고 있어 앞으로의 성장이 기대됨.<span class="conv-callout-tip">진로 희망 → 활동 변화 연결: 흐름 패턴 마무리</span></span></span></p>
           </div>
-          <div style="padding:0 16px 14px;"><p class="compare-why"><span class="beh-mark-a">금색</span> = 스스로 생활하는 모습·학업·진로 &nbsp;|&nbsp; <span class="beh-mark-b">초록</span> = 아쉬운 점과 달라진 모습 &nbsp;|&nbsp; <span class="beh-mark-d">보라</span> = 예체능.</p></div>
+          <div style="padding:0 16px 14px;"><p class="compare-why"><span class="beh-mark-a">금색</span> = 스스로 생활하는 모습·학업·진로 &nbsp;|&nbsp; <span class="beh-mark-b">초록</span> = 아쉬운 점과 달라진 모습 &nbsp;|&nbsp; <span class="beh-mark-d">보라</span> = 예체능. 학기는 '(1학기)' 같은 표시 없이 <b>문단 줄바꿈</b>으로 나누었습니다.</p></div>
         </div>
       </div>
       <div class="conv-selection-note">📌 <b>선별 기준</b>: 1학기 문단에는 3.20·4.17·5.28 기록으로 친구를 돕는 모습과 아쉬운 점을, 2학기 문단에는 9.5·10.14·11.3·12.1 기록으로 배우고 표현하는 모습과 달라진 점을 담았습니다. <b>5.28의 아쉬운 기록은 12.1(습관이 자리 잡음)과 짝지어</b> 달라진 과정이 보이게 했습니다.</div>
@@ -2698,7 +2747,7 @@
 
     <!-- 자율·동아리 연계 -->
     <div class="conv-type-panel" id="conv-club">
-      <p class="conv-key-note club">💡 <b>창체활동 연계 핵심</b>: 2022 개정 교육과정의 창의적 체험활동은 자율·자치, 동아리, 진로 활동으로 이루어집니다. 한 활동에서 보인 <b>강점</b>이 다른 활동에서도 이어지는 장면을 찾아 '좋아하는 것 → 맡은 일 → 넓어진 관심'의 줄기로 엮어 보세요.</p>
+      <p class="conv-key-note club">💡 <b>창체활동 연계 핵심</b>: 2022 개정 교육과정의 창의적 체험활동은 자율·자치, 동아리, 진로 활동으로 이루어집니다. 한 활동에서 보인 <b>강점</b>이 다른 활동에서도 이어지는 장면을 찾아 '좋아하는 것 → 맡은 일 → 넓어진 관심'의 줄기로 엮어 보세요. 2026년부터 창체 누가기록은 영역별 특기사항을 쓰는 데 <b>필요한 경우 활용할 수 있는</b> 선택 사항입니다.</p>
       <div class="beh-convert-layout card" style="padding:18px 20px; gap:16px;">
         <div class="beh-conv-raw">
           <span class="beh-conv-raw-badge">누가기록 원자료</span>
@@ -2887,12 +2936,12 @@
         </div>
         <div class="compare-col good">
           <div class="compare-label">✓ 수정 후</div>
-          <p><span class="hl-add"><b>(1학기)</b></span> 학급 또래 도우미로 활동하며 분수의 나눗셈을 어려워하는 친구에게 <span class="hl-fix">그림으로 단계를 나누어 설명하고, 친구가 스스로 풀 때까지 기다려 주는 인내심을 보임.</span> 문제를 끝까지 읽지 않고 서둘러 답을 적어 실수가 잦았으나, <span class="hl-fix">조건에 밑줄을 긋고 답을 한 번 더 확인하는 연습을 꾸준히 하며</span> 스스로 실수를 줄이려 노력함.<br>
-          <span class="hl-add"><b>(2학기)</b></span> <span class="hl-add">국어 시간에 이야기 속 인물이 다른 선택을 했다면 어떻게 되었을지 뒷이야기를 새로 쓰고, 음악 합주를 앞두고는 맡은 부분을 녹음해 들으며 틀린 마디를 스스로 고쳐 옴.</span> <span class="hl-add">조건을 확인하는 습관이 다른 과목 문제를 풀 때에도 이어져 실수가 눈에 띄게 줄어듦.</span></p>
-          <div class="compare-diff-legend"><span><span class="compare-diff-swatch hl-add"></span>2학기 내용 추가</span><span><span class="compare-diff-swatch hl-fix"></span>관찰 표현 완화·교육적 관점 강화</span></div>
+          <p>학급 또래 도우미로 활동하며 분수의 나눗셈을 어려워하는 친구에게 <span class="hl-fix">그림으로 단계를 나누어 설명하고, 친구가 스스로 풀 때까지 기다려 주는 인내심을 보임.</span> 문제를 끝까지 읽지 않고 서둘러 답을 적어 실수가 잦았으나, <span class="hl-fix">조건에 밑줄을 긋고 답을 한 번 더 확인하는 연습을 꾸준히 하며</span> 스스로 실수를 줄이려 노력함.<br><br>
+          <span class="hl-add">국어 시간에 이야기 속 인물이 다른 선택을 했다면 어떻게 되었을지 뒷이야기를 새로 쓰고, 음악 합주를 앞두고는 맡은 부분을 녹음해 들으며 틀린 마디를 스스로 고쳐 옴.</span> <span class="hl-add">조건을 확인하는 습관이 다른 과목 문제를 풀 때에도 이어져 실수가 눈에 띄게 줄어듦.</span></p>
+          <div class="compare-diff-legend"><span><span class="compare-diff-swatch hl-add"></span>2학기 내용을 새 문단으로 추가</span><span><span class="compare-diff-swatch hl-fix"></span>관찰 표현 완화·교육적 관점 강화</span></div>
         </div>
       </div>
-      <p class="compare-why">핵심: 학기를 나누어 쓸 수도 있으며, 이때는 '(1학기)', '(2학기)'로 직접 적습니다. 부족한 점을 쓸 때는 "노력하고 있음"으로 막연하게 두지 말고 "조건에 밑줄 긋기·다시 확인하기"처럼 <b>어떤 노력을 했는지</b> 구체화해야 합니다.</p>
+      <p class="compare-why">핵심: 학기를 나누어 쓸 때는 '(1학기)' 같은 표시를 붙이지 말고 <b>문단 단위로 줄을 바꾸어</b> 구분합니다(2026 기재요령: 문단구분 기호 지양, 문단 단위 줄바꿈 가능). 부족한 점을 쓸 때는 "노력하고 있음"으로 막연하게 두지 말고 "조건에 밑줄 긋기·다시 확인하기"처럼 <b>어떤 노력을 했는지</b> 구체화해야 합니다.</p>
     </div>
 
     <!-- 실수 유형 카드 -->
@@ -3001,14 +3050,33 @@
 
   </div><!-- /panel-behavior -->
 
-  <footer style="text-align:center; padding:24px 20px; font-size:.75rem; color:var(--neutral-400);">
-    만든이 © 2026 최창훈 · <a href="#" onclick="openOss(); return false;" style="color:inherit;text-decoration:underline;text-underline-offset:2px">오픈소스 라이선스</a>
-    <div class="footer-sources" style="margin-top:10px; font-size:.7rem; line-height:1.7;">
-      <div style="font-weight:600;">참고 자료</div>
-      <div>· 중앙교육연수원 「학교생활기록부 기재 역량 제고를 위한 원격연수(초)」(2021)</div>
-      <div>· 교육부·한국교육학술정보원(KERIS) 「2019 학교생활기록부 기재요령(초등)」 연수자료</div>
-      <div>· 17개 시도교육청 「2026학년도 학교생활기록부 기재요령(초등학교)」</div>
-      <div style="margin-top:4px;">교과 성취수준 및 특기사항(세특)의 기재 관점과 행동특성 및 종합의견 작성 흐름은 위 자료를 참고하여 저자가 재구성했으며, 기재 규칙은 2026학년도 기재요령을 따랐습니다.</div>
+  <footer class="site-footer">
+    <div class="ft-refs">
+      <p class="ft-title">참고 자료</p>
+      <div class="ft-groups">
+        <div class="ft-group">
+          <p class="ft-group-label">기재 규칙 · 2026학년도 기준</p>
+          <ul>
+            <li><span class="ft-org">17개 시도교육청</span>「2026학년도 학교생활기록부 기재요령(초등학교)」</li>
+            <li><span class="ft-org">교육부·KERIS</span>「2026 학교생활기록부 기재요령 주요 개정사항 안내(초등학교)」</li>
+          </ul>
+        </div>
+        <div class="ft-group">
+          <p class="ft-group-label">기재 관점 · 작성 흐름</p>
+          <ul>
+            <li><span class="ft-org">중앙교육연수원</span>「학교생활기록부 기재 역량 제고를 위한 원격연수(초)」(2021)</li>
+            <li><span class="ft-org">교육부·KERIS</span>「2019 학교생활기록부 기재요령(초등)」 연수자료</li>
+          </ul>
+        </div>
+      </div>
+      <p class="ft-note">교과 성취수준 및 특기사항(세특)의 기재 관점과 행동특성 및 종합의견 작성 흐름은 위 자료를 참고하여 저자가 재구성했으며, 기재 규칙은 2026학년도 기재요령을 따랐습니다.</p>
+    </div>
+    <div class="ft-bottom">
+      <span>만든이 © 2026 최창훈</span>
+      <span class="ft-dot" aria-hidden="true">·</span>
+      <a href="https://edu-hub-alpha-ten.vercel.app/" target="_blank" rel="noopener">🧰 학교 연장통 ↗</a>
+      <span class="ft-dot" aria-hidden="true">·</span>
+      <a href="#" onclick="openOss(); return false;" aria-haspopup="dialog" aria-controls="ossModal">오픈소스 라이선스</a>
     </div>
   </footer>
 </div>
@@ -3348,7 +3416,7 @@
         noticeHtml +
         '<div class="bkd-layout">' +
           '<div class="bkd-raw">' +
-            '<span class="bkd-raw-badge">원자료 (누가기록)</span>' +
+            '<span class="bkd-raw-badge">원자료 (관찰·평가 기록)</span>' +
             '<p class="bkd-raw-meta">'+escapeHtml(master.subject)+' · '+escapeHtml(master.grade)+'</p>' +
             rawHtml +
             '<p class="bkd-raw-hint">→ 이 관찰 기록을 바탕으로 오른쪽 다섯 가지 관점 중 하나로 가공합니다.</p>' +
@@ -3431,12 +3499,7 @@ function goHome(){
 </script>
     <!-- ===== 오픈소스 라이선스 고지 (버튼 + 팝업) ===== -->
     <style>
-        #ossBtn { position: fixed; right: 16px; bottom: 16px; z-index: 150; display: inline-flex; align-items: center; gap: 6px;
-            padding: 8px 14px; border-radius: 999px; border: 1px solid #cbd5e1; background: rgba(255,255,255,.95);
-            color: #334155; font-size: 13px; font-weight: 600; line-height: 1.2; font-family: inherit; box-shadow: 0 4px 14px rgba(15,23,42,.12);
-            cursor: pointer; min-height: 0; backdrop-filter: blur(4px); }
-        #ossBtn:hover { border-color: #64748b; color: #0f172a; }
-        #ossBtn:focus-visible, #ossModal :focus-visible { outline: 3px solid #3b82f6; outline-offset: 2px; }
+        #ossModal :focus-visible { outline: 3px solid #3b82f6; outline-offset: 2px; }
         #ossModal { position: fixed; inset: 0; z-index: 300; display: none; align-items: center; justify-content: center;
             padding: 16px; background: rgba(15,23,42,.55); }
         #ossModal.open { display: flex; }
@@ -3476,15 +3539,13 @@ function goHome(){
             .oss-body td { border: 0; padding: 2px 4px; }
         }
         @media (max-width: 640px) {
-            #ossBtn { right: 12px; bottom: 12px; padding: 7px 11px; font-size: 12px; }
             #ossModal { padding: 0; }
             .oss-panel { max-height: 100vh; height: 100%; border-radius: 0; }
             .oss-name { white-space: normal; }
         }
-        @media print { #ossBtn, #ossModal { display: none !important; } }
+        @media print { #ossModal { display: none !important; } }
     </style>
 
-    <button type="button" id="ossBtn" aria-haspopup="dialog" aria-controls="ossModal" onclick="openOss()">ⓘ 오픈소스 라이선스</button>
 
     <div id="ossModal" role="dialog" aria-modal="true" aria-labelledby="ossTitle" aria-hidden="true">
         <div class="oss-panel">
